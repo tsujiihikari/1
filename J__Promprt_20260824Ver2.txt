@@ -1,0 +1,85 @@
+1つめの修正
+右タブへ移動、左タブへ移動のボタンは、
+画面右側にあるNo	過去の閲覧履歴 ／ ファイル名の
+テーブルより、z-indexが下になるようにして
+
+画面右側にあるNo	過去の閲覧履歴 ／ ファイル名の
+テーブルのz-indexを上に持ってくるでよい
+
+
+２つ目の修正
+ブラウザのウィンドウ自体が、1500px以下に下回ったときに、
+画面左にあるDownloadボタンとCopyボタンをdisplya:noneにする。
+加えて、右タブへ移動、左タブへ移動のボタンも同様に
+500px以下に下回ったときに、displya:noneにする
+
+
+３つ目の修正
+テーブルハイライトからテーブルタブを開くときの、Java処理を
+修正して
+
+テーブルは以下二つ
+
+まずKYF0010のようなテーブルハイライトのキーワードがServeltにおくられる。
+そのKYF0010だけだと、DBTYPEとSCHEMAが一意で識別出来ない。
+だから、まずRPS_TABLE_LISTをNAME（ここにKYF0010が入っている）で、レコードデータをSelectする。
+
+そして、もし１行なら以下
+　　・タブ名　＝ KYF0010などのテーブル名
+　　・テーブル名（英字）　＝　NAME　カラム　　テーブル名（日本語）　＝　NAME2
+　　・いまMockで表示しているＨＴＭＬタブで表示している内容自体は問題ない。
+　　　これをＤＢから取得して、表示せよ。
+　　　
+　　・DB接続情報は次を参考にして　　sqlplus OBJECT_KYKELT/OBJECT_USER_KYKELT@10.206.12.112:1621/dlmkt1.world
+
+
+
+複数行なら以下
+　・タブ名　＝　テーブル選択
+　・タブのなかに、複数行SCHEMA、DBTYPE、NAMEをＨＴＭＬのtableタブとして表示し、
+　　そのテーブルの行を選択し、開くボタンを押すことで、１行（つまり1件だけ特定出来る場合と同じ）
+　　だけ特定出来る場合とおなじ挙動として、テーブルのタブを開く
+
+　　
+
+
+SQL> desc RPS_TABLE_LIST;
+ 名前                                                    NULL?    型
+ ----------------------------------------------------- -------- ------------------------------------
+ ID                                                    NOT NULL NUMBER(25)
+ SCHEMA                                                         VARCHAR2(128)
+ DBTYPE                                                         VARCHAR2(20)
+ VERSION                                                        VARCHAR2(20)
+ NAME                                                           VARCHAR2(60)
+ PART                                                           VARCHAR2(30)
+ NAME2                                                          VARCHAR2(300)
+ MAX_COUNT                                                      VARCHAR2(30)
+ UPDATE_DAY                                                     VARCHAR2(30)
+ TANTOSHA                                                       VARCHAR2(30)
+ PERSONAL_DATA                                                  VARCHAR2(30)
+ STATISTICS                                                     VARCHAR2(30)
+ JH_DATA_NUM                                                    NUMBER(19)
+
+SQL> desc RPS_TABLE_DATA;
+ 名前                                                    NULL?    型
+ ----------------------------------------------------- -------- ------------------------------------
+ ID                                                    NOT NULL NUMBER(25)
+ TABLE_LIST_ID                                         NOT NULL NUMBER(25)
+ SCHEMA                                                         VARCHAR2(128)
+ TABLE_NAME                                                     VARCHAR2(60)
+ NO                                                    NOT NULL NUMBER(25)
+ NAME                                                           VARCHAR2(30)
+ PKKEY                                                          VARCHAR2(20)
+ PART                                                           VARCHAR2(30)
+ KATA                                                           VARCHAR2(20)
+ COLUMN_SIZE                                                    VARCHAR2(20)
+ NULL_CONST                                                     VARCHAR2(20)
+ NAME2                                                          VARCHAR2(300)
+ DESCRIPTION                                                    VARCHAR2(2000)
+ REFERENCE                                                      VARCHAR2(600)
+ DEFAULT_VALUE                                                  VARCHAR2(100)
+ CHECK_CONST                                                    VARCHAR2(100)
+ JH_SAMPLE_DATA                                                 VARCHAR2(4000)
+
+
+
