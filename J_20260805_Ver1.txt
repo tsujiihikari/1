@@ -1,0 +1,188 @@
+[1]
+ブラウザのウィンドウ幅が1500px以下になったときに、
+つまりメディアクエリのmax-widht <=1500px？は、
+右タブへ移動と左タブへ移動のボタンは
+display:noneで非表示にする
+
+
+[2]
+JDBCドライバでの接続先のＵＲＬやスキーマやパスワードや
+ポートなどは、以下を参考に修正して
+sqlplus OBJECT_KYKELT/OBJECT_USER_KYKELT@10.206.12.112:1621/dlmkt1.world
+
+
+[3]
+openCode	@	main.js?v=20260804_s…get_csv_cgi_v1:3610
+検索結果の箇所でエラーになっている。
+クライアント資材とＪａｖａを修正せよ
+
+ただしい、呼び出しパラメータは以下とする。
+POST
+http://10.202.6.86/cgi-bin/krugle/get_csv.cgi?path_output_format=PATH&keyword=KYF1940&project=NIKKO.nkCCIS&language=java&findin=ALL&clone=YES
+
+
+[4]
+ArrowLeftキーとArrowRightキーを押したときに、
+同じようにグレー背景の白文字のモーダルを
+表示してほしい。
+そして、ＥＮＴＥＲを押したときに、そのソースコードタブを
+クリックしたとき同じ挙動とする。
+つまり、ArrowLeftキーとArrowRightキーを押したときは、数字の
+タブをhoverしたときと同じ挙動として、其の後ＥＮＴＥＲをおした
+ときに、数字のタブをクリックしたときと同じ挙動とする
+
+
+
+[5]
+テーブルのハイライトのタブの文字のみ、
+letter-spacing:0.1emにしゅうせいして
+
+
+
+[6]
+テーブルのハイライトタブを押し時に表示される
+ＨＴＭＬのデータを以下として。
+
+RPS_TABLE_LISTのNAMEはテーブル名（英字）
+RPS_TABLE_LISTのNAME2はテーブル名（日本語）
+RPS_TABLE_LISTのVERSIONは、Ver:1.4などのバージョン
+
+今はMockデータになっているが、これをＤＢから値を取得して出せ
+
+ちなみに、ハイライトされたテーブル名（KYF0010）をおして、
+それでRPS_TABLE_LISTのNAMEを検索
+そこで、１行のデータに特定出来たら、そこでDBTYPEやSCHEMAやVERSIONを
+取得して、KYF0010などのテーブル名特定した情報を表示して
+
+一方、複数行のデータがある場合は、タブ名はテーブル情報として、
+ＤＢＴＹＰＥとＳＣＨＥＭＡとＶＥＲＳＩＯＮとＮＡＭＥとＮＡＭＥ２を
+出して、そこから１つのデータをユーザに選択させるようにして。
+
+
+
+SQL>
+SQL> desc RPS_TABLE_LIST;
+ 名前                                        NULL?    型
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(25)
+ SCHEMA                                             VARCHAR2(128)
+ DBTYPE                                             VARCHAR2(20)
+ VERSION                                            VARCHAR2(20)
+ NAME                                               VARCHAR2(60)
+ PART                                               VARCHAR2(30)
+ NAME2                                              VARCHAR2(300)
+ MAX_COUNT                                          VARCHAR2(30)
+ UPDATE_DAY                                         VARCHAR2(30)
+ TANTOSHA                                           VARCHAR2(30)
+ PERSONAL_DATA                                      VARCHAR2(30)
+ STATISTICS                                         VARCHAR2(30)
+ JH_DATA_NUM                                        NUMBER(19)
+
+SQL> desc RPS_TABLE_DATA;
+ 名前                                        NULL?    型
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(25)
+ TABLE_LIST_ID                             NOT NULL NUMBER(25)
+ SCHEMA                                             VARCHAR2(128)
+ TABLE_NAME                                         VARCHAR2(60)
+ NO                                        NOT NULL NUMBER(25)
+ NAME                                               VARCHAR2(30)
+ PKKEY                                              VARCHAR2(20)
+ PART                                               VARCHAR2(30)
+ KATA                                               VARCHAR2(20)
+ COLUMN_SIZE                                        VARCHAR2(20)
+ NULL_CONST                                         VARCHAR2(20)
+ NAME2                                              VARCHAR2(300)
+ DESCRIPTION                                        VARCHAR2(2000)
+ REFERENCE                                          VARCHAR2(600)
+ DEFAULT_VALUE                                      VARCHAR2(100)
+ CHECK_CONST                                        VARCHAR2(100)
+ JH_SAMPLE_DATA                                     VARCHAR2(4000)
+
+
+[7]
+Krugle+のアイコン（左上）を押したときは、index.htmlを開くように
+初期起動（初期表示）として
+
+
+
+[8]
+Krugleのsoruceを取得すると、制御文字や改行コードが複数あって
+以下のように複数改行がはいっている
+
+package jp.co.nikkobeans.app.ez_ipo.sinkoku_jyokyo;
+
+import java.math.BigDecimal;
+
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Command;
+
+import jp.co.nikkobeans.app.ez_ipo.jyokyo.interfacebean.JyokyoMeisaiResponseBean;
+
+import jp.co.nikkobeans.app.ez_ipo.kb_bosy.dataaccess.querys.SnkokMeisaiQueryRecord;
+
+//import jp.co.nikkobeans.app.ez_ipo.ipo_constant.IpoConstantValue;
+
+/**
+
+ * <!--
+
+ * Copyright (C) 1999 by Nikko Business Systems, Co.,Ltd
+
+ *     All rights reserved.
+
+ * -->
+
+ * <H3>
+
+ * 申告明細表示画面の処理ロジッククラス
+
+ * </H3>
+
+ * 当選数のセット、状態区分の判定、約定Noのフォーマットを行う
+
+ *
+
+ * @auther 新日本製鐵株式會社
+
+ */
+
+<html><head>
+<title>NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java</title>
+</head>
+<body>
+<p><strong>NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java</strong></p>
+<hr>
+<pre><ol>
+<li>package jp.co.nikkobeans.app.ez_ipo.sinkoku_jyokyo;
+</li><li>
+</li><li>import java.math.BigDecimal;
+</li><li>
+</li><li>import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Command;
+</li><li>import jp.co.nikkobeans.app.ez_ipo.jyokyo.interfacebean.JyokyoMeisaiResponseBean;
+</li><li>import jp.co.nikkobeans.app.ez_ipo.kb_bosy.dataaccess.querys.SnkokMeisaiQueryRecord;
+</li><li>
+</li><li>//import jp.co.nikkobeans.app.ez_ipo.ipo_constant.IpoConstantValue;
+</li><li>
+</li><li>/**
+</li><li> * &lt;!--
+</li><li> * Copyright (C) 1999 by Nikko Business Systems, Co.,Ltd
+</li><li> *     All rights reserved.
+</li><li> * --&gt;
+</li><li> * &lt;H3&gt;
+</li><li> * 申告明細表示画面の処理ロジッククラス
+</li><li> * &lt;/H3&gt;
+</li><li> * 当選数のセット、状態区分の判定、約定Noのフォーマットを行う
+</li><li> * 
+</li><li> * @auther 新日本製鐵株式會社
+</li><li> */
+</li><li>public class KbSnkokMeisaiApplicationCommand implements Command {
+</li><li>
+
+
+
+
+
+
+
+
+
