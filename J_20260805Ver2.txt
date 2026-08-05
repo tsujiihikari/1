@@ -1,0 +1,96 @@
+[1]
+テーブルハイライトの処理（JavaScript）がおかしい
+
+DELETEとかSTARTとかCNTCT_UNIQKEY とかUPDATE_QUERY_POSTFIX_ARRAYが
+ハイライト対象となっている。
+これがおかしい。
+
+まず、サーバ側（RPS_TABLE_LISTテーブル）でＪａｖａでＳｅｌｅｃｔぶんで
+取得する。
+
+select distinct name , dbtype , schema from RPS_TABLE_LIST order by 1 , 2, 3;
+
+
+このnameに一致するテーブルキー（大文字英字や_が含まれる文字）を
+サーバのソースコードから探して、対象となるテーブルキーわーどを
+Serveltからクライアントへ返却。
+
+そして、そのクライアントでテーブルハイライトとする。
+
+
+
+
+[2]
+検索結果タブで、ＫｒｕｇｌｅＡＰＩからcgiを呼び込んで、検索結果を表示するところで文字化けとかおかしくなってる
+
+========
+<tbody id="resultBody">
+    <tr class="" data-index="0" data-no="1" data-file-name="&lt;br&gt;" data-project="NIKKO.nkCCIS" data-group="nkCCIS" data-directory-group="&lt;br&gt;" data-path="NIKKO.nkCCIS/&lt;br&gt;" data-language="java" aria-label="NIKKO.nkCCIS/&lt;br&gt;">
+      <td>1</td>
+      <td>&lt;br&gt;</td>
+      <td>nkCCIS</td>
+      <td>&lt;br&gt;</td>
+      <td>NIKKO.nkCCIS/&lt;br&gt;</td>
+    </tr>
+  
+    <tr class="" data-index="1" data-no="2" data-file-name="&lt;br&gt;" data-project="NIKKO.nkCCIS" data-group="nkCCIS" data-directory-group="&lt;br&gt;" data-path="NIKKO.nkCCIS/&lt;br&gt;" data-language="java" aria-label="NIKKO.nkCCIS/&lt;br&gt;">
+      <td>2</td>
+      <td>&lt;br&gt;</td>
+      <td>nkCCIS</td>
+      <td>&lt;br&gt;</td>
+      <td>NIKKO.nkCCIS/&lt;br&gt;</td>
+    </tr>
+  
+    <tr class="" data-index="2" data-no="3" data-file-name="&lt;font color=red&gt;" data-project="NIKKO.nkCCIS" data-group="nkCCIS" data-directory-group="&lt;font color=red&gt;" data-path="NIKKO.nkCCIS/&lt;font color=red&gt;" data-language="java" aria-label="NIKKO.nkCCIS/&lt;font color=red&gt;">
+      <td>3</td>
+      <td>&lt;font color=red&gt;</td>
+      <td>nkCCIS</td>
+      <td>&lt;font color=red&gt;</td>
+      <td>NIKKO.nkCCIS/&lt;font color=red&gt;</td>
+    </tr>
+  
+    <tr class="" data-index="3" data-no="4" data-file-name="a≫a､
+========
+
+
+パースがおかしいと思う。
+CSVが返って来る
+
+
+リクエスト
+http://10.202.6.86/cgi-bin/krugle/get_csv.cgi?path_output_format=PATH&keyword=KbSnkokMeisaiApplicationCommand+&project=ALL&language=ALL&findin=ALL&clone=YES
+
+
+レスポンス
+"1","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ.java17","nikko-ez_trade-app04/app_primary/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"2","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ.java17","nikko-ez_trade-app04/app_primary/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"3","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ","smbc.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"4","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ","smbc.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"5","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ","ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"6","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ","ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"7","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ","mcsmbc.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"8","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ","mcsmbc.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"9","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ","rb.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"10","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ","rb.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"11","KbSnkokMeisaiApplicationCommand.java","23","NIKKO.nikkoEZ","mcez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java"
+"12","KbSnkokMeisaiApplicationCommand.java","22","NIKKO.nikkoEZ","mcez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplicationCommand.java"
+"13","KbSnkokMeisaiApplication.java","46","NIKKO.nikkoEZ.java17","nikko-ez_trade-app04/app_primary/java/jp/co/nikkobeans/app/odr_yak/kb_bosy_meisai/KbSnkokMeisaiApplication.java"
+
+
+
+
+[3]
+http://10.202.6.86/cgi-bin/krugle/source_disp.cgiを呼ぶときに、
+?以降のパラメータ部分のＵＲＬエンコーディングが出来ていないからうまくうごいていない
+つまり正しいコードを取得できていない
+
+
+×
+http://10.202.6.86/cgi-bin/krugle/source_disp.cgi?NIKKO.nkCCIS/kyak.online.jar/lib/ApFrKjCtt_dbac.jar/jp/co/fnt/stp1/app/apptier/front/kj/ctt/model/accessor/Kyc0250TableAccessor.java
+
+
+〇
+
+http://10.202.6.86/cgi-bin/krugle/source_disp.cgi?NIKKO.nkCCIS%2Fkyak.online.jar%2Flib%2FApFrKjCtt_dbac.jar%2Fjp%2Fco%2Ffnt%2Fstp1%2Fapp%2Fapptier%2Ffront%2Fkj%2Fctt%2Fmodel%2Faccessor%2FKyc0250TableAccessor.java
+
+
