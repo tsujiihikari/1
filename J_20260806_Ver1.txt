@@ -1,0 +1,123 @@
+
+
+
+[1]
+検索ボタンを押したときの、挙動が違う。
+以下のエラーJSONがServltから返却。
+自分がブラウザで手動で叩いたときは、以下。
+Javaコードを修正して。
+
+
+http://10.205.7.19:8080/krugleapi/searchの中で、get_csv.cgiでエラー
+{"error":"Krugle get_csv.cgi failed","message":"IOException: Krugle get_csv.cgi returned HTML instead of CSV: â»æ¤ç
+´¢æ¡ä»¶ãæå®ããã¦ãã¾ããã ãï¼å¿é å¥åé ç®ï¼ ããå¯¾è±¡ãã­ã¸ã§ã¯ã ããè¨èª ããæ¤ç´¢ã¨ãªã¢ æ¤ç´¢çµæãè¡¨ç¤ºããç»é¢ã«ç´æ¥ã¢ã¯ã»ã¹ãã¦ããå¯è½æ§ãããã¾ãã ä¸è¨ã®ãªã³ã¯åã«ã¢ã¯ã»ã¹ãã¦ããæ¤ç´¢ãã¦ã","method":"GET","searchUrl":"http://10.202.6.86/cgi-bin/krugle/get_csv.cgi?path_output_format=PATH&keyword=&project=NIKKO.nkCCIS&language=java&findin=ALL&clone=YES","summary":{"hitCount":0,"count":0,"keyword":"","project":"NIKKO.nkCCIS","language":"java","findin":"ALL","clone":"YES","backend":"error","error":"IOException: Krugle get_csv.cgi returned HTML instead of CSV: â»æ¤ç´¢æ¡ä»¶ãæå®ããã¦ãã¾ããã ãï¼å¿é å¥åé ç®ï¼ ããå¯¾è±¡ãã­ã¸ã§ã¯ã ããè¨èª ããæ¤ç´¢ã¨ãªã¢ æ¤ç´¢çµæãè¡¨ç¤ºããç»é¢ã«ç´æ¥ã¢ã¯ã»ã¹ãã¦ããå¯è½æ§ãããã¾ãã ä¸è¨ã®ãªã³ã¯åã«ã¢ã¯ã»ã¹ãã¦ããæ¤ç´¢ãã¦ã"}}
+
+
+自分がブラウザで、KrugpeのAPIでHttpStatus=200が返ってきたときは以下
+正常系
+http://10.202.6.86/cgi-bin/krugle/get_csv.cgi
+
+パラメータ
+path_output_format=PATH&keyword=KYF1940&project=NIKKO.nkCCIS&language=java&findin=ALL&clone=YES
+
+==================================================
+Request URL
+http://10.202.6.86/cgi-bin/krugle/get_csv.cgi
+Request Method
+POST
+Status Code
+200 OK
+Remote Address
+10.202.6.86:80
+Referrer Policy
+strict-origin-when-cross-origin
+connection
+Keep-Alive
+content-disposition
+attachment; filename="krugle.csv"
+content-type
+application/octet-stream name="krugle.csv"
+date
+Thu, 06 Aug 2026 05:37:48 GMT
+keep-alive
+timeout=5, max=100
+server
+Apache/2.4.53 (Red Hat Enterprise Linux)
+transfer-encoding
+chunked
+accept
+text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+accept-encoding
+gzip, deflate
+accept-language
+ja,en;q=0.9,en-GB;q=0.8,en-US;q=0.7
+cache-control
+max-age=0
+connection
+keep-alive
+content-length
+95
+content-type
+application/x-www-form-urlencoded
+cookie
+findin=ALL; source_disp=NO; clone=YES; keyword=KYF1940; project=NIKKO.nkCCIS; language=java
+host
+10.202.6.86
+origin
+http://10.202.6.86
+referer
+http://10.202.6.86/cgi-bin/krugle/result.cgi
+upgrade-insecure-requests
+1
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0
+==================================================
+
+
+
+[2]
+レスポンシブウェブのブラウザの1475xpから1180pxの間で、
+検索キーワード、移行グループ、言語、Clone、検索ボタン、曖昧検索ボタン
+これが<section class="searchPanel" aria-label="検索条件">の枠から
+はみ出ている。レスポンシブウェブ（リキッドデザイン）にするか、
+はみ出したときはScrollXとするか、なにかよいスタイルをあてて
+あなたにデザインは任せる
+
+
+[3]
+レスポンシブウェブのブラウザの1475xpから1180pxの間で、
+ヘッダーのホームタブ、検索結果タブ、数字のソースコード表示タブ
+これが<header class="fixedHeaderArea">の枠から
+はみ出ている。レスポンシブウェブ（リキッドデザイン）にするか、
+はみ出したときはScrollXとするか、なにかよいスタイルをあてて
+あなたにデザインは任せる
+
+
+[4]
+ソースコード表示タブ（数字のタブ）を押したときに、最初Servletで
+異常に時間がかかる。正直、ソースコード表示だけならすごく速いはずだが、
+最初の接続確認で時間がかかるのか、性能改善、コード改善して
+http://10.205.7.19:8080/krugleapi/source?path=NIKKO.nkCCIS%2Fkyak.online.jar%2Flib%2FApFrKjEdd_java.jar%2Fjp%2Fco%2Ffnt%2Fstp1%2Fapp%2Fapptier%2Ffront%2Fkj%2Fedd%2Fmodel%2FKjEddKabunusiYakuinTorkTask.java&fullPath=NIKKO.nkCCIS%2Fkyak.online.jar%2Flib%2FApFrKjEdd_java.jar%2Fjp%2Fco%2Ffnt%2Fstp1%2Fapp%2Fapptier%2Ffront%2Fkj%2Fedd%2Fmodel%2FKjEddKabunusiYakuinTorkTask.java&filePath=NIKKO.nkCCIS%2Fkyak.online.jar%2Flib%2FApFrKjEdd_java.jar%2Fjp%2Fco%2Ffnt%2Fstp1%2Fapp%2Fapptier%2Ffront%2Fkj%2Fedd%2Fmodel%2FKjEddKabunusiYakuinTorkTask.java&project=&href=&sourceUrl=&language=java&source_disp=YES&callback=__krugleJsonp_1785995329134_r9tvhze67ka&_=1785995329134
+
+Eageの開発者ツールで
+Explanation = 64.62ms
+
+[5]
+テーブルハイライトの情報を表示している箇所のHTMLのスタイルとデータ修正
+
+以下の１行のデータを書き換えて
+DBTYPE：KYKDB SCHEMA：KYKOWNER Ver:2.2 NAME：KYK5300 NAME2：入出金
+↓
+DBTYPE：KYKDB　　スキーマ：KYKOWNER　　Ver:2.2　　KYK5300（入出金）
+
+
+
+
+[6]
+テーブルハイライトの情報を表示している
+<div id="codeTitle" class="codeTitle">KYK5300</div>
+
+ここを修正して
+
+KYK5300（入出金）　Ver:2.2　DBTYPE：KYKDB　スキーマ：KYKOWNER
+
