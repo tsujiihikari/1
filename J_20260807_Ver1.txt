@@ -1,0 +1,2462 @@
+[1]
+右タブへ移動、左タブへ移動をおしたとき、またボタンにカーソルがあたっているとき、
+ENTERをおしたとき
+ArrowRightやArrowLeftキーを押したときと同じく、グレー背景で白文字のモーダルを出して
+そこでＥＮＴＥＲをおきたときのみ、ソースを新しく表示する
+
+
+
+[2]
+右上のCopyボタンとDownloadボタンと、小　大ボタン　、　ハイライト表示ＯＦＦ　ＯＮボタンの
+位置とpositionを変更して
+
+positon;fixedとして
+
+
+<div class="codeFileActions" aria-label="コード操作">
+          <button id="codeCopyBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Copy" title="Copy">Copy</button>
+          <button id="codeDownloadBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Download" title="Download">Download</button>
+        </div>
+上記のボタンは、<div class="codeToolbar">
+        <div class="codeModeTabs" aria-label="コード表示切替">
+          <button class="codeModeTab isActive" type="button" data-code-panel="source">ソースコード</button>
+          <button class="codeModeTab codeModeTabPending" type="button" data-code-panel="ai" disabled="" aria-disabled="true" data-badge="未対応" title="未対応">解説コード</button>
+          <button class="codeModeTab codeModeTabPending" type="button" data-code-panel="summary" disabled="" aria-disabled="true" data-badge="未対応" title="未対応">要約説明</button>
+          <button class="codeModeTab codeTableInfoTab" type="button" data-code-panel="table" hidden="" aria-hidden="true">テーブル情報</button>
+        </div>
+      </div>
+      
+この<div class="codeToolbar">の中にいれて。
+高さ中央（Y軸の中央位置）に配置して
+
+
+小　大ボタンは、<div class="codeHighlightActions">にいれて、位置をtransform:translateY(-5px）の位置に配置
+
+<div class="codeHighlightActions">
+            <button id="highlightToggleBtn" class="codeFloatingBtn isOff" type="button" aria-label="ハイライト表示は現在OFFです。クリックするとONになります。" aria-pressed="false" title="ハイライト表示: OFF（背景色のみ切替）"><span class="highlightToggleLabel">ハイライト表示</span><span class="highlightToggleChoice highlightToggleChoiceOff isActive" aria-hidden="true">OFF</span><span class="highlightToggleChoice highlightToggleChoiceOn" aria-hidden="true">ON</span></button>
+          </div>
+       
+
+
+<button id="highlightToggleBtn" は、今の高さｙほり+5pxだけＹ軸下に持っていく
+
+
+[3]
+
+検索結果タブで、ＤｏｗｎｌｏａｄボタンやＣｏｐｙボタンをおしたとき
+
+ヒット数	検索キーワード	対象プロジェクト	言語	開始	終了	Clone
+1156	KYF0030	ALL	ALL	2026/08/07(金) 11:34:37	2026/08/07(金) 11:34:56	表示
+
+これの情報（２行）はいらない
+データから除外して
+
+[4]
+ホームタブのＤｏｗｎｌｏａｄボタンやＣｏｐｙボタンをおしたとき
+
+No	過去の閲覧履歴 ／ 検索キーワード
+1	
+KYF0030
+すべて
+すべて
+
+2	
+KYF1950
+すべて
+すべて
+
+3	
+KYF1951
+すべて
+すべて
+
+4	
+KYF1951
+すべて
+Java
+
+
+こちらのデータがタブのあとに、改行コードＣＲＬＦがはいっている
+この改行コードを取り除いて
+
+
+[5]
+KrugleAPIからSourceを取得して、ＨＴＭＬをパースしたときに、
+やっぱりＳｅｒｖｅｌｔの中で文字列を取得すると、改行コードが余剰にはいっている
+
+ＵＦＴ－８とかＳｈｉｆｔ－ＪＩＳとかが問題？
+何処が悪いかチェックして、慎重にこの問題が起きないように手当しろ
+
+
+<pre><code id="codeBlock" class="language-java hljs" style="font-size: 14px !important;" data-highlighted="yes"><span class="hljs-keyword">package</span> jp.co.fnt.stp1.app.apptier.back.az.kzn.model.accessor;
+
+<span class="hljs-comment">/*
+
+ * Copyright (C) 2002 Financial Network Technologies, Ltd, All Rights Reserved.
+
+ *
+
+ * このファイルは
+
+ * jp.co.fnt.stp1.appfw.dbaccessor.generator.DbAccessorGenerator によって生成されました.
+
+ * 生成に使用されたリソースファイルの情報は以下の通りです.
+
+ * -------------------------------------------------------------------------------
+
+ * 生成日時                            	2021/04/09 09:06:59.879
+
+ * アクセサジェネレータ                 	DbAccessorGenerator v001_004
+
+ * ソースコードテンプレートXML           	template_table_accessor.xml ver 1.0
+
+ * DBアクセスパターンXML名               	C:\NKSOL\Dev\ccis\01-2017-01-147\ws\ApBkAzKzn_dbac_res\db_xml\Kyk5382_AZ.xml
+
+ * DBアクセスパターンXMLバージョン        Version-1.0
+
+ * ソースコード出力先ルートディレクトリ    C:\NKSOL\Dev\ccis\01-2017-01-147\ws\ApBkAzKzn_dbac
+
+ * -------------------------------------------------------------------------------
+
+ */</span>
+
+<span class="hljs-keyword">import</span> java.sql.Connection;
+
+<span class="hljs-keyword">import</span> java.sql.SQLException;
+
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.common.DbConstants;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.common.DbAccessorException;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.common.DbFieldAttribute;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbAccessor;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbTableAccessor;
+
+<span class="hljs-keyword">import</span> jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbRecord;
+
+<span class="hljs-comment">/**
+
+ * &lt;h3&gt;
+
+ * Kyk5382Azテーブルアクセサ
+
+ * &lt;/h3&gt;
+
+ * データベース上のテーブル "<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>" にアクセスするためのクラス.
+
+ * このクラスにてDBコネクションの管理は行っていない.
+
+ * このクラスのメソッドにおいて、JDBCから送出されるSQLExceptionは捕捉していない.
+
+ *
+
+ * <span class="hljs-doctag">@author</span> jp.co.fnt.stp1.appfw.dbaccessor.generator.DbAccessorGenerator
+
+ */</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span>
+
+<span class="hljs-title class_">Kyk5382AzTableAccessor</span>
+
+<span class="hljs-keyword">extends</span> <span class="hljs-title class_">DbTableAccessor</span>
+
+{
+
+    <span class="hljs-comment">/**
+
+     * テーブル項目のメタ情報配列
+
+     */</span>
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> DbFieldAttribute[] FIELD_ATTRIBUTE_ARRAY = {
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"DB_UPDJI1"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">17</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"DB_UPDJI2"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">17</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"NYU_USERID"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"CO_HYJUN_C"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"KYAK_KOZANO"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">11</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"TUKA_C"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"KITYOYMD"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"GAIKA_RYUHO_G"</span>, java.sql.Types.NUMERIC, <span class="hljs-number">19</span>, <span class="hljs-number">4</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"RONR_MASY_K"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"SOSINYMDJI"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">19</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>),
+
+        <span class="hljs-keyword">new</span> <span class="hljs-title class_">DbFieldAttribute</span>(<span class="hljs-string">"MSG_UNIQKEY"</span>, java.sql.Types.VARCHAR, <span class="hljs-number">24</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>)
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * テーブル名
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">TABLE_NAME</span> <span class="hljs-operator">=</span> <span class="hljs-string">"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>"</span>;
+
+    <span class="hljs-comment">/**
+
+     * バージョン情報を保持するカラムのインデックス
+
+     */</span>
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">VERSION_COLUMN_INDEX</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">/**
+
+     * 挿入情報を保持するカラムのインデックス
+
+     */</span>
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">INSERT_COLUMN_INDEX</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">/**
+
+     * 更新情報を保持するカラムのインデックス
+
+     */</span>
+
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">UPDATE_COLUMN_INDEX</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">/**
+
+     * 検索クエリ生成用SQL文字列
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] SELECT_QUERY_ARRAY = {
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\""</span>,
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?"</span>,
+
+        <span class="hljs-string">""</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 検索適合レコード数取得クエリ生成用SQL文字列
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] COUNT_QUERY_ARRAY = {
+
+        <span class="hljs-string">"SELECT COUNT(*) FROM (SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\")"</span>,
+
+        <span class="hljs-string">"SELECT COUNT(*) FROM (SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?)"</span>,
+
+        <span class="hljs-string">""</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 行ロック有り(待ち合わせ有り)検索クエリ生成用SQL文字列
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] SELECT_FOR_UPDATE_QUERY_ARRAY = {
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" FOR UPDATE"</span>,
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=? FOR UPDATE"</span>,
+
+        <span class="hljs-string">""</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 行ロック有り(待ち合わせ無し)検索クエリ生成用SQL文字列
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY = {
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" FOR UPDATE NOWAIT"</span>,
+
+        <span class="hljs-string">"SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=? FOR UPDATE NOWAIT"</span>,
+
+        <span class="hljs-string">""</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 挿入クエリ生成用SQL文字列 前半
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">INSERT_QUERY_PREFIX</span> <span class="hljs-operator">=</span> <span class="hljs-string">"INSERT  INTO \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" ("</span>;
+
+    <span class="hljs-comment">/**
+
+     * 更新クエリ生成用SQL文字列 前半
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] UPDATE_QUERY_PREFIX_ARRAY = {
+
+        <span class="hljs-string">"UPDATE \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" SET"</span>,
+
+        <span class="hljs-string">"UPDATE \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" SET"</span>,
+
+        <span class="hljs-string">"UPDATE \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\" SET"</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 更新クエリ生成用SQL文字列 後半
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] UPDATE_QUERY_POSTFIX_ARRAY = {
+
+        <span class="hljs-string">""</span>,
+
+        <span class="hljs-string">"WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?"</span>,
+
+        <span class="hljs-string">"WHERE KYAK_KOZANO = ? AND TUKA_C = '011' AND KITYOYMD &lt; ? AND CO_HYJUN_C = ? AND RONR_MASY_K  = ?"</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * 削除クエリ生成用SQL文字列
+
+     */</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> String[] DELETE_QUERY_ARRAY = {
+
+        <span class="hljs-string">"DELETE  FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\""</span>,
+
+        <span class="hljs-string">"DELETE  FROM \"<button type="button" class="codeKeywordLink codeTableKeyword" data-keyword="KYK5382_AZ" data-keyword-type="table" title="KYK5382_AZ テーブル名" style="--keyword-hit-width: calc(10ch + 1.7em);">KYK5382_AZ</button>\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?"</span>,
+
+        <span class="hljs-string">""</span>
+
+    };
+
+    <span class="hljs-comment">/**
+
+     * Kyk5382AzTableAccessorコンストラクタ.
+
+     */</span>
+
+    <span class="hljs-keyword">public</span>
+
+    <span class="hljs-title function_">Kyk5382AzTableAccessor</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-built_in">super</span>();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * Kyk5382AzTableRecordオブジェクトを生成するファクトリメソッド.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> テーブルレコードの実体.
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> DbRecord
+
+    <span class="hljs-title function_">createRecord</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_"><button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecord" data-keyword-type="java-class" title="Kyk5382AzTableRecord Javaクラス名" style="--keyword-hit-width: calc(20ch + 1.7em);">Kyk5382AzTableRecord</button></span>();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 問い合わせの結果から1レコードを返し、その次のレコードにポインタを移す.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 現在のKyk5382AzTableRecord.
+
+     *         問い合わせが行われていないか、全ての結果を取得した後はnullを返す.
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecord" data-keyword-type="java-class" title="Kyk5382AzTableRecord Javaクラス名" style="--keyword-hit-width: calc(20ch + 1.7em);">Kyk5382AzTableRecord</button> <span class="hljs-title function_">nextRecord</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException {
+
+        <span class="hljs-keyword">return</span> (<button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecord" data-keyword-type="java-class" title="Kyk5382AzTableRecord Javaクラス名" style="--keyword-hit-width: calc(20ch + 1.7em);">Kyk5382AzTableRecord</button>) <span class="hljs-built_in">super</span>.next(FIELD_ATTRIBUTE_ARRAY, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 問い合わせの結果から引数で指定された数のレコードを取得し、その参照を格納したjava.util.Listを返す.&lt;br&gt;
+
+     * レコードのポインタは、取得したレコード数と同数だけ進める.
+
+     * 問い合わせの結果の最後に到った時点で処理を終了する.
+
+     * 取得できる最大数は、DbConstants.MAX_RECORD_COUNTであり、
+
+     * これを超える値が引数として与えられた場合には、
+
+     * java.lang.IllegalArgumentExceptionが送出されポインタは移動しない.
+
+     * 全ての結果を取得した後にこのメソッドをコールした場合には、
+
+     * サイズ0のjava.util.Listのインスタンスを返す.nullを返すことはない.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> maxSize 取得する最大数.
+
+     * <span class="hljs-doctag">@return</span> 取得したAccountTableRecordのコレクション.
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外.
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> List
+
+    <span class="hljs-title function_">getResultRecords</span><span class="hljs-params">(<span class="hljs-type">int</span> maxSize)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.getResultRecords(FIELD_ATTRIBUTE_ARRAY, maxSize, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 問い合わせの結果において現在のレコードのポインタから、引数で指定された数だけ順方向に移動する.&lt;br&gt;
+
+     * 0以下の値が引数として与えられた場合には、java.lang.IllegalArgumentExceptionが送出され、
+
+     * ポインタは移動しない.
+
+     * JDBCレベルでカーソルを移動するだけで、無駄なレコードの生成や値の読み込みは行わない実装である.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> forward カーソル移動の数.
+
+     * <span class="hljs-doctag">@return</span> 引数で指定された数だけ実際に移動できた場合にtrueを返し、
+
+     *         問い合わせが行われていないか、
+
+     *         引数で指定された数だけ移動する前に問い合わせ結果の最終行に達した場合はfalseを返す.
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外.
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span>
+
+    <span class="hljs-title function_">relative</span><span class="hljs-params">(<span class="hljs-type">int</span> forward)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.relative(forward);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 問い合わせ用のカーソルを閉じる. &lt;br&gt;
+
+     * 問い合わせ実行時に確保したリソースを解放する.
+
+     * 当該アクセサあるいは、問い合わせ結果が不要になった場合には、必ずこのメソッドをコールし、
+
+     * リソースを解放すること.
+
+     * このメソッドを呼び出した後、改めて executeQuery() 等を呼び出すまで、nextRecord() は null を返す.
+
+     *
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">closeStatement</span><span class="hljs-params">()</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.closeStatement();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目DB_UPDJI1のデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目DB_UPDJI1の大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfDbUpdji1</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">0</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目DB_UPDJI2のデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目DB_UPDJI2の大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfDbUpdji2</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">1</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目NYU_USERIDのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目NYU_USERIDの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfNyuUserid</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">2</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目CO_HYJUN_Cのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目CO_HYJUN_Cの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfCoHyjunC</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">3</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目KYAK_KOZANOのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目KYAK_KOZANOの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfKyakKozano</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">4</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目TUKA_Cのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目TUKA_Cの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfTukaC</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">5</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目KITYOYMDのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目KITYOYMDの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfKityoymd</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">6</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目GAIKA_RYUHO_Gのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目GAIKA_RYUHO_Gの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfGaikaRyuhoG</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">7</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目RONR_MASY_Kのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目RONR_MASY_Kの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfRonrMasyK</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">8</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目SOSINYMDJIのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目SOSINYMDJIの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfSosinymdji</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">9</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目MSG_UNIQKEYのデータベーステーブル上の大きさを取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目MSG_UNIQKEYの大きさ
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getSizeOfMsgUniqkey</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">10</span>].getPrecision();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目DB_UPDJI1のデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目DB_UPDJI1の精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfDbUpdji1</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">0</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目DB_UPDJI2のデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目DB_UPDJI2の精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfDbUpdji2</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">1</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目NYU_USERIDのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目NYU_USERIDの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfNyuUserid</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">2</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目CO_HYJUN_Cのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目CO_HYJUN_Cの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfCoHyjunC</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">3</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目KYAK_KOZANOのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目KYAK_KOZANOの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfKyakKozano</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">4</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目TUKA_Cのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目TUKA_Cの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfTukaC</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">5</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目KITYOYMDのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目KITYOYMDの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfKityoymd</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">6</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目GAIKA_RYUHO_Gのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目GAIKA_RYUHO_Gの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfGaikaRyuhoG</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">7</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目RONR_MASY_Kのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目RONR_MASY_Kの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfRonrMasyK</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">8</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目SOSINYMDJIのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目SOSINYMDJIの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfSosinymdji</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">9</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 項目MSG_UNIQKEYのデータベーステーブル上の精度を取得する.
+
+     *
+
+     * <span class="hljs-doctag">@return</span> 取得された項目MSG_UNIQKEYの精度
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">getScaleOfMsgUniqkey</span><span class="hljs-params">()</span>
+
+    {
+
+        <span class="hljs-keyword">return</span> FIELD_ATTRIBUTE_ARRAY[<span class="hljs-number">10</span>].getScale();
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 基本検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する. 全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQuery</span><span class="hljs-params">(Connection connection)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(connection, SELECT_QUERY_ARRAY[<span class="hljs-number">0</span>], <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 基本検索適合レコード数取得メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文で得られる実行結果の行数を返す. 全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@return</span> 問合せ結果の数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">countQuery</span><span class="hljs-params">(Connection connection)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbAccessor.countQuery(connection, COUNT_QUERY_ARRAY[<span class="hljs-number">0</span>], <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 基本行ロック有り(待ち合わせ有り)検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * "FOR UPDATE"を付加した全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQueryForUpdate</span><span class="hljs-params">(Connection connection)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(connection, SELECT_FOR_UPDATE_QUERY_ARRAY[<span class="hljs-number">0</span>], <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 基本行ロック有り(待ち合わせ無し)検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * "FOR UPDATE NOWAIT"を付加した全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQueryForUpdateNoWait</span><span class="hljs-params">(Connection connection)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(connection, SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY[<span class="hljs-number">0</span>],    <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 与えられたレコードをデータベースに挿入する. &lt;br&gt;
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてバージョン番号カラムが
+
+     * 指定されていた場合には、その項目に、初期バージョン値0を設定して挿入する.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて挿入時刻カラムが
+
+     * 指定されていた場合には、その項目に、システム時刻を設定して挿入する.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+
+     * 指定されていた場合には、その項目に、更新時刻初期値("00000000000000000")を設定して挿入する.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> record 挿入するレコード
+
+     * <span class="hljs-doctag">@return</span> 挿入したレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">insert</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecord" data-keyword-type="java-class" title="Kyk5382AzTableRecord Javaクラス名" style="--keyword-hit-width: calc(20ch + 1.7em);">Kyk5382AzTableRecord</button> record)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.insert(FIELD_ATTRIBUTE_ARRAY, connection, record, INSERT_QUERY_PREFIX, VERSION_COLUMN_INDEX, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定 検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * プライマリキー値の一致によりクエリを行なう.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+
+     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が指定されていた場合には、
+
+     * そのヒントを追加してSQL文を実行する.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> pKey プライマリキーデータ
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQuery</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordPKey" data-keyword-type="java-class" title="Kyk5382AzTableRecordPKey Javaクラス名" style="--keyword-hit-width: calc(24ch + 1.7em);">Kyk5382AzTableRecordPKey</button> pKey)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_QUERY_ARRAY[<span class="hljs-number">1</span>], VERSION_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定検索適合レコード数取得メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文で得られる実行結果の行数を返す.
+
+     * プライマリキー値の一致によりクエリを行なう.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+
+     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が指定されていた場合には、
+
+     * そのヒントを追加してSQL文を実行する.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> pKey プライマリキーデータ
+
+     * <span class="hljs-doctag">@return</span> 問合せ結果の数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">countQuery</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordPKey" data-keyword-type="java-class" title="Kyk5382AzTableRecordPKey Javaクラス名" style="--keyword-hit-width: calc(24ch + 1.7em);">Kyk5382AzTableRecordPKey</button> pKey)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbAccessor.countQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, COUNT_QUERY_ARRAY[<span class="hljs-number">1</span>], VERSION_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定行ロック有り(待ち合わせ有り)検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * "FOR UPDATE"を付加した全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> pKey プライマリキーデータ
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQueryForUpdate</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordPKey" data-keyword-type="java-class" title="Kyk5382AzTableRecordPKey Javaクラス名" style="--keyword-hit-width: calc(24ch + 1.7em);">Kyk5382AzTableRecordPKey</button> pKey)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_FOR_UPDATE_QUERY_ARRAY[<span class="hljs-number">1</span>], VERSION_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定行ロック有り(待ち合わせ無し)検索メソッド.&lt;br&gt;
+
+     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+
+     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * "FOR UPDATE NOWAIT"を付加した全件問い合わせを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> pKey プライマリキーデータ
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQueryForUpdateNoWait</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordPKey" data-keyword-type="java-class" title="Kyk5382AzTableRecordPKey Javaクラス名" style="--keyword-hit-width: calc(24ch + 1.7em);">Kyk5382AzTableRecordPKey</button> pKey)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-built_in">super</span>.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY[<span class="hljs-number">1</span>], VERSION_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定更新メソッド.&lt;br&gt;
+
+     * 与えられた条件で、データベース上のデータを更新する.
+
+     * プライマリキーに関するフィールドが設定されていなければ例外を投げる.
+
+     * 与えられたレコードの設定されたデータ項目について、
+
+     * 同一のプライマリキーを持つデータベース上のレコードを更新する.
+
+     * プライマリキー以外のデータ項目が１つも設定されていない場合は、何もせずに0を返す.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+
+     * 指定されていた場合には、その項目にシステム時刻を設定して挿入する.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+
+     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     *
+
+	 * プライマリキー値の一致によりクエリを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> record 更新対象となるレコード
+
+     * <span class="hljs-doctag">@return</span> 更新されたレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">update</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecord" data-keyword-type="java-class" title="Kyk5382AzTableRecord Javaクラス名" style="--keyword-hit-width: calc(20ch + 1.7em);">Kyk5382AzTableRecord</button> record)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY, connection, record, UPDATE_QUERY_PREFIX_ARRAY[<span class="hljs-number">1</span>], UPDATE_QUERY_POSTFIX_ARRAY[<span class="hljs-number">1</span>], UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * プライマリキー指定削除メソッド.&lt;br&gt;
+
+     * 与えられたプライマリキーデータと同一のプライマリキーを持つレコードを、
+
+     * データベースから削除する.
+
+     *
+
+	 * プライマリキー値の一致によりクエリを行なう.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> pKey 削除対象となるレコードのプライマリキーデータ
+
+     * <span class="hljs-doctag">@return</span> 削除されたレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">delete</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordPKey" data-keyword-type="java-class" title="Kyk5382AzTableRecordPKey Javaクラス名" style="--keyword-hit-width: calc(24ch + 1.7em);">Kyk5382AzTableRecordPKey</button> pKey)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.delete(FIELD_ATTRIBUTE_ARRAY, connection, pKey, DELETE_QUERY_ARRAY[<span class="hljs-number">1</span>]);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * UpdateRecordSyutk拡張更新メソッド. &lt;br&gt;
+
+     * 与えられたレコードの設定されたデータ項目について、
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて拡張アクセスクエリ"UpdateRecordSyutk"の
+
+     * 条件にマッチするデータベース上のレコードを同一の値で更新する.
+
+     * プライマリキー以外のデータ項目が１つも設定されていない場合は、何もせずに0を返す.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて当該拡張アクセスクエリに
+
+     * 固有のヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+
+     * 指定されていた場合には、その項目にシステム時刻を設定して更新する.
+
+     * プライマリキーに関する情報は更新されない.
+
+     *
+
+	 * 更新対象レコードを取得するクエリー
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> value 更新対象となるレコードの非プライマリキー項目データ
+
+     * <span class="hljs-doctag">@param</span> kyakKozano 顧客口座番号
+
+     * <span class="hljs-doctag">@param</span> kityoymd 記帳日
+
+     * <span class="hljs-doctag">@param</span> coHyjunC 会社標準コード
+
+     * <span class="hljs-doctag">@param</span> ronrMasyK 論理抹消区分
+
+     * <span class="hljs-doctag">@return</span> 更新されたレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">updateUpdateRecordSyutk</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordValue" data-keyword-type="java-class" title="Kyk5382AzTableRecordValue Javaクラス名" style="--keyword-hit-width: calc(25ch + 1.7em);">Kyk5382AzTableRecordValue</button> value ,java.lang.String kyakKozano,java.lang.String kityoymd,java.lang.String coHyjunC,java.lang.String ronrMasyK)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY,
+
+                            connection,
+
+                            value,
+
+                            UPDATE_QUERY_PREFIX_ARRAY[<span class="hljs-number">2</span>],
+
+                            UPDATE_QUERY_POSTFIX_ARRAY[<span class="hljs-number">2</span>],
+
+                            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]{kyakKozano,kityoymd,coHyjunC,ronrMasyK},
+
+                            <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]{<span class="hljs-number">12</span>,<span class="hljs-number">12</span>,<span class="hljs-number">12</span>,<span class="hljs-number">12</span>},
+
+                            UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 動的検索メソッド. &lt;br&gt;
+
+     * オプショナルクエリを指定してSQL文を即時実行し、その後 nextRecord()等を用いて
+
+     * その結果を取り出せるように、結果レコードを指すポインタを先頭のひとつ前に設定する.
+
+     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+
+     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> conditionClause 指定するオプショナルクエリ
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>
+
+    <span class="hljs-title function_">executeQueryWithCondition</span><span class="hljs-params">(Connection connection, String conditionClause)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-type">StringBuffer</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>(conditionClause.length() + <span class="hljs-number">100</span>);
+
+        buf.append(SELECT_QUERY_ARRAY[<span class="hljs-number">0</span>]);
+
+        buf.append(DbConstants.WHITE_SPACE);
+
+        buf.append(conditionClause);
+
+        <span class="hljs-built_in">super</span>.executeQuery(connection, buf.toString(), <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 動的検索適合レコード数取得メソッド. &lt;br&gt;
+
+     * オプショナルクエリを指定してSQL文を即時実行し、検索条件に適合したレコードの行数を返す.
+
+     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+
+     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> conditionClause 指定するオプショナルクエリ
+
+     * <span class="hljs-doctag">@return</span> 問合せ結果の数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">countQueryWithCondition</span><span class="hljs-params">(Connection connection, String conditionClause)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+          <span class="hljs-type">StringBuffer</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>(conditionClause.length() + <span class="hljs-number">100</span>);
+
+        buf.append(DbConstants.COUNT_PHRASE);
+
+        buf.append(SELECT_QUERY_ARRAY[<span class="hljs-number">0</span>]);
+
+        buf.append(DbConstants.WHITE_SPACE);
+
+        buf.append(conditionClause);
+
+        buf.append(DbConstants.RIGHT_PAREN);
+
+        <span class="hljs-keyword">return</span> DbAccessor.countQuery(connection, buf.toString(), <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 動的更新メソッド. &lt;br&gt;
+
+     * オプショナルクエリを指定して
+
+     * データベース上のデータを更新する.
+
+     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     * プライマリキーに関する情報は更新されない.
+
+     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+
+     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> value 更新対象となるレコード
+
+     * <span class="hljs-doctag">@param</span> conditionClause 指定するオプショナルクエリ
+
+     * <span class="hljs-doctag">@return</span> 更新されたレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">updateWithCondition</span><span class="hljs-params">(Connection connection, <button type="button" class="codeKeywordLink codeJavaClassKeyword" data-keyword="Kyk5382AzTableRecordValue" data-keyword-type="java-class" title="Kyk5382AzTableRecordValue Javaクラス名" style="--keyword-hit-width: calc(25ch + 1.7em);">Kyk5382AzTableRecordValue</button> value, String conditionClause)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY, connection, value, UPDATE_QUERY_PREFIX_ARRAY[<span class="hljs-number">0</span>], conditionClause, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, UPDATE_COLUMN_INDEX);
+
+    }
+
+    <span class="hljs-comment">/**
+
+     * 動的削除メソッド. &lt;br&gt;
+
+     * オプショナルクエリを指定して、
+
+     * データベース上のデータを削除する.
+
+     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+
+     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+
+     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+
+     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+
+     *
+
+     * <span class="hljs-doctag">@param</span> connection JDBC接続
+
+     * <span class="hljs-doctag">@param</span> conditionClause 指定するオプショナルクエリ
+
+     * <span class="hljs-doctag">@return</span> 削除されたレコード数
+
+     * <span class="hljs-doctag">@exception</span> SQLException JDBCからの例外
+
+     */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>
+
+    <span class="hljs-title function_">deleteWithCondition</span><span class="hljs-params">(Connection connection, String conditionClause)</span>
+
+    <span class="hljs-keyword">throws</span> SQLException
+
+    {
+
+        <span class="hljs-type">StringBuffer</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>(conditionClause.length() + <span class="hljs-number">100</span>);
+
+        buf.append(DELETE_QUERY_ARRAY[<span class="hljs-number">0</span>]);
+
+        buf.append(DbConstants.WHITE_SPACE);
+
+        buf.append(conditionClause);
+
+        <span class="hljs-keyword">return</span> DbTableAccessor.delete(connection, buf.toString(), <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+
+    }
+
+}</code></pre>
+
+
+元のＫｒｕｇｌｅＡＰＩを読んで帰ってきたときのＨＴＭＬはいか
+<html><head>
+<title>NIKKO.nkCCIS/kyak.online.jar/lib/ApBkAzKzn_dbac.jar/jp/co/fnt/stp1/app/apptier/back/az/kzn/model/accessor/Kyk5382AzTableAccessor.java</title>
+</head>
+<body>
+<p><strong>NIKKO.nkCCIS/kyak.online.jar/lib/ApBkAzKzn_dbac.jar/jp/co/fnt/stp1/app/apptier/back/az/kzn/model/accessor/Kyk5382AzTableAccessor.java</strong></p>
+<hr>
+<pre><ol>
+<li>package jp.co.fnt.stp1.app.apptier.back.az.kzn.model.accessor;
+</li><li>/*
+</li><li> * Copyright (C) 2002 Financial Network Technologies, Ltd, All Rights Reserved.
+</li><li> *
+</li><li> * このファイルは 
+</li><li> * jp.co.fnt.stp1.appfw.dbaccessor.generator.DbAccessorGenerator によって生成されました. 
+</li><li> * 生成に使用されたリソースファイルの情報は以下の通りです.
+</li><li> * -------------------------------------------------------------------------------
+</li><li> * 生成日時                            	2021/04/09 09:06:59.879
+</li><li> * アクセサジェネレータ                 	DbAccessorGenerator v001_004
+</li><li> * ソースコードテンプレートXML           	template_table_accessor.xml ver 1.0
+</li><li> * DBアクセスパターンXML名               	C:\NKSOL\Dev\ccis\01-2017-01-147\ws\ApBkAzKzn_dbac_res\db_xml\Kyk5382_AZ.xml
+</li><li> * DBアクセスパターンXMLバージョン        Version-1.0
+</li><li> * ソースコード出力先ルートディレクトリ    C:\NKSOL\Dev\ccis\01-2017-01-147\ws\ApBkAzKzn_dbac
+</li><li> * -------------------------------------------------------------------------------
+</li><li> */
+</li><li>import java.sql.Connection;
+</li><li>import java.sql.SQLException;
+</li><li>import java.util.List;
+</li><li>
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.common.DbConstants;
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.common.DbAccessorException;
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.common.DbFieldAttribute;
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbAccessor;
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbTableAccessor;
+</li><li>import jp.co.fnt.stp1.appfw.dbaccessor.runtime.DbRecord;
+</li><li>
+</li><li>/**
+</li><li> * &lt;h3&gt;
+</li><li> * Kyk5382Azテーブルアクセサ
+</li><li> * &lt;/h3&gt;
+</li><li> * データベース上のテーブル "KYK5382_AZ" にアクセスするためのクラス.
+</li><li> * このクラスにてDBコネクションの管理は行っていない.
+</li><li> * このクラスのメソッドにおいて、JDBCから送出されるSQLExceptionは捕捉していない.
+</li><li> *
+</li><li> * @author jp.co.fnt.stp1.appfw.dbaccessor.generator.DbAccessorGenerator
+</li><li> */
+</li><li>public class
+</li><li>Kyk5382AzTableAccessor
+</li><li>extends DbTableAccessor
+</li><li>{
+</li><li>
+</li><li>    /**
+</li><li>     * テーブル項目のメタ情報配列
+</li><li>     */
+</li><li>    protected final static DbFieldAttribute[] FIELD_ATTRIBUTE_ARRAY = {
+</li><li>        new DbFieldAttribute("DB_UPDJI1", java.sql.Types.VARCHAR, 17, 0, false),
+</li><li>        new DbFieldAttribute("DB_UPDJI2", java.sql.Types.VARCHAR, 17, 0, false),
+</li><li>        new DbFieldAttribute("NYU_USERID", java.sql.Types.VARCHAR, 10, 0, false),
+</li><li>        new DbFieldAttribute("CO_HYJUN_C", java.sql.Types.VARCHAR, 5, 0, true),
+</li><li>        new DbFieldAttribute("KYAK_KOZANO", java.sql.Types.VARCHAR, 11, 0, true),
+</li><li>        new DbFieldAttribute("TUKA_C", java.sql.Types.VARCHAR, 3, 0, true),
+</li><li>        new DbFieldAttribute("KITYOYMD", java.sql.Types.VARCHAR, 8, 0, true),
+</li><li>        new DbFieldAttribute("GAIKA_RYUHO_G", java.sql.Types.NUMERIC, 19, 4, false),
+</li><li>        new DbFieldAttribute("RONR_MASY_K", java.sql.Types.VARCHAR, 1, 0, false),
+</li><li>        new DbFieldAttribute("SOSINYMDJI", java.sql.Types.VARCHAR, 19, 0, false),
+</li><li>        new DbFieldAttribute("MSG_UNIQKEY", java.sql.Types.VARCHAR, 24, 0, false)
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * テーブル名
+</li><li>     */
+</li><li>    private final static String TABLE_NAME = "KYK5382_AZ";
+</li><li>
+</li><li>    /**
+</li><li>     * バージョン情報を保持するカラムのインデックス
+</li><li>     */
+</li><li>    protected final static int VERSION_COLUMN_INDEX = -1;
+</li><li>
+</li><li>    /**
+</li><li>     * 挿入情報を保持するカラムのインデックス
+</li><li>     */
+</li><li>    protected final static int INSERT_COLUMN_INDEX = 0;
+</li><li>
+</li><li>    /**
+</li><li>     * 更新情報を保持するカラムのインデックス
+</li><li>     */
+</li><li>    protected final static int UPDATE_COLUMN_INDEX = 1;
+</li><li>
+</li><li>    /**
+</li><li>     * 検索クエリ生成用SQL文字列    
+</li><li>     */
+</li><li>    private final static String[] SELECT_QUERY_ARRAY = {
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\"",
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?",
+</li><li>        ""
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 検索適合レコード数取得クエリ生成用SQL文字列    
+</li><li>     */
+</li><li>    private final static String[] COUNT_QUERY_ARRAY = {
+</li><li>        "SELECT COUNT(*) FROM (SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\")",
+</li><li>        "SELECT COUNT(*) FROM (SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?)",
+</li><li>        ""
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 行ロック有り(待ち合わせ有り)検索クエリ生成用SQL文字列    
+</li><li>     */
+</li><li>    private final static String[] SELECT_FOR_UPDATE_QUERY_ARRAY = {
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\" FOR UPDATE",
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=? FOR UPDATE",
+</li><li>        ""
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 行ロック有り(待ち合わせ無し)検索クエリ生成用SQL文字列    
+</li><li>     */
+</li><li>    private final static String[] SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY = {
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\" FOR UPDATE NOWAIT",
+</li><li>        "SELECT \"DB_UPDJI1\",\"DB_UPDJI2\",\"NYU_USERID\",\"CO_HYJUN_C\",\"KYAK_KOZANO\",\"TUKA_C\",\"KITYOYMD\",\"GAIKA_RYUHO_G\",\"RONR_MASY_K\",\"SOSINYMDJI\",\"MSG_UNIQKEY\" FROM \"KYK5382_AZ\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=? FOR UPDATE NOWAIT",
+</li><li>        ""
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 挿入クエリ生成用SQL文字列 前半    
+</li><li>     */
+</li><li>    private final static String INSERT_QUERY_PREFIX = "INSERT  INTO \"KYK5382_AZ\" (";
+</li><li>
+</li><li>    /**
+</li><li>     * 更新クエリ生成用SQL文字列 前半    
+</li><li>     */
+</li><li>    private final static String[] UPDATE_QUERY_PREFIX_ARRAY = {
+</li><li>        "UPDATE \"KYK5382_AZ\" SET",
+</li><li>        "UPDATE \"KYK5382_AZ\" SET",
+</li><li>        "UPDATE \"KYK5382_AZ\" SET"
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 更新クエリ生成用SQL文字列 後半    
+</li><li>     */
+</li><li>    private final static String[] UPDATE_QUERY_POSTFIX_ARRAY = {
+</li><li>        "",
+</li><li>        "WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?",
+</li><li>        "WHERE KYAK_KOZANO = ? AND TUKA_C = '011' AND KITYOYMD &lt; ? AND CO_HYJUN_C = ? AND RONR_MASY_K  = ?"
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * 削除クエリ生成用SQL文字列    
+</li><li>     */
+</li><li>    private final static String[] DELETE_QUERY_ARRAY = {
+</li><li>        "DELETE  FROM \"KYK5382_AZ\"",
+</li><li>        "DELETE  FROM \"KYK5382_AZ\"  WHERE \"CO_HYJUN_C\"=? AND \"KYAK_KOZANO\"=? AND \"TUKA_C\"=? AND \"KITYOYMD\"=?",
+</li><li>        ""
+</li><li>    };
+</li><li>
+</li><li>    /**
+</li><li>     * Kyk5382AzTableAccessorコンストラクタ.
+</li><li>     */
+</li><li>    public 
+</li><li>    Kyk5382AzTableAccessor() 
+</li><li>    {
+</li><li>        super();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * Kyk5382AzTableRecordオブジェクトを生成するファクトリメソッド. 
+</li><li>     * 
+</li><li>     * @return テーブルレコードの実体.
+</li><li>     */
+</li><li>    public DbRecord 
+</li><li>    createRecord() 
+</li><li>    {
+</li><li>        return new Kyk5382AzTableRecord();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 問い合わせの結果から1レコードを返し、その次のレコードにポインタを移す.
+</li><li>     *
+</li><li>     * @return 現在のKyk5382AzTableRecord.
+</li><li>     *         問い合わせが行われていないか、全ての結果を取得した後はnullを返す.
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public Kyk5382AzTableRecord nextRecord() throws SQLException {
+</li><li>        return (Kyk5382AzTableRecord) super.next(FIELD_ATTRIBUTE_ARRAY, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 問い合わせの結果から引数で指定された数のレコードを取得し、その参照を格納したjava.util.Listを返す.&lt;br&gt;
+</li><li>     * レコードのポインタは、取得したレコード数と同数だけ進める.
+</li><li>     * 問い合わせの結果の最後に到った時点で処理を終了する.
+</li><li>     * 取得できる最大数は、DbConstants.MAX_RECORD_COUNTであり、
+</li><li>     * これを超える値が引数として与えられた場合には、
+</li><li>     * java.lang.IllegalArgumentExceptionが送出されポインタは移動しない.
+</li><li>     * 全ての結果を取得した後にこのメソッドをコールした場合には、
+</li><li>     * サイズ0のjava.util.Listのインスタンスを返す.nullを返すことはない.
+</li><li>     *    
+</li><li>     * @param maxSize 取得する最大数.
+</li><li>     * @return 取得したAccountTableRecordのコレクション.
+</li><li>     * @exception SQLException JDBCからの例外.
+</li><li>     */
+</li><li>    public List 
+</li><li>    getResultRecords(int maxSize) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return super.getResultRecords(FIELD_ATTRIBUTE_ARRAY, maxSize, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 問い合わせの結果において現在のレコードのポインタから、引数で指定された数だけ順方向に移動する.&lt;br&gt;
+</li><li>     * 0以下の値が引数として与えられた場合には、java.lang.IllegalArgumentExceptionが送出され、
+</li><li>     * ポインタは移動しない.
+</li><li>     * JDBCレベルでカーソルを移動するだけで、無駄なレコードの生成や値の読み込みは行わない実装である.
+</li><li>     * 
+</li><li>     * @param forward カーソル移動の数.
+</li><li>     * @return 引数で指定された数だけ実際に移動できた場合にtrueを返し、
+</li><li>     *         問い合わせが行われていないか、
+</li><li>     *         引数で指定された数だけ移動する前に問い合わせ結果の最終行に達した場合はfalseを返す.
+</li><li>     * @exception SQLException JDBCからの例外.
+</li><li>     */
+</li><li>    public boolean 
+</li><li>    relative(int forward) 
+</li><li>    throws SQLException 
+</li><li>    {
+</li><li>        return super.relative(forward);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 問い合わせ用のカーソルを閉じる. &lt;br&gt;
+</li><li>     * 問い合わせ実行時に確保したリソースを解放する. 
+</li><li>     * 当該アクセサあるいは、問い合わせ結果が不要になった場合には、必ずこのメソッドをコールし、
+</li><li>     * リソースを解放すること.
+</li><li>     * このメソッドを呼び出した後、改めて executeQuery() 等を呼び出すまで、nextRecord() は null を返す.
+</li><li>     *
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    closeStatement() 
+</li><li>    throws SQLException 
+</li><li>    {
+</li><li>        super.closeStatement();
+</li><li>    }
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * 項目DB_UPDJI1のデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目DB_UPDJI1の大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfDbUpdji1() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[0].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目DB_UPDJI2のデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目DB_UPDJI2の大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfDbUpdji2() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[1].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目NYU_USERIDのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目NYU_USERIDの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfNyuUserid() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[2].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目CO_HYJUN_Cのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目CO_HYJUN_Cの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfCoHyjunC() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[3].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目KYAK_KOZANOのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目KYAK_KOZANOの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfKyakKozano() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[4].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目TUKA_Cのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目TUKA_Cの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfTukaC() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[5].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目KITYOYMDのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目KITYOYMDの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfKityoymd() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[6].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目GAIKA_RYUHO_Gのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目GAIKA_RYUHO_Gの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfGaikaRyuhoG() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[7].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目RONR_MASY_Kのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目RONR_MASY_Kの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfRonrMasyK() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[8].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目SOSINYMDJIのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目SOSINYMDJIの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfSosinymdji() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[9].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目MSG_UNIQKEYのデータベーステーブル上の大きさを取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目MSG_UNIQKEYの大きさ
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getSizeOfMsgUniqkey() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[10].getPrecision();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目DB_UPDJI1のデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目DB_UPDJI1の精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfDbUpdji1() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[0].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目DB_UPDJI2のデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目DB_UPDJI2の精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfDbUpdji2() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[1].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目NYU_USERIDのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目NYU_USERIDの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfNyuUserid() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[2].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目CO_HYJUN_Cのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目CO_HYJUN_Cの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfCoHyjunC() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[3].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目KYAK_KOZANOのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目KYAK_KOZANOの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfKyakKozano() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[4].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目TUKA_Cのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目TUKA_Cの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfTukaC() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[5].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目KITYOYMDのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目KITYOYMDの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfKityoymd() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[6].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目GAIKA_RYUHO_Gのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目GAIKA_RYUHO_Gの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfGaikaRyuhoG() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[7].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目RONR_MASY_Kのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目RONR_MASY_Kの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfRonrMasyK() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[8].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目SOSINYMDJIのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目SOSINYMDJIの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfSosinymdji() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[9].getScale();
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 項目MSG_UNIQKEYのデータベーステーブル上の精度を取得する.
+</li><li>     *
+</li><li>     * @return 取得された項目MSG_UNIQKEYの精度
+</li><li>     */
+</li><li>    public static int 
+</li><li>    getScaleOfMsgUniqkey() 
+</li><li>    {
+</li><li>        return FIELD_ATTRIBUTE_ARRAY[10].getScale();
+</li><li>    }
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * 基本検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する. 全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQuery(Connection connection)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(connection, SELECT_QUERY_ARRAY[0], null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 基本検索適合レコード数取得メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文で得られる実行結果の行数を返す. 全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @return 問合せ結果の数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int 
+</li><li>    countQuery(Connection connection) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbAccessor.countQuery(connection, COUNT_QUERY_ARRAY[0], null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 基本行ロック有り(待ち合わせ有り)検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * "FOR UPDATE"を付加した全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQueryForUpdate(Connection connection)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(connection, SELECT_FOR_UPDATE_QUERY_ARRAY[0], null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 基本行ロック有り(待ち合わせ無し)検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * "FOR UPDATE NOWAIT"を付加した全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQueryForUpdateNoWait(Connection connection)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(connection, SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY[0],    null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 与えられたレコードをデータベースに挿入する. &lt;br&gt;
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてバージョン番号カラムが
+</li><li>     * 指定されていた場合には、その項目に、初期バージョン値0を設定して挿入する.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて挿入時刻カラムが
+</li><li>     * 指定されていた場合には、その項目に、システム時刻を設定して挿入する.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+</li><li>     * 指定されていた場合には、その項目に、更新時刻初期値("00000000000000000")を設定して挿入する.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param record 挿入するレコード
+</li><li>     * @return 挿入したレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    insert(Connection connection, Kyk5382AzTableRecord record) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbTableAccessor.insert(FIELD_ATTRIBUTE_ARRAY, connection, record, INSERT_QUERY_PREFIX, VERSION_COLUMN_INDEX, INSERT_COLUMN_INDEX, UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定 検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * プライマリキー値の一致によりクエリを行なう.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+</li><li>     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が指定されていた場合には、
+</li><li>     * そのヒントを追加してSQL文を実行する.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param pKey プライマリキーデータ
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQuery(Connection connection, Kyk5382AzTableRecordPKey pKey)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_QUERY_ARRAY[1], VERSION_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定検索適合レコード数取得メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文で得られる実行結果の行数を返す.
+</li><li>     * プライマリキー値の一致によりクエリを行なう.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+</li><li>     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が指定されていた場合には、
+</li><li>     * そのヒントを追加してSQL文を実行する.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param pKey プライマリキーデータ
+</li><li>     * @return 問合せ結果の数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int 
+</li><li>    countQuery(Connection connection, Kyk5382AzTableRecordPKey pKey) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbAccessor.countQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, COUNT_QUERY_ARRAY[1], VERSION_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定行ロック有り(待ち合わせ有り)検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * "FOR UPDATE"を付加した全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param pKey プライマリキーデータ
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQueryForUpdate(Connection connection, Kyk5382AzTableRecordPKey pKey)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_FOR_UPDATE_QUERY_ARRAY[1], VERSION_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定行ロック有り(待ち合わせ無し)検索メソッド.&lt;br&gt;
+</li><li>     * 問い合わせSQL文を実行し、nextRecord() 等を用いてその結果を取り出せるように、
+</li><li>     * 結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * "FOR UPDATE NOWAIT"を付加した全件問い合わせを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param pKey プライマリキーデータ
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQueryForUpdateNoWait(Connection connection, Kyk5382AzTableRecordPKey pKey)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        super.executeQuery(FIELD_ATTRIBUTE_ARRAY, connection, pKey, SELECT_FOR_UPDATE_NO_WAIT_QUERY_ARRAY[1], VERSION_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定更新メソッド.&lt;br&gt;
+</li><li>     * 与えられた条件で、データベース上のデータを更新する. 
+</li><li>     * プライマリキーに関するフィールドが設定されていなければ例外を投げる.
+</li><li>     * 与えられたレコードの設定されたデータ項目について、
+</li><li>     * 同一のプライマリキーを持つデータベース上のレコードを更新する.
+</li><li>     * プライマリキー以外のデータ項目が１つも設定されていない場合は、何もせずに0を返す.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+</li><li>     * 指定されていた場合には、その項目にシステム時刻を設定して挿入する.
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいてテーブルアクセサのヒント
+</li><li>     * (SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+</li><li>     * 
+</li><li>	 * プライマリキー値の一致によりクエリを行なう.
+</li><li>     * 
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param record 更新対象となるレコード 
+</li><li>     * @return 更新されたレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    update(Connection connection, Kyk5382AzTableRecord record) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY, connection, record, UPDATE_QUERY_PREFIX_ARRAY[1], UPDATE_QUERY_POSTFIX_ARRAY[1], UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * プライマリキー指定削除メソッド.&lt;br&gt;
+</li><li>     * 与えられたプライマリキーデータと同一のプライマリキーを持つレコードを、
+</li><li>     * データベースから削除する.
+</li><li>     * 
+</li><li>	 * プライマリキー値の一致によりクエリを行なう.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param pKey 削除対象となるレコードのプライマリキーデータ      
+</li><li>     * @return 削除されたレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    delete(Connection connection, Kyk5382AzTableRecordPKey pKey) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbTableAccessor.delete(FIELD_ATTRIBUTE_ARRAY, connection, pKey, DELETE_QUERY_ARRAY[1]);
+</li><li>    }
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * UpdateRecordSyutk拡張更新メソッド. &lt;br&gt;
+</li><li>     * 与えられたレコードの設定されたデータ項目について、
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて拡張アクセスクエリ"UpdateRecordSyutk"の
+</li><li>     * 条件にマッチするデータベース上のレコードを同一の値で更新する. 
+</li><li>     * プライマリキー以外のデータ項目が１つも設定されていない場合は、何もせずに0を返す. 
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて当該拡張アクセスクエリに
+</li><li>     * 固有のヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する. 
+</li><li>     * 当該テーブルアクセサのDBアクセスパターンXMLにおいて更新時刻カラムが
+</li><li>     * 指定されていた場合には、その項目にシステム時刻を設定して更新する. 
+</li><li>     * プライマリキーに関する情報は更新されない. 
+</li><li>     * 
+</li><li>	 * 更新対象レコードを取得するクエリー
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param value 更新対象となるレコードの非プライマリキー項目データ 
+</li><li>     * @param kyakKozano 顧客口座番号
+</li><li>     * @param kityoymd 記帳日
+</li><li>     * @param coHyjunC 会社標準コード
+</li><li>     * @param ronrMasyK 論理抹消区分
+</li><li>     * @return 更新されたレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    updateUpdateRecordSyutk(Connection connection, Kyk5382AzTableRecordValue value ,java.lang.String kyakKozano,java.lang.String kityoymd,java.lang.String coHyjunC,java.lang.String ronrMasyK) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY,
+</li><li>                            connection,
+</li><li>                            value,
+</li><li>                            UPDATE_QUERY_PREFIX_ARRAY[2],
+</li><li>                            UPDATE_QUERY_POSTFIX_ARRAY[2], 
+</li><li>                            new Object[]{kyakKozano,kityoymd,coHyjunC,ronrMasyK},
+</li><li>                            new int[]{12,12,12,12},
+</li><li>                            UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>   
+</li><li>
+</li><li>
+</li><li>    /**
+</li><li>     * 動的検索メソッド. &lt;br&gt;
+</li><li>     * オプショナルクエリを指定してSQL文を即時実行し、その後 nextRecord()等を用いて
+</li><li>     * その結果を取り出せるように、結果レコードを指すポインタを先頭のひとつ前に設定する.
+</li><li>     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+</li><li>     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+</li><li>     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param conditionClause 指定するオプショナルクエリ
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public void 
+</li><li>    executeQueryWithCondition(Connection connection, String conditionClause)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        StringBuffer buf = new StringBuffer(conditionClause.length() + 100);
+</li><li>        buf.append(SELECT_QUERY_ARRAY[0]);
+</li><li>        buf.append(DbConstants.WHITE_SPACE);
+</li><li>        buf.append(conditionClause);
+</li><li>        super.executeQuery(connection, buf.toString(), null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 動的検索適合レコード数取得メソッド. &lt;br&gt;
+</li><li>     * オプショナルクエリを指定してSQL文を即時実行し、検索条件に適合したレコードの行数を返す.
+</li><li>     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+</li><li>     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+</li><li>     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param conditionClause 指定するオプショナルクエリ
+</li><li>     * @return 問合せ結果の数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int 
+</li><li>    countQueryWithCondition(Connection connection, String conditionClause) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>          StringBuffer buf = new StringBuffer(conditionClause.length() + 100);
+</li><li>        buf.append(DbConstants.COUNT_PHRASE);
+</li><li>        buf.append(SELECT_QUERY_ARRAY[0]);
+</li><li>        buf.append(DbConstants.WHITE_SPACE);
+</li><li>        buf.append(conditionClause);
+</li><li>        buf.append(DbConstants.RIGHT_PAREN);
+</li><li>        return DbAccessor.countQuery(connection, buf.toString(), null, null);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 動的更新メソッド. &lt;br&gt;
+</li><li>     * オプショナルクエリを指定して
+</li><li>     * データベース上のデータを更新する. 
+</li><li>     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+</li><li>     * プライマリキーに関する情報は更新されない.
+</li><li>     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+</li><li>     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param value 更新対象となるレコード 
+</li><li>     * @param conditionClause 指定するオプショナルクエリ
+</li><li>     * @return 更新されたレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    updateWithCondition(Connection connection, Kyk5382AzTableRecordValue value, String conditionClause) 
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        return DbTableAccessor.update(FIELD_ATTRIBUTE_ARRAY, connection, value, UPDATE_QUERY_PREFIX_ARRAY[0], conditionClause, null, null, UPDATE_COLUMN_INDEX);
+</li><li>    }
+</li><li>
+</li><li>    /**
+</li><li>     * 動的削除メソッド. &lt;br&gt;
+</li><li>     * オプショナルクエリを指定して、
+</li><li>     * データベース上のデータを削除する. 
+</li><li>     * 基本アクセスクエリにヒント(SQL文の実行計画を選択する際のオプティマイザへ指示を渡すコメント)が
+</li><li>     * 指定されていた場合には、そのヒントを追加してSQL文を実行する.
+</li><li>     * 実行できるのはバインドパラメータを含まないSQL問い合わせ文に限られる.
+</li><li>     * 実行時にSQL文法例外が発生する可能性も有るので、使用には注意が必要である.
+</li><li>     *
+</li><li>     * @param connection JDBC接続
+</li><li>     * @param conditionClause 指定するオプショナルクエリ
+</li><li>     * @return 削除されたレコード数
+</li><li>     * @exception SQLException JDBCからの例外
+</li><li>     */
+</li><li>    public static int
+</li><li>    deleteWithCondition(Connection connection, String conditionClause)
+</li><li>    throws SQLException
+</li><li>    {
+</li><li>        StringBuffer buf = new StringBuffer(conditionClause.length() + 100);
+</li><li>        buf.append(DELETE_QUERY_ARRAY[0]);
+</li><li>        buf.append(DbConstants.WHITE_SPACE);
+</li><li>        buf.append(conditionClause);
+</li><li>        return DbTableAccessor.delete(connection, buf.toString(), null, null);
+</li><li>    }
+</li><li>
+</li><li>}
+</li></ol>
+</pre>
+<hr>
+
+
+</body></html>
+
+[6]
+テーブルハイライトが実施されるのが、タイミングがおそい
+テーブルをクリックしたら、ハイライトが反映されている
+ソースを表示して、すぐにハイライトを入れて
+もし、それでファーストビューの表示が遅くなるなら、
+サーバサイドで処理を上手く入れるように考えても良い
+
+
+
+
