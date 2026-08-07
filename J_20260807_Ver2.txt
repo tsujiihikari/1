@@ -1,0 +1,123 @@
+[1]
+テーブル名のハイライトのタブ名が長いと、文字がタブの横幅からはみ出して全文出ていない
+
+よって、12文字以上だと、それ以降は...として省略して
+
+また、letter-spacing:0.1emにして
+
+
+
+
+[2]
+
+<div id="tableInfoStatus" class="tableInfoStatus">KYF0200_KBTNP_CMP（顧客勘定状況（信用）テーブル（照合用））　Ver:1.1　DBTYPE：KYKDB　スキーマ：KYKOWNER　項目数：21</div>
+
+ここのスタイル（文字色と背景色）は気に入っている
+
+しかし、ここのdivはもうＨＴＭＬから削除で構わない
+
+代わりに
+
+<div class="codeContentHeader">
+        <div id="codeTitle" class="codeTitle">KYF0200_KBTNP_CMP（顧客勘定状況（信用）テーブル（照合用））　Ver:1.1　DBTYPE：KYKDB　スキーマ：KYKOWNER</div>
+      </div>
+ここにid="tableInfoStatus" ようなスタイルをあてて
+
+
+
+
+
+[3]
+
+<div class="codeFileActions" aria-label="コード操作">
+          <button id="codeCopyBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Copy" title="Copy">Copy</button>
+          <button id="codeDownloadBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Download" title="Download">Download</button>
+        </div>
+
+ここのボタンのスタイルが、ハイライト表示ＯＦＦ ONと同じボタンのスタイルになっていない
+文字色、大きさ、背景など、スタイルをハイライト表示とおなじように併せるように修正
+
+
+
+また、このcodeFileActionsのdivが
+<div class="codeToolbar">
+このdivの立て中央に位置出来ていない。
+codeToolbarにあてるスタイル含めclass="codeFileActions"の位置を調整して、縦方向の中央位置に配置して
+
+[4]
+
+<div class="codeSizeActions" aria-label="コード文字サイズ">
+              <span class="codeSizeLabel" aria-hidden="true">文字サイズ</span>
+              <button id="smallBtn" class="codeFloatingBtn" type="button" aria-label="コード文字を小さくする">小</button>
+              <button id="largeBtn" class="codeFloatingBtn" type="button" aria-label="コード文字を大きくする">大</button>
+            </div>
+            
+ここの位置が違う
+
+今のpositionから、以下として
+今の位置からtranslate(15px,-15px)
+
+
+[5]
+
+<button id="highlightToggleBtn" class="codeFloatingBtn isOff" type="button" aria-label="ハイライト表示は現在OFFです。クリックするとONになります。" aria-pressed="false" title="ハイライト表示: OFF（背景色のみ切替）"><span class="highlightToggleLabel">ハイライト表示</span><span class="highlightToggleChoice highlightToggleChoiceOff isActive" aria-hidden="true">OFF</span><span class="highlightToggleChoice highlightToggleChoiceOn" aria-hidden="true">ON</span></button>
+
+            
+ここの位置が違う
+
+今のpositionから、以下として
+今の位置からtranslateY(-10px)
+
+
+[6]
+
+hilight.jsがうまくCSS反映出来ないものがある
+
+cupertino.min.css
+
+/*!
+  Highlight.js v11.10.0 (git: 366a8bd012)
+  (c) 2006-2024 Josh Goebel <hello@joshgoebel.com> and other contributors
+  License: BSD-3-Clause
+ */
+ 
+
+
+NIKKO.nkCCIS/kyak.batch/properties/KYK_MAINT11.properties
+#-------------------------------------------------------------------------------------------------------------------#
+#  FileName               : ${APP_BATCH_PROP}/KYK_MAINT11.properties
+#  Call File              : ${APP_BATCH_SCRIPTS}/runsql_props2.csh
+#  Description            : ＳＱＬ実行用プロパティファイル
+#  引数(スペース区切)     : 実行ＳＱＬ、再編成対象テーブル、バックアップテーブル
+#  更新履歴               : 2026/1/6 SSE 01-2026-01-114(【顧客リスク格付リアルタイム化】テーブル再編成処理) 新規作成
+#                           2026/3/19 CIT 01-2025-01-125 ＣＣＩＳにおける継続的顧客管理の対応強化 KYF1980,KYF1981追加
+#-------------------------------------------------------------------------------------------------------------------#
+ccis_table_rebuild.sql KYF1941 KYF1941_BK
+ccis_table_rebuild.sql KYF1942 KYF1942_BK
+ccis_table_rebuild.sql KYF1980 KYF1980_BK
+ccis_table_rebuild.sql KYF1981 KYF1981_BK
+
+
+この場合は、cupertino.min.cssがうまく作動せず、
+真っ黒の背景のDEFAULT状態のハイライトＪＳのスタイルがあたってしまっている
+これは困る
+
+よって、.propertiesや.envや.lstとかのテキストは、.shとして換算してハイライトのスタイルを当てて欲しい
+何か方法ある
+
+そして方法があれば、修正して。
+
+
+
+
+[7]
+右タブへ移動や左タブへ移動は、ＥＮＴＥＲしか出来ないくなっている
+
+そうではなく、基本は他のボタンと同じで、クリック出来、普通のボタンと同じとして
+
+しかし、一応CORSORがあたった状態だと、ＥＮＴＥＲも可能とする
+
+
+ＥＮＴＥＲの文字も不要
+
+
