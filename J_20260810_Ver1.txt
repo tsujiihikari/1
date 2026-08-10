@@ -1,0 +1,142 @@
+[1]
+hoverしたときに表れるグレー背景（半透明）で白の文字のスタイルを変更
+
+
+　padding-leftを今の位置（paddinf-left値）から、-50pxした値にして
+　
+　ファイル名 = や検索キーワード = の= は全角にして、かつ＝の前後は全角スペースとする
+　
+　ファイル名と移行グループとディレクトリグループと言語の間には、｜を入れて、区切りを分かりやすくする
+　
+　
+
+[2]
+<div id="codeTitle" class="codeTitle">NIKKO.nkCCIS/kyak.online.jar/lib/ApFrKjKar_dbac.jar/jp/co/fnt/stp1/app/apptier/front/kj/kar/model/accessor/KycKakninKiddCalTaisSyutkQueryAccessor.java</div>
+このid="codeTitle"は、letter-spacing:0.1emとする
+
+
+<code id="codeBlock" class="language-java hljs" style="font-size: 13px !important;" data-highlighted="yes"><span class="hljs-keyword">package</span> jp.co.fnt.stp1.app.apptier.front.kj.kar.model.accessor;
+</code>
+このid="codeBlock"は、font-size:12pxを初期表示とする
+
+<div class="codeFileActions" aria-label="コード操作">
+          <button id="codeCopyBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Copy" title="Copy" data-original-copy-text="Copy">Copy</button>
+          <button id="codeDownloadBtn" class="codeFileActionBtn codeFloatingBtn" type="button" aria-label="Download" title="Download" data-original-download-text="Download">Download</button>
+        </div>
+ここの位置を現在の位置から、transform:translateY(2px)分だけ下に移動させる。
+くれぐれもそのままtranslateY(2px)を当てるのではなく、いまのいちから　＋2pxだけしたにして
+
+
+<div class="codeSizeActions" aria-label="コード文字サイズ">
+              <span class="codeSizeLabel" aria-hidden="true">文字サイズ</span>
+              <button id="smallBtn" class="codeFloatingBtn" type="button" aria-label="コード文字を小さくする">小</button>
+              <button id="largeBtn" class="codeFloatingBtn" type="button" aria-label="コード文字を大きくする">大</button>
+            </div>
+ここの位置を現在の位置から、transform:translate(-10px,8px)分だけ下に移動させる。
+くれぐれもそのままtranslate(-10px,8px)を当てるのではなく、いまのいちから　＋2pxだけしたにして
+
+[3]
+テーブル情報タブは、テーブル選択タブへ名前変更
+
+KYF1940 はRPS_TABLE_LISTに複数件あります。DBTYPE／SCHEMA／VERSION／NAME／NAME2から1行を選択してください。
+↓
+ＣＳＳ変更　＝　letter-spacing:0.2em
+
+文字変更　＝　KYF1940 は候補データが複数件あります。以下のDBTYPEおよびスキーマから、1行を選択してください。
+
+
+
+
+
+
+
+
+[4]
+
+No	DBTYPE	SCHEMA	VERSION	NAME	NAME2
+
+テーブルのヘッダーの日本語を変更
+
+NO  DBTYPE  スキーマ　バージョン　テーブル名　日本語
+
+[5]
+
+
+<table class="tableInfoTable tableCandidateTable">
+          <thead><tr><th>No</th><th>DBTYPE</th><th>SCHEMA</th><th>VERSION</th><th>NAME</th><th>NAME2</th></tr></thead>
+          <tbody>
+            <tr class="tableCandidateRow" data-table-candidate-index="0" tabindex="0" role="button" aria-label="KYF1940 CIEDB OBJ_KYK 1.0 を表示">
+              <td>1</td>
+              <td>CIEDB</td>
+              <td>OBJ_KYK</td>
+              <td>1.0</td>
+              <td>KYF1940</td>
+              <td>顧客リスク格付情報</td>
+            </tr>
+            <tr class="tableCandidateRow" data-table-candidate-index="1" tabindex="0" role="button" aria-label="KYF1940 EZDB EZOWNER 1.5 を表示">
+              <td>2</td>
+              <td>EZDB</td>
+              <td>EZOWNER</td>
+              <td>1.5</td>
+              <td>KYF1940</td>
+              <td>顧客リスク格付情報</td>
+            </tr>
+            <tr class="tableCandidateRow" data-table-candidate-index="2" tabindex="0" role="button" aria-label="KYF1940 KYKDB KYKOWNER 1.5 を表示">
+              <td>3</td>
+              <td>KYKDB</td>
+              <td>KYKOWNER</td>
+              <td>1.5</td>
+              <td>KYF1940</td>
+              <td>顧客リスク格付情報</td>
+            </tr></tbody>
+        </table>
+        
+        
+
+ここの一番外枠を囲むborderはもう少し太く
+
+そして、複数行から選択することが分かりやすいように、行の一番右へ選択ボタンを付けて
+かつ行を選択するんですよ、この選択ボタンでなくても、行をクリックだけすれば選択可能ですよが分かるようにして「
+
+
+[6]
+テーブルデータを表示する際の、テーブルデータの列幅変更
+
+No.
+キー	
+Par	
+データ型	
+データ長	
+NULL制約
+
+
+ここの列幅はもっと小さくして。ギリギリ文字が入る幅でよい
+
+
+
+
+[7]
+
+右タブタブへ移動ボタン
+左タブへ移動ボタンの仕様を変更する
+
+
+ArrowRightとArrowLeftキーを押したときと同じく、直接タブを移動するのではなく、
+グレーのhoverしたときの背景と白文字をだして、ＥＮＴＥＲキーを押すと、そのタブの
+ソースコードを表示する
+
+いまはすべてＳｅｒｖｌｅｔに飛ばしているので、サーバ側で処理がパンクしている
+
+
+
+<button class="recentNavArrow recentNavArrowRight" type="button" aria-label="右のタブへ移動" title="右のタブへ移動">
+      <svg class="recentNavIconSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M9.8 4.8L15.7 12l-5.9 7.2"></path>
+      </svg>
+    </button>
+    
+ これもrecentNavArrowRight　recentNavArrowLeftもArrowRightとArrowLeftキーを押したときと同じく、直接タブを移動するのではなく、
+グレーのhoverしたときの背景と白文字をだして、ＥＮＴＥＲキーを押すと、そのタブの
+ソースコードを表示する
+
+
