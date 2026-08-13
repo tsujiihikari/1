@@ -1,0 +1,638 @@
+[1]
+数字のタブのソースコード表示のタブに置いて、以下が表示されていない。
+このソースコード表示のタブにも、検索条件のsearchPanelのsectionを表示して
+
+<section class="searchPanel" aria-label="検索条件">
+      <label class="field fieldKeyword">
+        <span>検索キーワード</span>
+        <input id="keywordInput" name="keyword" type="text" value="" autocomplete="on" list="keywordHistoryList">
+        <datalist id="keywordHistoryList"><option value="*Redirect*"></option><option value="Redirect"></option><option value="リダイレクト"></option><option value="*KJ30_G401*"></option><option value="_KJ30_G401"></option><option value="KJ30_G401_InitFactory"></option><option value="/E/kj/crm/G4sales/list/search"></option><option value="KJ30_G401"></option><option value="Init_KJ30_G401EJBReqEditor"></option><option value="GetCntctRirekJohoFromCnd_G4_Command"></option><option value="KJ30_040_C001.xml"></option><option value="KJ30_AP2401.xml"></option><option value="KJ30_AP2401"></option><option value="KYC0010"></option><option value="TableAccessor"></option><option value="CUSTOMER_ID"></option><option value="Command Task Accessor"></option><option value="MST_CUSTOMER"></option><option value="QueryAccessor"></option><option value="AccountUpdate"></option><option value="KYF1940"></option><option value="8jjj8jjeJEjee"></option><option value="TableAccessor009"></option><option value="CUSTOMER_ID010"></option><option value="Command Task Accessor011"></option><option value="MST_CUSTOMER012"></option><option value="QueryAccessor013"></option><option value="AccountUpdate014"></option><option value="KYF1940015"></option><option value="8jjj8jjeJEjee016"></option><option value="TableAccessor017"></option><option value="CUSTOMER_ID018"></option><option value="Command Task Accessor019"></option><option value="MST_CUSTOMER020"></option><option value="QueryAccessor021"></option><option value="AccountUpdate022"></option><option value="KYF1940023"></option><option value="8jjj8jjeJEjee024"></option><option value="TableAccessor025"></option><option value="CUSTOMER_ID026"></option><option value="Command Task Accessor027"></option><option value="MST_CUSTOMER028"></option><option value="QueryAccessor029"></option><option value="AccountUpdate030"></option></datalist>
+      </label>
+      <div class="field fieldGroup" id="groupSelectField">
+        <span>移行グループ</span>
+        <div class="nativeSelectFilter" id="groupSelectFilter">
+          <select id="groupSelect" class="nativeGroupSelect"><option value="ALL" class="groupSelectAll">すべて</option><optgroup label="最近閲覧した移行グループ"><option value="NIKKO.nkCCIS">nkCCIS</option><option value="NIKKO.nikkoEZ">nikkoEZ</option></optgroup><optgroup label="NIKKO"><option value="NIKKO.aebois">aebois</option><option value="NIKKO.azrsk">azrsk</option><option value="NIKKO.bik2023">bik2023</option><option value="NIKKO.ccismail">ccismail</option><option value="NIKKO.cmrk">cmrk</option><option value="NIKKO.connect">connect</option><option value="NIKKO.dagw">dagw</option><option value="NIKKO.dbn">dbn</option><option value="NIKKO.dbn2025">dbn2025</option><option value="NIKKO.deri2025">deri2025</option><option value="NIKKO.derico">derico</option><option value="NIKKO.djkCCIS">djkCCIS</option><option value="NIKKO.eba">eba</option><option value="NIKKO.edj">edj</option><option value="NIKKO.eft">eft</option><option value="NIKKO.eft_ai">eft_ai</option><option value="NIKKO.eft_mx">eft_mx</option><option value="NIKKO.extc">extc</option><option value="NIKKO.eza_android">eza_android</option><option value="NIKKO.eza_ios">eza_ios</option><option value="NIKKO.ezISA">ezISA</option><option value="NIKKO.ezLogst">ezLogst</option><option value="NIKKO.EZtradeEOL">EZtradeEOL</option><option value="NIKKO.fast">fast</option><option value="NIKKO.fast2024">fast2024</option><option value="NIKKO.fbase2019">fbase2019</option><option value="NIKKO.fms">fms</option><option value="NIKKO.foms">foms</option><option value="NIKKO.fxdhub">fxdhub</option><option value="NIKKO.fxm">fxm</option><option value="NIKKO.g_blast2022">g_blast2022</option><option value="NIKKO.g_lufei2022">g_lufei2022</option><option value="NIKKO.gcrs">gcrs</option><option value="NIKKO.gladapter_tky">gladapter_tky</option><option value="NIKKO.gloss_tky">gloss_tky</option><option value="NIKKO.gpr">gpr</option><option value="NIKKO.gts">gts</option><option value="NIKKO.gwall">gwall</option><option value="NIKKO.hkg_gloss">hkg_gloss</option><option value="NIKKO.hkj2023">hkj2023</option><option value="NIKKO.ifaCCIS">ifaCCIS</option><option value="NIKKO.intra">intra</option><option value="NIKKO.itnp2024">itnp2024</option><option value="NIKKO.jsc">jsc</option><option value="NIKKO.kaisoku">kaisoku</option><option value="NIKKO.lecos">lecos</option><option value="NIKKO.lnd">lnd</option><option value="NIKKO.logon">logon</option><option value="NIKKO.mbc">mbc</option><option value="NIKKO.mcd">mcd</option><option value="NIKKO.mkb">mkb</option><option value="NIKKO.mnimg2023">mnimg2023</option><option value="NIKKO.mnk">mnk</option><option value="NIKKO.mobile">mobile</option><option value="NIKKO.nayose2025">nayose2025</option><option value="NIKKO.nba">nba</option><option value="NIKKO.nba2024">nba2024</option><option value="NIKKO.neuci">neuci</option><option value="NIKKO.nfxgw">nfxgw</option><option value="NIKKO.nikkoEZ">nikkoEZ</option><option value="NIKKO.nikkoEZ.container">nikkoEZ.container</option><option value="NIKKO.nikkoEZ.java17">nikkoEZ.java17</option><option value="NIKKO.nk_agm">nk_agm</option><option value="NIKKO.nk_fxgw">nk_fxgw</option><option value="NIKKO.nk_jika2024">nk_jika2024</option><option value="NIKKO.nk_mnk_kyaku2023">nk_mnk_kyaku2023</option><option value="NIKKO.nk_relay2024">nk_relay2024</option><option value="NIKKO.nk_sorgw2025">nk_sorgw2025</option><option value="NIKKO.nkCCIS">nkCCIS</option><option value="NIKKO.nkCCIS_BoisUke">nkCCIS_BoisUke</option><option value="NIKKO.nkCCIS_client">nkCCIS_client</option><option value="NIKKO.nkhp">nkhp</option><option value="NIKKO.nkISA">nkISA</option><option value="NIKKO.nkSecCC">nkSecCC</option><option value="NIKKO.nkSecCC2025">nkSecCC2025</option><option value="NIKKO.nkSecCIS_adpt-hway">nkSecCIS_adpt-hway</option><option value="NIKKO.nkWF">nkWF</option><option value="NIKKO.nmc2020">nmc2020</option><option value="NIKKO.nmc2026">nmc2026</option><option value="NIKKO.ocp_ezTrade">ocp_ezTrade</option><option value="NIKKO.ocp_froggy">ocp_froggy</option><option value="NIKKO.ptch">ptch</option><option value="NIKKO.pxlog">pxlog</option><option value="NIKKO.redos">redos</option><option value="NIKKO.res2020">res2020</option><option value="NIKKO.ris">ris</option><option value="NIKKO.rpt">rpt</option><option value="NIKKO.rpt2023">rpt2023</option><option value="NIKKO.shikin">shikin</option><option value="NIKKO.ships">ships</option><option value="NIKKO.smbcgwp">smbcgwp</option><option value="NIKKO.smfr2020">smfr2020</option><option value="NIKKO.smk">smk</option><option value="NIKKO.soc">soc</option><option value="NIKKO.spr">spr</option><option value="NIKKO.spsrs">spsrs</option><option value="NIKKO.stpCCIS">stpCCIS</option><option value="NIKKO.szk">szk</option><option value="NIKKO.tid">tid</option><option value="NIKKO.vscn">vscn</option><option value="NIKKO.vtt2023">vtt2023</option><option value="NIKKO.wkf">wkf</option><option value="NIKKO.wtel">wtel</option><option value="NIKKO.zengin">zengin</option><option value="NIKKO.zxk">zxk</option><option value="nk_stpmq">nk_stpmq</option></optgroup><optgroup label="BPS"><option value="BPNet">BPNet</option><option value="BPNet2024">BPNet2024</option><option value="BPS.bpdbat2023">bpdbat2023</option><option value="BPS.bpdonl2023">bpdonl2023</option><option value="BPS.bped">bped</option><option value="BPS.bperp">bperp</option><option value="BPS.bps2021">bps2021</option><option value="BPS.bps_next">bps_next</option><option value="BPS.mden">mden</option><option value="BPS.mnk">mnk</option><option value="BPS.mnk2023">mnk2023</option><option value="BPS.SMBC2023">SMBC2023</option><option value="BPS.SMBC2024">SMBC2024</option><option value="BPS.SMBCbps_mnk2023">SMBCbps_mnk2023</option><option value="BPS.SMBCbps_mnk_ks2023">SMBCbps_mnk_ks2023</option><option value="BPS.smbceft">smbceft</option><option value="BPS.SMBCTBbpd2025">SMBCTBbpd2025</option><option value="BPS.SMBCTBbps2025">SMBCTBbps2025</option><option value="BPS.SMBCTBbps_mnk">SMBCTBbps_mnk</option><option value="BPS.SMBCTBbps_mnk2023">SMBCTBbps_mnk2023</option><option value="BPS.SMBCTBbps_ngt2025">SMBCTBbps_ngt2025</option><option value="BPS_CARDM0AP">CARDM0AP</option><option value="BPS_CARDMAAP">CARDMAAP</option><option value="BPS_CARDMCAP">CARDMCAP</option><option value="BPS_CARDMGAP">CARDMGAP</option><option value="BPS_CARDMHAP">CARDMHAP</option><option value="BPS_CARDMIAP">CARDMIAP</option><option value="BPS_CARDMJAP">CARDMJAP</option><option value="BPS_CARDMKAP">CARDMKAP</option><option value="BPS_CARDMLAP">CARDMLAP</option><option value="BPS_CARDMNAP">CARDMNAP</option><option value="BPS_CARDMPAP">CARDMPAP</option><option value="BPS_CARDMSAP">CARDMSAP</option><option value="BPS_CARDMTOL">CARDMTOL</option><option value="BPS_CARDMZAP">CARDMZAP</option><option value="BPS_JCL">JCL</option><option value="BPS_MCR">MCR</option></optgroup><optgroup label="→ SYはじまり"><option value="SY1_JCL">SY1_JCL</option><option value="SY1_MCR">SY1_MCR</option><option value="SY1_PGM">SY1_PGM</option><option value="SYA2_JCL">SYA2_JCL</option><option value="SYA2_MCR">SYA2_MCR</option><option value="SYA2_PGM">SYA2_PGM</option><option value="SYD5_JCL">SYD5_JCL</option><option value="SYE3_JCL">SYE3_JCL</option><option value="SYE6_JCL">SYE6_JCL</option><option value="SYGK_JCL">SYGK_JCL</option></optgroup><optgroup label="RPS"><option value="RPS.package">package</option><option value="RPS.view">view</option></optgroup><optgroup label="その他"><option value="Brims2020">Brims2020</option><option value="ROKINREN.bpsrk">ROKINREN.bpsrk</option></optgroup></select>
+        </div>
+      </div>
+      <label class="field fieldLanguage">
+        <span>言語</span>
+        <select id="languageSelect">
+          <option value="ALL">すべて</option>
+          <option value="Java">Java</option>
+          <option value="SQL">SQL</option>
+          <option value="XML">XML</option>
+          <option value="JSP">JSP</option>
+          <option value="Shell">Shell</option>
+        </select>
+      </label>
+      <label class="cloneField">
+        <span>Clone</span>
+        <input id="cloneCheck" type="checkbox">
+        <em>非表示</em>
+      </label>
+      <button id="searchBtn" class="primaryBtn" type="button">検索</button>
+      <button id="sampleBtn" class="ghostBtn" type="button">曖昧検索</button>
+      </section>
+
+[2]
+
+言語の検索条件が、今く効いていない
+
+<select id="languageSelect">
+          <option value="ALL">すべて</option>
+          <option value="Java">Java</option>
+          <option value="SQL">SQL</option>
+          <option value="XML">XML</option>
+          <option value="JSP">JSP</option>
+          <option value="Shell">Shell</option>
+        </select>
+
+
+元々のKrugleサイトで、KrugleAPIを呼ぶときの言語の指定はこちら
+valueの言語の形のズレを修正して
+
+<select name="language">
+<option value="ALL">すべて</option>
+<option value="asp">ASP</option>
+<option value="asp.net">ASP.NET</option>
+<option value="actionscript">ActionScript</option>
+<option value="ada">Ada</option>
+<option value="applescript">AppleScript</option>
+<option value="aspectj">AspectJ</option>
+<option value="assembly">Assembly</option>
+<option value="awk">Awk</option>
+<option value="basic">BASIC</option>
+<option value="c">C</option>
+<option value="csharp">C#</option>
+<option value="cpp">C++</option>
+<option value="cobol">COBOL</option>
+<option value="css">CSS</option>
+<option value="coldfusion">ColdFusion</option>
+<option value="lisp">Common Lisp</option>
+<option value="d">D</option>
+<option value="document">Document</option>
+<option value="dylan">Dylan</option>
+<option value="eiffel">Eiffel</option>
+<option value="elisp">Emacs Lisp</option>
+<option value="erlang">Erlang</option>
+<option value="euphoria">Euphoria</option>
+<option value="expect">Expect</option>
+<option value="forth">Forth</option>
+<option value="fortran">Fortran</option>
+<option value="groovy">Groovy</option>
+<option value="haskell">Haskell</option>
+<option value="html">Html</option>
+<option value="idl">IDL</option>
+<option value="issue">Issue</option>
+<option value="jsp">JSP</option>
+<option value="java">Java</option>
+<option value="javascript">JavaScript</option>
+<option value="lpc">LPC</option>
+<option value="labview">LabVIEW</option>
+<option value="lex">Lex/Flex</option>
+<option value="lua">Lua</option>
+<option value="matlab">MATLAB</option>
+<option value="ml">ML</option>
+<option value="mumps">MUMPS</option>
+<option value="modula">Modula</option>
+<option value="oberon">Oberon</option>
+<option value="objectivec">Objective C</option>
+<option value="php">PHP</option>
+<option value="progress">PROGRESS</option>
+<option value="pascal">Pascal/Delphi</option>
+<option value="perl">Perl</option>
+<option value="pike">Pike</option>
+<option value="prolog">Prolog</option>
+<option value="python">Python</option>
+<option value="rebol">REBOL</option>
+<option value="rexx">Rexx</option>
+<option value="ruby">Ruby</option>
+<option value="s">S/R</option>
+<option value="sql">SQL</option>
+<option value="scheme">Scheme</option>
+<option value="sed">Sed</option>
+<option value="shell">Shell Script</option>
+<option value="smalltalk">Smalltalk</option>
+<option value="tcl">Tcl</option>
+<option value="vb.net">VB.NET</option>
+<option value="vbscript">VBScript</option>
+<option value="vhdl">VHDL</option>
+<option value="verilog">Verilog</option>
+<option value="vb">Visual Basic</option>
+<option value="vfpro">Visual FoxPro</option>
+<option value="xml">XML</option>
+<option value="yacc">Yacc/Bison</option>
+</select>
+
+[3]
+
+JSPのような、ＨＴＭＬだと、ハイライトＪＳで画面表示すると、
+クロスサイトスクリプティングなのか表示がうまく行かない
+
+
+
+今回のKrugle+のサイトだと、JavaScriptでコードを埋めているので、このＨＴＭＬなどのエラーが起きる
+サーバサイドレンダリング（ServletでＨＴＭＬタブを作成）するか、JavaScriptでもクロスサイトスクリプティングの対応をして
+<pre><code id="codeBlock" class="language-java"></code></pre>
+
+
+ただ、元々のKrugleサイトだとそのようなエラーは起きない
+KrugleサイトのＨＴＭＬ
+
+<html>
+<head>
+<title>NIKKO.nkCCIS/efront.online/htdocs/jsp/fap/ccis/redirectCcisRgd.jsp</title>
+</head>
+<body>
+<p><strong>NIKKO.nkCCIS/efront.online/htdocs/jsp/fap/ccis/redirectCcisRgd.jsp</strong></p>
+<hr>
+<pre>
+<ol>
+<li>&lt;%@ page language="java" contentType="text/html; charset=Shift_JIS" %&gt;
+</li><li>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+</li><li>&lt;HTML&gt;
+</li><li>&lt;HEAD&gt;
+</li><li>&lt;META name="GENERATOR" content="IBM WebSphere Studio"&gt;
+</li><li>&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+</li><li>&lt;%-- 
+</li><li>　w = window.open(
+</li><li>    'http://[CCIS_ip]/servlet/FwNoOperation/fap/ccis/Redirect?[Param]',
+</li><li>    'RedirectCcis',
+</li><li>    'toolbar=no,directories=no,location=no,status=yes,resizable=no,menubar=no,scrollbars=no'
+</li><li>    );
+</li><li>
+</li><li>　[Param]には以下のように設定してください
+</li><li>　　顧客カルテ：
+</li><li>　　gamenId=1
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>　　kyakCifC=[客CIF]
+</li><li>
+</li><li>　　コンタクト履歴入力：
+</li><li>　　gamenId=2
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>　　syohnnm=[商品名称(案件名称)]
+</li><li>
+</li><li>　　コンタクト履歴一覧：
+</li><li>　　gamenId=3
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>
+</li><li>　　帝国企業情報：
+</li><li>　　gamenId=4
+</li><li>　　teikkKigyocd=[帝国企業コード]
+</li><li>
+</li><li>　　見込顧客基本情報：
+</li><li>　　gamenId=5
+</li><li>　　nayoNo=[名寄せ番号]
+</li><li>　　mboK=[名簿区分]
+</li><li>
+</li><li>　　コンタクト履歴入力（from CLIP)：
+</li><li>　　gamenId=11
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>　　cntctY=[コンタクト日（年）]
+</li><li>　　cntctM=[コンタクト日（月）]
+</li><li>　　cntctD=[コンタクト日（日）]
+</li><li>　　cntctHh=[コンタクト日（時）]
+</li><li>　　cntctMi=[コンタクト日（分）]
+</li><li>　　cntctHohoCntct=[コンタクト方法]
+</li><li>　　renrkskKCntct=[連絡先区分]
+</li><li>　　cntctAiteK=[コンタクト相手]
+</li><li>　　cntct_aitenm=[コンタクト相手その他]
+</li><li>　　taio_k=[対応区分]
+</li><li>　　cmmtRCntct=[コメント欄]
+</li><li>
+</li><li>　　コンタクト履歴入力（from 音テキ)：
+</li><li>　　gamenId=13
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>　　cntctY=[コンタクト日（年）]
+</li><li>　　cntctM=[コンタクト日（月）]
+</li><li>　　cntctD=[コンタクト日（日）]
+</li><li>　　cntctHh=[コンタクト日（時）]
+</li><li>　　cntctMi=[コンタクト日（分）]
+</li><li>　　cntctHohoCntct=[コンタクト方法]
+</li><li>　　renrkskKCntct=[連絡先区分]
+</li><li>　　cntctAiteK=[コンタクト相手]
+</li><li>　　cntct_aitenm=[コンタクト相手その他]
+</li><li>　　taio_k=[対応区分]
+</li><li>　　cmmtRCntct=[コメント欄]
+</li><li>　　syainTelno=[当社側電話番号]
+</li><li>　　kyakTelno=[お客様側電話番号]
+</li><li>　　tuwVoiceRenkeiK[通話音声連携チェック]
+</li><li>　　hituchiK[非通知チェック]
+</li><li>　　dokosyaK[同行者]
+</li><li>　　dokosya[同行者入力欄]
+</li><li>
+</li><li>　　コンタクト履歴入力（from プレコンタクト履歴)：
+</li><li>　　gamenId=14
+</li><li>　　miseC=[店コード]
+</li><li>　　kyakC=[客コード]
+</li><li>　　cntctY=[コンタクト日（年）]
+</li><li>　　cntctM=[コンタクト日（月）]
+</li><li>　　cntctD=[コンタクト日（日）]
+</li><li>　　cntctHh=[コンタクト日（時）]
+</li><li>　　cntctMi=[コンタクト日（分）]
+</li><li>　　cntctHohoCntct=[コンタクト方法]
+</li><li>　　renrkskKCntct=[連絡先区分]
+</li><li>　　cntctAiteK=[コンタクト相手]
+</li><li>　　cntct_aitenm=[コンタクト相手その他]
+</li><li>　　taio_k=[対応区分]
+</li><li>　　cmmtRCntct=[コメント欄]
+</li><li>　　syainTelno=[当社側電話番号]
+</li><li>　　kyakTelno=[お客様側電話番号]
+</li><li>　　tuwVoiceRenkeiK[通話音声連携チェック]
+</li><li>　　hituchiK[非通知チェック]
+</li><li>　　dokosyaK[同行者]
+</li><li>　　dokosya[同行者入力欄]
+</li><li>--%&gt;
+</li><li>&lt;script language="JavaScript" src="/js/FaKyakDBCommon.js"&gt;&lt;/script&gt;
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add Start --%&gt;
+</li><li>&lt;script language="JavaScript" src="/js/FaKyakDBCommon2.js"&gt;&lt;/script&gt;
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add End --%&gt;
+</li><li>&lt;script language="JavaScript" src="/js/FwEnv.js"&gt;&lt;/script&gt;
+</li><li>&lt;script language="JavaScript" src="/js/MbcEnv.js"&gt;&lt;/script&gt;
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add End --%&gt;
+</li><li>&lt;script language="JavaScript" src="/js/rgdOverride.js"&gt;&lt;/script&gt;
+</li><li>&lt;script language="JavaScript" type="text/javascript"&gt;
+</li><li>	function helloCcis(){
+</li><li>		var gamenId = &lt;%= request.getParameter("gamenId") %&gt;
+</li><li>		switch( gamenId ){
+</li><li>
+</li><li>		//初期オープン時
+</li><li>		case 0:
+</li><li>			break;
+</li><li>
+</li><li>		//顧客カルテ
+</li><li>		case 1:
+</li><li>			openKyakMain(main_form, '&lt;%= request.getParameter("miseC") %&gt;', '&lt;%= request.getParameter("kyakC") %&gt;');
+</li><li>			break;
+</li><li>
+</li><li>		//コンタクト履歴入力
+</li><li>		case 2:
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+</li><li>//		openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G4rireki/input/init',
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod Start --%&gt;
+</li><li>//		openSub(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/input/init',
+</li><li>		openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/input/tenpuinit',
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod End --%&gt;
+</li><li>//				'Input','resizable=yes,menubars=no,scrollbars=yes,width=850,height=600');
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod Start --%&gt;
+</li><li>//				'Input','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod End --%&gt;
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+</li><li>			break;
+</li><li>
+</li><li>		//コンタクト履歴一覧
+</li><li>		case 3:
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+</li><li>//			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G4sales/list/init',
+</li><li>			openSub(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4sales/list/init',
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+</li><li>					'List','resizable=yes,menubars=no,scrollbars=yes,width=1000,height=540');
+</li><li>			break;
+</li><li>
+</li><li>		//帝国企業情報
+</li><li>		case 4:
+</li><li>			openSubAngular(main_form,'index.html#/ccis-kyak/kj/external-data-basic-information',
+</li><li>					'Teikoku','resizable=yes,menubars=no,scrollbars=yes,width=1176,height=800');
+</li><li>			break;
+</li><li>
+</li><li>		//見込顧客基本情報
+</li><li>		case 5:
+</li><li>			var url        = "/M/kj/pcm/G100/display/search/rgd";
+</li><li>			var parm       = "?FW_CHOICE_MISE_C=&lt;%= request.getParameter("miseC") %&gt;&nayoNo=&lt;%= request.getParameter("nayoNo") %&gt;&mboK=&lt;%= request.getParameter("mboK") %&gt;&FW_LOGON_APLNM="+ fwLoginAppNmMkm1;
+</li><li>			openSub2(main_form,fwMikomUrl + url + parm, 'Mkm_Karute', 'resizable=yes,menubars=no,scrollbars=yes,width=870,height=600');
+</li><li>			break;
+</li><li>		//残高照会
+</li><li>		case 6:
+</li><li>			openKyakbtZanMain(main_form, '&lt;%= request.getParameter("miseC") %&gt;', '&lt;%= request.getParameter("kyakC") %&gt;');
+</li><li>			break;
+</li><li>
+</li><li>		//コンタクト履歴一覧（顧客選択）
+</li><li>		case 7:
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+</li><li>//			var url    = '/E/kj/crm/G4kokyaku/list/init';
+</li><li>			var url    = '/E/kj/ctt/G4kokyaku/list/init';
+</li><li>// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+</li><li>			
+</li><li>			var parm = '?syorKG402=1&kakuninKG402=0&ateskMiseCodeG402=&lt;%= request.getParameter("miseC") %&gt;&ateskKyakCodeG402=&lt;%= request.getParameter("kyakC") %&gt;';
+</li><li>			openSub(main_form,'/servlet/FwNoOperation' + url + parm, 'List','width=1010,height=715,resizable=yes');
+</li><li>			break;
+</li><li>
+</li><li>		//記念日アラーム登録一覧
+</li><li>		case 8:
+</li><li>			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6master/list/init/rgd?syorKG602=1&kenskKakariCG602=&lt;%= request.getParameter("kakariC") %&gt;&c_syainC=&lt;%= request.getParameter("syainC") %&gt;',
+</li><li>			'List','width=1010,height=715,resizable=yes');
+</li><li>			break;
+</li><li>
+</li><li>		//記念日アラーム予定一覧
+</li><li>		case 9:
+</li><li>			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6meisai/list/init/rgd?syorKG601=1&kenskKakariCG601=&lt;%= request.getParameter("kakariC") %&gt;&c_syainC=&lt;%= request.getParameter("syainC") %&gt;',
+</li><li>			'List','width=1010,height=715,resizable=yes');
+</li><li>			break;
+</li><li>
+</li><li>		//記念日アラーム登録（コンタクト履歴引継ぎ）
+</li><li>		case 10:
+</li><li>			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6master/input/init/rgd?miseC=&lt;%= request.getParameter("miseC") %&gt;&kyakC=&lt;%= request.getParameter("kyakC") %&gt;&cmmtR=&lt;%= request.getParameter("cmmtR") %&gt;',
+</li><li>			'Input','width=1000,height=800,resizable=yes');
+</li><li>			break;
+</li><li>			
+</li><li>		// 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add Start
+</li><li>		//コンタクト履歴入力
+</li><li>		case 11:
+</li><li>			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init2',
+</li><li>				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>			break;
+</li><li>		// 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add  End 
+</li><li>
+</li><li>		// 2021.03.05 ACC 【RDX】コンタクト履歴の機能追加・リファクタリング対応(01-2020-08-038) Add Start
+</li><li>		//コンタクト履歴入力(営業支援から)
+</li><li>		case 12:
+</li><li>			var param = '';
+</li><li>			param = '?miseC=&lt;%= request.getParameter("miseC") %&gt;&kyakC=&lt;%= request.getParameter("kyakC") %&gt;&koudouC=&lt;%= request.getParameter("koudouC") %&gt;&ankC=&lt;%= request.getParameter("ankC") %&gt;&cntctK=1';
+</li><li>			openSubAngularNoForm(main_form,'index.html#/ccis-kyak/contact/cntct-msg-asw-edit/edit' + param,
+</li><li>				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>			break;
+</li><li>		// 2021.03.05 ACC 【RDX】コンタクト履歴の機能追加・リファクタリング対応(01-2020-08-038) Add  End 
+</li><li>		// 2024.12.11 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月－２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330)  ADD START
+</li><li>		//コンタクト履歴入力
+</li><li>		case 13:
+</li><li>			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init3',
+</li><li>				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>			break;
+</li><li>		
+</li><li>		//コンタクト履歴入力
+</li><li>		case 14:
+</li><li>			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init4',
+</li><li>				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+</li><li>			window.close();
+</li><li>			break;
+</li><li>		// 2024.12.11 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月－２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330)  ADD END
+</li><li>		// 01-2024-08-331（【ＡＰＩ基盤構築】メール電子交付API対応） ACC張 ADD START
+</li><li>		// 資料ボックスシステム（ＥＵＣ）から交付指示へ遷移する場合
+</li><li>		case 20:
+</li><li>			var kofusijiUrl = '/rgd/index.html#/ccis-kyak/mail/delivered-document/delivered' 
+</li><li>				+ '?cif=&lt;%= request.getParameter("cif") %&gt;'
+</li><li>				+ '&nikkoViewF=1'
+</li><li>				+ '&seqNo=&lt;%= request.getParameter("seqNo") %&gt;'
+</li><li>				+ '&docNo=&lt;%= request.getParameter("docNo") %&gt;'
+</li><li>				+ '&issuerCode=&lt;%= request.getParameter("issuerCode") %&gt;'
+</li><li>				+ '&issuerPk=&lt;%= request.getParameter("issuerPk") %&gt;';
+</li><li>			&lt;% 
+</li><li>				String kofusijiUrlAdd = "";
+</li><li>				for(int i=2;i&lt;=10;i++){
+</li><li>					String seqNo = request.getParameter("seqNo"+i);
+</li><li>					String docNo = request.getParameter("docNo"+i);
+</li><li>					String issuerCode = request.getParameter("issuerCode"+i);
+</li><li>					String issuerPk = request.getParameter("issuerPk"+i);
+</li><li>
+</li><li>					kofusijiUrlAdd = kofusijiUrlAdd
+</li><li>					+ "&seqNo"+i+"="+seqNo
+</li><li>					+ "&docNo"+i+"="+docNo
+</li><li>					+ "&issuerCode"+i+"="+issuerCode
+</li><li>					+ "&issuerPk"+i+"="+issuerPk;
+</li><li>				}
+</li><li>			%&gt;
+</li><li>			kofusijiUrl = kofusijiUrl + '&lt;%=kofusijiUrlAdd%&gt;';
+</li><li>			
+</li><li>			//openSubNoForm(main_form, kofusijiUrl, 'DeliveredDocument',
+</li><li>				//'resizeable=yes,menubars=no,scrollbars=yes,width=1216,height=720');
+</li><li>			window.open(kofusijiUrl, 'DeliveredDocument', 'resizeable=yes,menubars=no,scrollbars=yes,status=yes,width=1216,height=720');
+</li><li>			break;
+</li><li>		// 01-2024-08-331（【ＡＰＩ基盤構築】メール電子交付API対応） ACC張 ADD END
+</li><li>		default:
+</li><li>			alert("外部システム接続失敗(システム部署へご連絡ください)");
+</li><li>		}
+</li><li>// 2022.07.21 ACC 【RDX】新ＣＩＥＤＢ環境でのＣＣＩＳ連携時における挙動対応 Add Start
+</li><li>		var edgeFlag = &lt;%= request.getParameter("edgeFlag") %&gt;
+</li><li>		if (edgeFlag == null || edgeFlag == ""){
+</li><li>			edgeFlag = "0"
+</li><li>		}
+</li><li>		if (edgeFlag == "1") {
+</li><li>			try{window.open('about:blank','_self').close();}catch(e){}
+</li><li>		}
+</li><li>// 2022.07.21 ACC 【RDX】新ＣＩＥＤＢ環境でのＣＣＩＳ連携時における挙動対応 Add End
+</li><li>	}
+</li><li>&lt;/script&gt;
+</li><li>&lt;TITLE&gt;外部システムからの転送画面&lt;/TITLE&gt;
+</li><li>&lt;/HEAD&gt;
+</li><li>&lt;BODY onload="helloCcis()"&gt;
+</li><li>&lt;form name="main_form"&gt;
+</li><li>&lt;INPUT type="hidden" name="miseC" value="&lt;%=request.getParameter("miseC") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="kyakC" value="&lt;%=request.getParameter("kyakC") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="kyakCifC" value="&lt;%=request.getParameter("kyakCifC") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="syohnnm" value="&lt;%=request.getParameter("syohnnm") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="sKozaNo1" value="&lt;%=request.getParameter("miseC") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="sKozaNo2" value="&lt;%=request.getParameter("kyakC") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="teikkKigyocd" value="&lt;%=request.getParameter("teikkKigyocd") %&gt;"&gt;
+</li><li>&lt;INPUT type="hidden" name="initK" value="6"&gt;
+</li><li>&lt;%-- 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add Start --%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト日（年）
+</li><li>String cntctY = request.getParameter("cntctY");
+</li><li>if (cntctY != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctY" value="&lt;%=cntctY %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト日（月）
+</li><li>String cntctM = request.getParameter("cntctM");
+</li><li>if (cntctM != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctM" value="&lt;%=cntctM %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト日（日）
+</li><li>String cntctD = request.getParameter("cntctD");
+</li><li>if (cntctD != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctD" value="&lt;%=cntctD %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト日（時）
+</li><li>String cntctHh = request.getParameter("cntctHh");
+</li><li>if (cntctHh != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctHh" value="&lt;%=cntctHh %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト日（分）
+</li><li>String cntctMi = request.getParameter("cntctMi");
+</li><li>if (cntctMi != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctMi" value="&lt;%=cntctMi %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>
+</li><li>&lt;%
+</li><li>// コンタクト方法
+</li><li>String cntctHohoCntct = request.getParameter("cntctHohoCntct");
+</li><li>if (cntctHohoCntct != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctHohoCntct" value="&lt;%=cntctHohoCntct %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 連絡先区分
+</li><li>String renrkskKCntct = request.getParameter("renrkskKCntct");
+</li><li>if (renrkskKCntct != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="renrkskKCntct" value="&lt;%=renrkskKCntct %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト相手区分
+</li><li>String[] cntctAiteK = request.getParameterValues("cntctAiteK");
+</li><li>if (cntctAiteK != null ) {
+</li><li>    for (int i =0; i &lt; cntctAiteK.length; i++ ) {
+</li><li>        if ("".equals(cntctAiteK[i])) {
+</li><li>            continue;
+</li><li>        }
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntctAiteK" value="&lt;%=cntctAiteK[i] %&gt;"&gt;
+</li><li>&lt;%
+</li><li>    }
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コンタクト相手その他
+</li><li>String cntctAitenm = request.getParameter("cntct_aitenm");
+</li><li>if (cntctAitenm != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cntct_aitenm" value="&lt;%=cntctAitenm %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 対応区分
+</li><li>String[] taioK = request.getParameterValues("taio_k");
+</li><li>if (taioK != null ) {
+</li><li>    for (int i =0; i &lt; taioK.length; i++ ) {
+</li><li>        if ("".equals(taioK[i])) {
+</li><li>            continue;
+</li><li>        }
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="taio_k" value="&lt;%=taioK[i] %&gt;"&gt;
+</li><li>&lt;%
+</li><li>    }
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// コメント欄
+</li><li>String cmmtRCntct = request.getParameter("cmmtRCntct");
+</li><li>if (cmmtRCntct != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="cmmtRCntct" value="&lt;%=cmmtRCntct %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%-- 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add  End --%&gt;
+</li><li>&lt;%-- 2024.12.02 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月－２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330) ADD START --%&gt;
+</li><li>&lt;%
+</li><li>// 当社側電話番号
+</li><li>String syainTelno = request.getParameter("syainTelno");
+</li><li>if (syainTelno != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="syainTelno" value="&lt;%=syainTelno %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// お客様側電話番号
+</li><li>String kyakTelno = request.getParameter("kyakTelno");
+</li><li>if (kyakTelno != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="kyakTelno" value="&lt;%=kyakTelno %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 通話音声連携チェック
+</li><li>String tuwVoiceRenkeiK = request.getParameter("tuwVoiceRenkeiK");
+</li><li>if (tuwVoiceRenkeiK != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="tuwVoiceRenkeiK" value="&lt;%=tuwVoiceRenkeiK %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 非通知チェック
+</li><li>String hituchiK = request.getParameter("hituchiK");
+</li><li>if (hituchiK != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="hituchiK" value="&lt;%=hituchiK %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 同行者
+</li><li>String[] dokosyaK = request.getParameterValues("dokosyaK");
+</li><li>if (dokosyaK != null ) {
+</li><li>    for (int i =0; i &lt; dokosyaK.length; i++ ) {
+</li><li>        if ("".equals(dokosyaK[i])) {
+</li><li>            continue;
+</li><li>        }
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="dokosyaK" value="&lt;%=dokosyaK[i] %&gt;"&gt;
+</li><li>&lt;%
+</li><li>    }
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%
+</li><li>// 同行者入力欄
+</li><li>String dokosya = request.getParameter("dokosya");
+</li><li>if (dokosya != null ) {
+</li><li>%&gt;
+</li><li>&lt;INPUT type="hidden" name="dokosya" value="&lt;%=dokosya %&gt;"&gt;
+</li><li>&lt;%
+</li><li>}
+</li><li>%&gt;
+</li><li>&lt;%-- 2024.12.02 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月－２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330) ADD END --%&gt;
+</li><li>&lt;/form&gt;
+</li><li>&lt;/BODY&gt;
+</li><li>&lt;/HTML&gt;
+</li></ol>
+</pre>
+<hr>
+</body>
+</html>
+
+
+[4]
+
+検索結果タブにおいて、検索結果からフィルターを出来るようにしたい
+
+ハイライト OFF ON  
+ボタンと同じように、宙に浮かせて（z-index）
+その位置に、フィルター ON OFFのボタンを表示
+それをONにすると
+
+ファイル名や移行グループやディレクトリグループで、
+フィルター可能なようにする
+
+移行グループやディレクトリグループaはSelect Boxで
+その中身は検索結果のレコードに含まれる分だけにして。
+
+全部の移行グループのデータ全部を出してはいけない
+
+
+[5]
+
+HTML以外においても、クロスサイトスクリプティングが起こりそうな
+preコードに当て込む処理がないか、確認して、もしあればその箇所もしゅうせいして
+
