@@ -1,0 +1,714 @@
+[1]
+
+右上のＣｏｐｙボタンとDownloadボタンは、ＨＴＭＬの要素ごと削除して。
+そして、それをクリックしたときに発生するJavaScript処理も削除して
+
+しかし、左側のCopyボタンとDownloadボタンを押したときに発生する
+JavaScriptの挙動や、処理はそのままとして
+
+
+[2]
+
+ＨＴＭＬのクロスサイトスクリプティングの対応したからか、
+ハイライトＪＳがＪＳＰに効かない
+
+実際のＨＴＭＬは以下
+
+<code id="codeBlock" class="language-plaintext hljs codeBlockPlainSource" style="font-size: 12px !important;" data-safe-plain-source="true">&lt;%@ page language="java" contentType="text/html; charset=Shift_JIS" %&gt;
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;META name="GENERATOR" content="IBM WebSphere Studio"&gt;
+&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+&lt;%--
+　w = window.open(
+    'http://[CCIS_ip]/servlet/FwNoOperation/fap/ccis/Redirect?[Param]',
+    'RedirectCcis',
+    'toolbar=no,directories=no,location=no,status=yes,resizable=no,menubar=no,scrollbars=no'
+    );
+
+　[Param]には以下のように設定してください
+　　顧客カルテ：
+　　gamenId=1
+　　miseC=[店コード]
+　　kyakC=[客コード]
+　　kyakCifC=[客CIF]
+
+　　コンタクト履歴入力：
+　　gamenId=2
+　　miseC=[店コード]
+　　kyakC=[客コード]
+　　syohnnm=[商品名称(案件名称)]
+
+　　コンタクト履歴一覧：
+　　gamenId=3
+　　miseC=[店コード]
+　　kyakC=[客コード]
+
+　　帝国企業情報：
+　　gamenId=4
+　　teikkKigyocd=[帝国企業コード]
+
+　　見込顧客基本情報：
+　　gamenId=5
+　　nayoNo=[名寄せ番号]
+　　mboK=[名簿区分]
+
+　　コンタクト履歴入力（from CLIP)：
+　　gamenId=11
+　　miseC=[店コード]
+　　kyakC=[客コード]
+　　cntctY=[コンタクト日（年）]
+　　cntctM=[コンタクト日（月）]
+　　cntctD=[コンタクト日（日）]
+　　cntctHh=[コンタクト日（時）]
+　　cntctMi=[コンタクト日（分）]
+　　cntctHohoCntct=[コンタクト方法]
+　　renrkskKCntct=[連絡先区分]
+　　cntctAiteK=[コンタクト相手]
+　　cntct_aitenm=[コンタクト相手その他]
+　　taio_k=[対応区分]
+　　cmmtRCntct=[コメント欄]
+
+　　コンタクト履歴入力（from 音テキ)：
+　　gamenId=13
+　　miseC=[店コード]
+　　kyakC=[客コード]
+　　cntctY=[コンタクト日（年）]
+　　cntctM=[コンタクト日（月）]
+　　cntctD=[コンタクト日（日）]
+　　cntctHh=[コンタクト日（時）]
+　　cntctMi=[コンタクト日（分）]
+　　cntctHohoCntct=[コンタクト方法]
+　　renrkskKCntct=[連絡先区分]
+　　cntctAiteK=[コンタクト相手]
+　　cntct_aitenm=[コンタクト相手その他]
+　　taio_k=[対応区分]
+　　cmmtRCntct=[コメント欄]
+　　syainTelno=[当社側電話番号]
+　　kyakTelno=[お客様側電話番号]
+　　tuwVoiceRenkeiK[通話音声連携チェック]
+　　hituchiK[非通知チェック]
+　　dokosyaK[同行者]
+　　dokosya[同行者入力欄]
+
+　　コンタクト履歴入力（from プレコンタクト履歴)：
+　　gamenId=14
+　　miseC=[店コード]
+　　kyakC=[客コード]
+　　cntctY=[コンタクト日（年）]
+　　cntctM=[コンタクト日（月）]
+　　cntctD=[コンタクト日（日）]
+　　cntctHh=[コンタクト日（時）]
+　　cntctMi=[コンタクト日（分）]
+　　cntctHohoCntct=[コンタクト方法]
+　　renrkskKCntct=[連絡先区分]
+　　cntctAiteK=[コンタクト相手]
+　　cntct_aitenm=[コンタクト相手その他]
+　　taio_k=[対応区分]
+　　cmmtRCntct=[コメント欄]
+　　syainTelno=[当社側電話番号]
+　　kyakTelno=[お客様側電話番号]
+　　tuwVoiceRenkeiK[通話音声連携チェック]
+　　hituchiK[非通知チェック]
+　　dokosyaK[同行者]
+　　dokosya[同行者入力欄]
+--%&gt;
+&lt;script language="JavaScript" src="/js/FaKyakDBCommon.js"&gt;&lt;/script&gt;
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add Start --%&gt;
+&lt;script language="JavaScript" src="/js/FaKyakDBCommon2.js"&gt;&lt;/script&gt;
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add End --%&gt;
+&lt;script language="JavaScript" src="/js/FwEnv.js"&gt;&lt;/script&gt;
+&lt;script language="JavaScript" src="/js/MbcEnv.js"&gt;&lt;/script&gt;
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) add End --%&gt;
+&lt;script language="JavaScript" src="/js/rgdOverride.js"&gt;&lt;/script&gt;
+&lt;script language="JavaScript" type="text/javascript"&gt;
+	function helloCcis(){
+		var gamenId = &lt;%= request.getParameter("gamenId") %&gt;
+		switch( gamenId ){
+
+		//初期オープン時
+		case 0:
+			break;
+
+		//顧客カルテ
+		case 1:
+			openKyakMain(main_form, '&lt;%= request.getParameter("miseC") %&gt;', '&lt;%= request.getParameter("kyakC") %&gt;');
+			break;
+
+		//コンタクト履歴入力
+		case 2:
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+//		openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G4rireki/input/init',
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod Start --%&gt;
+//		openSub(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/input/init',
+		openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/input/tenpuinit',
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod End --%&gt;
+//				'Input','resizable=yes,menubars=no,scrollbars=yes,width=850,height=600');
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod Start --%&gt;
+//				'Input','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+&lt;%-- 2018.02.23 INTEC 提案資料保存機能追加対応に係る要件定義(01-2017-04-289) mod End --%&gt;
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+			break;
+
+		//コンタクト履歴一覧
+		case 3:
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+//			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G4sales/list/init',
+			openSub(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4sales/list/init',
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+					'List','resizable=yes,menubars=no,scrollbars=yes,width=1000,height=540');
+			break;
+
+		//帝国企業情報
+		case 4:
+			openSubAngular(main_form,'index.html#/ccis-kyak/kj/external-data-basic-information',
+					'Teikoku','resizable=yes,menubars=no,scrollbars=yes,width=1176,height=800');
+			break;
+
+		//見込顧客基本情報
+		case 5:
+			var url        = "/M/kj/pcm/G100/display/search/rgd";
+			var parm       = "?FW_CHOICE_MISE_C=&lt;%= request.getParameter("miseC") %&gt;&amp;nayoNo=&lt;%= request.getParameter("nayoNo") %&gt;&amp;mboK=&lt;%= request.getParameter("mboK") %&gt;&amp;FW_LOGON_APLNM="+ fwLoginAppNmMkm1;
+			openSub2(main_form,fwMikomUrl + url + parm, 'Mkm_Karute', 'resizable=yes,menubars=no,scrollbars=yes,width=870,height=600');
+			break;
+		//残高照会
+		case 6:
+			openKyakbtZanMain(main_form, '&lt;%= request.getParameter("miseC") %&gt;', '&lt;%= request.getParameter("kyakC") %&gt;');
+			break;
+
+		//コンタクト履歴一覧（顧客選択）
+		case 7:
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD START
+//			var url    = '/E/kj/crm/G4kokyaku/list/init';
+			var url    = '/E/kj/ctt/G4kokyaku/list/init';
+// 2014.10.20 INTEC 【時間創出】コンタクト履歴入力簡素化対応(01-2014-03-257) MOD END
+
+			var parm = '?syorKG402=1&amp;kakuninKG402=0&amp;ateskMiseCodeG402=&lt;%= request.getParameter("miseC") %&gt;&amp;ateskKyakCodeG402=&lt;%= request.getParameter("kyakC") %&gt;';
+			openSub(main_form,'/servlet/FwNoOperation' + url + parm, 'List','width=1010,height=715,resizable=yes');
+			break;
+
+		//記念日アラーム登録一覧
+		case 8:
+			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6master/list/init/rgd?syorKG602=1&amp;kenskKakariCG602=&lt;%= request.getParameter("kakariC") %&gt;&amp;c_syainC=&lt;%= request.getParameter("syainC") %&gt;',
+			'List','width=1010,height=715,resizable=yes');
+			break;
+
+		//記念日アラーム予定一覧
+		case 9:
+			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6meisai/list/init/rgd?syorKG601=1&amp;kenskKakariCG601=&lt;%= request.getParameter("kakariC") %&gt;&amp;c_syainC=&lt;%= request.getParameter("syainC") %&gt;',
+			'List','width=1010,height=715,resizable=yes');
+			break;
+
+		//記念日アラーム登録（コンタクト履歴引継ぎ）
+		case 10:
+			openSub(main_form,'/servlet/FwNoOperation/E/kj/crm/G6master/input/init/rgd?miseC=&lt;%= request.getParameter("miseC") %&gt;&amp;kyakC=&lt;%= request.getParameter("kyakC") %&gt;&amp;cmmtR=&lt;%= request.getParameter("cmmtR") %&gt;',
+			'Input','width=1000,height=800,resizable=yes');
+			break;
+
+		// 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add Start
+		//コンタクト履歴入力
+		case 11:
+			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init2',
+				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+			break;
+		// 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add  End
+
+		// 2021.03.05 ACC 【RDX】コンタクト履歴の機能追加・リファクタリング対応(01-2020-08-038) Add Start
+		//コンタクト履歴入力(営業支援から)
+		case 12:
+			var param = '';
+			param = '?miseC=&lt;%= request.getParameter("miseC") %&gt;&amp;kyakC=&lt;%= request.getParameter("kyakC") %&gt;&amp;koudouC=&lt;%= request.getParameter("koudouC") %&gt;&amp;ankC=&lt;%= request.getParameter("ankC") %&gt;&amp;cntctK=1';
+			openSubAngularNoForm(main_form,'index.html#/ccis-kyak/contact/cntct-msg-asw-edit/edit' + param,
+				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+			break;
+		// 2021.03.05 ACC 【RDX】コンタクト履歴の機能追加・リファクタリング対応(01-2020-08-038) Add  End
+		// 2024.12.11 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月"２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330)  ADD START
+		//コンタクト履歴入力
+		case 13:
+			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init3',
+				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+			break;
+
+		//コンタクト履歴入力
+		case 14:
+			openSub3(main_form,'/servlet/FwNoOperation/E/kj/ctt/G4rireki/redirect/init4',
+				'TenpuInput','resizable=yes,menubars=no,scrollbars=yes,width=890,height=700');
+			window.close();
+			break;
+		// 2024.12.11 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月"２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330)  ADD END
+		// 01-2024-08-331（【ＡＰＩ基盤構築】メール電子交付API対応） ACC張 ADD START
+		// 資料ボックスシステム（ＥＵＣ）から交付指示へ遷移する場合
+		case 20:
+			var kofusijiUrl = '/rgd/index.html#/ccis-kyak/mail/delivered-document/delivered'
+				+ '?cif=&lt;%= request.getParameter("cif") %&gt;'
+				+ '&amp;nikkoViewF=1'
+				+ '&amp;seqNo=&lt;%= request.getParameter("seqNo") %&gt;'
+				+ '&amp;docNo=&lt;%= request.getParameter("docNo") %&gt;'
+				+ '&amp;issuerCode=&lt;%= request.getParameter("issuerCode") %&gt;'
+				+ '&amp;issuerPk=&lt;%= request.getParameter("issuerPk") %&gt;';
+			&lt;%
+				String kofusijiUrlAdd = "";
+				for(int i=2;i&lt;=10;i++){
+					String seqNo = request.getParameter("seqNo"+i);
+					String docNo = request.getParameter("docNo"+i);
+					String issuerCode = request.getParameter("issuerCode"+i);
+					String issuerPk = request.getParameter("issuerPk"+i);
+
+					kofusijiUrlAdd = kofusijiUrlAdd
+					+ "&amp;seqNo"+i+"="+seqNo
+					+ "&amp;docNo"+i+"="+docNo
+					+ "&amp;issuerCode"+i+"="+issuerCode
+					+ "&amp;issuerPk"+i+"="+issuerPk;
+				}
+			%&gt;
+			kofusijiUrl = kofusijiUrl + '&lt;%=kofusijiUrlAdd%&gt;';
+
+			//openSubNoForm(main_form, kofusijiUrl, 'DeliveredDocument',
+				//'resizeable=yes,menubars=no,scrollbars=yes,width=1216,height=720');
+			window.open(kofusijiUrl, 'DeliveredDocument', 'resizeable=yes,menubars=no,scrollbars=yes,status=yes,width=1216,height=720');
+			break;
+		// 01-2024-08-331（【ＡＰＩ基盤構築】メール電子交付API対応） ACC張 ADD END
+		default:
+			alert("外部システム接続失敗(システム部署へご連絡ください)");
+		}
+// 2022.07.21 ACC 【RDX】新ＣＩＥＤＢ環境でのＣＣＩＳ連携時における挙動対応 Add Start
+		var edgeFlag = &lt;%= request.getParameter("edgeFlag") %&gt;
+		if (edgeFlag == null || edgeFlag == ""){
+			edgeFlag = "0"
+		}
+		if (edgeFlag == "1") {
+			try{window.open('about:blank','_self').close();}catch(e){}
+		}
+// 2022.07.21 ACC 【RDX】新ＣＩＥＤＢ環境でのＣＣＩＳ連携時における挙動対応 Add End
+	}
+&lt;/script&gt;
+&lt;TITLE&gt;外部システムからの転送画面&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY onload="helloCcis()"&gt;
+&lt;form name="main_form"&gt;
+&lt;INPUT type="hidden" name="miseC" value="&lt;%=request.getParameter("miseC") %&gt;"&gt;
+&lt;INPUT type="hidden" name="kyakC" value="&lt;%=request.getParameter("kyakC") %&gt;"&gt;
+&lt;INPUT type="hidden" name="kyakCifC" value="&lt;%=request.getParameter("kyakCifC") %&gt;"&gt;
+&lt;INPUT type="hidden" name="syohnnm" value="&lt;%=request.getParameter("syohnnm") %&gt;"&gt;
+&lt;INPUT type="hidden" name="sKozaNo1" value="&lt;%=request.getParameter("miseC") %&gt;"&gt;
+&lt;INPUT type="hidden" name="sKozaNo2" value="&lt;%=request.getParameter("kyakC") %&gt;"&gt;
+&lt;INPUT type="hidden" name="teikkKigyocd" value="&lt;%=request.getParameter("teikkKigyocd") %&gt;"&gt;
+&lt;INPUT type="hidden" name="initK" value="6"&gt;
+&lt;%-- 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add Start --%&gt;
+&lt;%
+// コンタクト日（年）
+String cntctY = request.getParameter("cntctY");
+if (cntctY != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctY" value="&lt;%=cntctY %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// コンタクト日（月）
+String cntctM = request.getParameter("cntctM");
+if (cntctM != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctM" value="&lt;%=cntctM %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// コンタクト日（日）
+String cntctD = request.getParameter("cntctD");
+if (cntctD != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctD" value="&lt;%=cntctD %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// コンタクト日（時）
+String cntctHh = request.getParameter("cntctHh");
+if (cntctHh != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctHh" value="&lt;%=cntctHh %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// コンタクト日（分）
+String cntctMi = request.getParameter("cntctMi");
+if (cntctMi != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctMi" value="&lt;%=cntctMi %&gt;"&gt;
+&lt;%
+}
+%&gt;
+
+&lt;%
+// コンタクト方法
+String cntctHohoCntct = request.getParameter("cntctHohoCntct");
+if (cntctHohoCntct != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntctHohoCntct" value="&lt;%=cntctHohoCntct %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// 連絡先区分
+String renrkskKCntct = request.getParameter("renrkskKCntct");
+if (renrkskKCntct != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="renrkskKCntct" value="&lt;%=renrkskKCntct %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// コンタクト相手区分
+String[] cntctAiteK = request.getParameterValues("cntctAiteK");
+if (cntctAiteK != null ) {
+    for (int i =0; i &lt; cntctAiteK.length; i++ ) {
+        if ("".equals(cntctAiteK[i])) {
+            continue;
+        }
+%&gt;
+&lt;INPUT type="hidden" name="cntctAiteK" value="&lt;%=cntctAiteK[i] %&gt;"&gt;
+&lt;%
+    }
+}
+%&gt;
+&lt;%
+// コンタクト相手その他
+String cntctAitenm = request.getParameter("cntct_aitenm");
+if (cntctAitenm != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cntct_aitenm" value="&lt;%=cntctAitenm %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// 対応区分
+String[] taioK = request.getParameterValues("taio_k");
+if (taioK != null ) {
+    for (int i =0; i &lt; taioK.length; i++ ) {
+        if ("".equals(taioK[i])) {
+            continue;
+        }
+%&gt;
+&lt;INPUT type="hidden" name="taio_k" value="&lt;%=taioK[i] %&gt;"&gt;
+&lt;%
+    }
+}
+%&gt;
+&lt;%
+// コメント欄
+String cmmtRCntct = request.getParameter("cmmtRCntct");
+if (cmmtRCntct != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="cmmtRCntct" value="&lt;%=cmmtRCntct %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%-- 2019.07.16 JASTEC 【CLIP】CCISコンタクト履歴入力へのリンク機能作成対応(01-2019-07-058) Add  End --%&gt;
+&lt;%-- 2024.12.02 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月"２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330) ADD START --%&gt;
+&lt;%
+// 当社側電話番号
+String syainTelno = request.getParameter("syainTelno");
+if (syainTelno != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="syainTelno" value="&lt;%=syainTelno %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// お客様側電話番号
+String kyakTelno = request.getParameter("kyakTelno");
+if (kyakTelno != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="kyakTelno" value="&lt;%=kyakTelno %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// 通話音声連携チェック
+String tuwVoiceRenkeiK = request.getParameter("tuwVoiceRenkeiK");
+if (tuwVoiceRenkeiK != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="tuwVoiceRenkeiK" value="&lt;%=tuwVoiceRenkeiK %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// 非通知チェック
+String hituchiK = request.getParameter("hituchiK");
+if (hituchiK != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="hituchiK" value="&lt;%=hituchiK %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%
+// 同行者
+String[] dokosyaK = request.getParameterValues("dokosyaK");
+if (dokosyaK != null ) {
+    for (int i =0; i &lt; dokosyaK.length; i++ ) {
+        if ("".equals(dokosyaK[i])) {
+            continue;
+        }
+%&gt;
+&lt;INPUT type="hidden" name="dokosyaK" value="&lt;%=dokosyaK[i] %&gt;"&gt;
+&lt;%
+    }
+}
+%&gt;
+&lt;%
+// 同行者入力欄
+String dokosya = request.getParameter("dokosya");
+if (dokosya != null ) {
+%&gt;
+&lt;INPUT type="hidden" name="dokosya" value="&lt;%=dokosya %&gt;"&gt;
+&lt;%
+}
+%&gt;
+&lt;%-- 2024.12.02 ITI 【開発依頼】【ＣＣＩＳ＿小規模】小規模改修２０２４年１２月"２０２５年１月分（音声テキストコンタクト入力対応）(01-2024-11-330) ADD END --%&gt;
+&lt;/form&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;</code>
+
+
+この<code>に対してハイライトＪＳで色を付けることはできない？
+しかし、この&lt;とかは変更してしまうと、クロスサイトスクリプティングになってしまうので、
+それは困る
+
+つまり、クロスサイトスクリプティングは対応しつつ、ハイライトＪＳで色はつけない
+
+
+[3]
+
+文字サイズ 小 大
+今のpositionから、transform:tranlate(3px,8px)　移動させて
+
+今の位置からXへ3px Yへ8px　移動させたところに位置をお願いします
+
+[4]
+
+検索キーワードに、redirectCcisRgd.jspを入れたときに、
+検索結果のなかで、このファイル名に完全に合致する結果が現れたとき
+それを、最優先（一番上）に表示するように、検索結果のテーブルのレコードを
+ServletでＳｏｒｔして
+
+Ｓｏｒｔの処理をＪａｖａ（Ｓｅｒｖｌｅｔ）を修正して
+
+
+[5]
+
+KYF4310などのテーブル情報タブ
+
+
+Copyボタンの場合は、TSV形式で
+Downloadボタンの場合は、ＣＳＶ形式で
+
+以下の情報を、クリップボードコピーやダウンロード出来るようにJavaScript処理を追加して
+
+<div class="codeContentHeader">
+        <div id="codeTitle" class="codeTitle">KYF4310（支店管理グループ情報）　　　DBTYPE　：　KYKDB　　　スキーマ　：　KYKOWNER　　　Version　：　1.0</div>
+      </div>
+
+<section id="tableInfoPanel" class="tableInfoPanel" aria-live="polite">
+        <div id="tableInfoContent" class="tableInfoContent">
+      <div class="tableInfoTableWrap tableDefinitionTableWrap">
+        <table class="tableInfoTable tableDefinitionTable">
+          <thead>
+            <tr>
+              <th>No.</th><th>項目名</th><th>キー</th><th>Par</th><th>データ型</th><th>データ長</th>
+              <th>NULL制約</th><th>日本語名称</th><th>項目説明</th><th>外部参照</th>
+              <th>省略時値</th><th>CHECK制約</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10</td>
+              <td>DB_UPDJI1</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(17)</td>
+              <td></td>
+              <td>ＤＢ更新時間１</td>
+              <td>作成日時</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td>DB_UPDJI2</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(17)</td>
+              <td></td>
+              <td>ＤＢ更新時間２</td>
+              <td>更新日時</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>30</td>
+              <td>NYU_USERID</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(10)</td>
+              <td></td>
+              <td>入力ユーザＩＤ</td>
+              <td>入力ユーザＩＤ</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>40</td>
+              <td>CO_HYJUN_C</td>
+              <td>3</td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(5)</td>
+              <td>NOT NULL</td>
+              <td>会社標準コード</td>
+              <td>会社標準コード</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>50</td>
+              <td>KYAKKANR_GROUPNO</td>
+              <td>1</td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(3)</td>
+              <td>NOT NULL</td>
+              <td>顧客管理グループＮＯ</td>
+              <td>顧客管理グループＮＯ</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>60</td>
+              <td>KYAKKANR_GROUPNM</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(30)</td>
+              <td></td>
+              <td>顧客管理グループ名</td>
+              <td>顧客管理グループ名</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>70</td>
+              <td>MISE_C</td>
+              <td>2</td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(4)</td>
+              <td>NOT NULL</td>
+              <td>店部課コード</td>
+              <td>店部課コード</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>90</td>
+              <td>UPDYMD</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(8)</td>
+              <td></td>
+              <td>更新日</td>
+              <td>更新日（YYYYMMDD）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>100</td>
+              <td>TORKYMD</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(8)</td>
+              <td></td>
+              <td>登録日</td>
+              <td>登録日（YYYYMMDD）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>110</td>
+              <td>KJOYMD</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(8)</td>
+              <td></td>
+              <td>解除日</td>
+              <td>解除日（YYYYMMDD）</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>120</td>
+              <td>TORK_RIYU_R</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(120)</td>
+              <td></td>
+              <td>登録理由欄</td>
+              <td>登録理由</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>130</td>
+              <td>RONR_MASY_K</td>
+              <td></td>
+              <td></td>
+              <td>VARCHAR2</td>
+              <td>(1)</td>
+              <td></td>
+              <td>論理抹消区分</td>
+              <td>0:通常、1:抹消</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr></tbody>
+        </table>
+      </div></div>
+      </section>
+
+[6]
+
+２つのボタンrecentNavArrowRightとrecentNavArrowLeftを押したときに、今Rightなら一つ右のタブへカーソル移動
+Leftなら一つ左のタブへカーソル移動
+
+そして、そのカーソル当たっているタブのファイル名、移行グループ、ディレクトリグループ、言語などの
+グレー背景の白文字の情報を変更して
+
+
+
+<button class="recentNavArrow recentNavArrowRight" type="button" aria-label="右のタブへ移動" title="右のタブへ移動">
+      <svg class="recentNavIconSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M9.8 4.8L15.7 12l-5.9 7.2"></path>
+      </svg>
+    </button>
+
