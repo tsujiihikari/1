@@ -1,0 +1,1842 @@
+Javaを修正して。
+Ｊａｖａに機能を追加して、以下の仕様を追加して。
+
+
+[1]
+/IKO/Master/nikkoEZ/mcez.web.onlineSrc
+
+IKOMaster--[appadm@dzikodevv01: /IKO/Master/nikkoEZ]$ ls | grep -i src | grep online
+ez.web.onlineSrc
+mcez.web.onlineSrc
+mcsmbc.web.onlineSrc
+rb.web.onlineSrc
+smbc.web.onlineSrc
+
+
+この５つのonlineSrcの中には、zipファイルが多数ある
+
+IKOMaster--[appadm@dzikodevv01: /IKO/Master/nikkoEZ/ez.web.onlineSrc/jar]$ ls
+app_atm-src.zip                 app_fx-src.zip                      app_master-src.zip           app_primary-src.zip               app_tumitate_presen-src.zip   nmt_msg_common-src.zip
+app_atm_inquiry-src.zip         app_gaika_mmf-src.zip               app_menuitem-src.zip         app_primary_kanri-src.zip         app_ucu-src.zip               nmt_odr-src.zip
+app_batch-src.zip               app_gaika_mmf_common-src.zip        app_mokuromi-src.zip         app_primary_kanri_presen-src.zip  app_usa-src.zip               nmt_odr_presen-src.zip
+app_ccis-src.zip                app_gaika_mmf_kanri-src.zip         app_mokuromi_presen-src.zip  app_primary_presen-src.zip        atm_fw-src.zip                nmt_sinyo_calc-src.zip
+app_china-src.zip               app_gaika_mmf_kanri_presen-src.zip  app_mq_ut-src.zip            app_qtp-src.zip                   atm_mq-src.zip                nmt_sinyo_calc_presen-src.zip
+app_common-src.zip              app_gaika_mmf_presen-src.zip        app_msg_common-src.zip       app_sisan-src.zip                 fw_common-src.zip             nmt_sinyo_common-src.zip
+app_data-src.zip                app_goiken_mail-src.zip             app_msgbox-src.zip           app_sisan_rcv-src.zip             fw_impl-src.zip               nmt_sinyo_furikae-src.zip
+app_date_service-src.zip        app_gyoumu_common-src.zip           app_national_kanri-src.zip   app_syohin-src.zip                fw_interface-src.zip          nmt_sinyo_furikae_presen-src.zip
+app_dw_rcv-src.zip              app_hp-src.zip                      app_nbodr-src.zip            app_t_card-src.zip                fw_tools-src.zip              nmt_sinyo_koza-src.zip
+app_dwodr-src.zip               app_ifa-src.zip                     app_nbodr_presen-src.zip     app_taxbox-src.zip                loppi_data-src.zip            nmt_sinyo_meigara-src.zip
+app_ekofu-src.zip               app_ivritem-src.zip                 app_nikkocard-src.zip        app_test_drivers-src.zip          loppi_kinkabu-src.zip         nmt_sinyo_tategyoku-src.zip
+app_folio-src.zip               app_kanri-src.zip                   app_nyuskn-src.zip           app_tsn-src.zip                   loppi_kinkabu_presen-src.zip  nmt_sinyo_tategyoku_kanri-src.zip
+app_foreignbond-src.zip         app_kinkabu_rcv-src.zip             app_nyuskn_banksim-src.zip   app_tsn_meigara-src.zip           loppi_kyak-src.zip            nmt_sinyo_trade-src.zip
+app_foreignbond_kanri-src.zip   app_kyak-src.zip                    app_odr-src.zip              app_tsnpresen-src.zip             nmt_data-src.zip              nmt_sinyo_trade_presen-src.zip
+app_foreignbond_presen-src.zip  app_login-src.zip                   app_odrpresen-src.zip        app_tumitate-src.zip              nmt_db-src.zip                nmt_syohin-src.zip
+app_fuka-src.zip                app_mail-src.zip                    app_payment-src.zip          app_tumitate_common-src.zip       nmt_meig-src.zip              nmt_tanpo-src.zip
+
+
+こうのzipファイルが存在する場合、中に.javaファイルが入っている
+
+これは.jarの解凍して、.javaのパスを取得したように、
+同じように.javaのファイルパスも併せて取得して
+
+.java以外の.xmlなどは取得しなくてよい
+
+
+ＤＢへ.zipの中の.javaのパスをいれてほしい
+
+
+[2]
+
+nikkoEZの移行グループの中の.jarの中には.classファイルしかない。
+
+その場合も解凍して、.javaがないので、仕方ないから.classのファイルパスを取得して
+ＤＢに入れておいてほしい
+
+後々、.classからファイル名やパスを置換して取得するのに、ＤＢデータを使う
+
+ＤＢへ.classのパスをいれてほしい
+
+いまはJar解凍して、そのまま.classはいれていない
+.javaのみ
+
+ここをnikkoEZの場合は、全部いれる
+
+=====
+import com.jcraft.jsch.*;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.nio.file.attribute.FileTime;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+
+public class Main {
+
+    private static final String SSH_HOST = "10.206.40.35";
+    private static final int SSH_PORT = 22;
+    private static final String SSH_USER = "appadm";
+    private static final String SSH_PASSWORD = "appadm";
+
+    private static final String DB_URL =
+            "jdbc:oracle:thin:@//10.206.12.112:1621/dlmkt1.world";
+    private static final String DB_USER = "OBJECT_KYKELT";
+    private static final String DB_PASSWORD = "OBJECT_USER_KYKELT";
+
+    private static final int THREAD_COUNT = 4;
+    private static final Charset SSH_CHARSET = Charset.forName("UTF-8");
+    private static final int BATCH_SIZE = 500;
+
+    // 固まり対策: SSH/SCP/Worker/JAR処理の無限待ちを防ぐ。
+    private static final int SSH_CONNECT_TIMEOUT_MS = 30000;
+    private static final int SSH_SOCKET_TIMEOUT_MS = 300000;
+    private static final int CHANNEL_CONNECT_TIMEOUT_MS = 30000;
+    private static final int WORKER_FUTURE_TIMEOUT_MINUTES = 60;
+    private static final long JAR_PROCESS_TIMEOUT_MS = 10L * 60L * 1000L;
+    private static final int PROGRESS_LOG_INTERVAL = 1000;
+    private static final boolean DEBUG_RECORD_LOG = false;
+    private static final int DDL_LOCK_TIMEOUT_SECONDS = 120;
+    private static final int DDL_RESOURCE_BUSY_RETRY_COUNT = 10;
+    private static final long DDL_RESOURCE_BUSY_SLEEP_MS = 15000L;
+    private static final String RESULT_FILE = "result.txt";
+    private static final String INPUT_FILE = "input.txt";
+
+    // common settings
+    private static final String REMOTE_MASTER_PREFIX = "/IKO/Master/";
+    private static final String LOCAL_DOWNLOAD_ROOT = "./Download";
+    private static final String LOCAL_CKSUM_EXE = "cksum";
+
+    // log settings
+    private static final String LOG_DIR = "./Log";
+    private static final String ERROR_LOG_FILE = "./Log/ERROR.txt";
+    private static final Object LOG_LOCK = new Object();
+    private static final Object CONTENT_LOCK = new Object();
+
+    public static void main(String[] args) {
+        int exitCode = 0;
+        ExecutorService executor = null;
+
+        try {
+            ensureLogDir();
+
+            initializeDbObjects();
+
+            AtomicLong totalInserted = new AtomicLong(0);
+
+            List<String> allPaths = loadPathsFromResultTxt(RESULT_FILE);
+            List<String> paths = filterPathsByInputTxt(allPaths, INPUT_FILE);
+
+            log("INFO ", "result.txt target path count=" + allPaths.size());
+            log("INFO ", "execute target path count=" + paths.size());
+            for (String p : paths) {
+                log("INFO ", "[TARGET] " + p);
+            }
+
+            if (paths.isEmpty()) {
+                log("WARN ", "execute target path is empty. exit.");
+                return;
+            }
+
+            Files.createDirectories(Paths.get(LOCAL_DOWNLOAD_ROOT));
+
+            executor = Executors.newFixedThreadPool(Math.min(THREAD_COUNT, paths.size()));
+            List<Future<Long>> futures = new ArrayList<>();
+
+            for (int i = 0; i < paths.size(); i++) {
+                futures.add(executor.submit(new Worker(i + 1, paths.get(i), totalInserted)));
+            }
+
+            long total = 0;
+            int errorCount = 0;
+
+            for (Future<Long> f : futures) {
+                try {
+                    total += f.get(WORKER_FUTURE_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+                } catch (TimeoutException e) {
+                    errorCount++;
+                    f.cancel(true);
+                    logErr("ERROR", "[ERROR] Worker timeout. canceled. minutes=" + WORKER_FUTURE_TIMEOUT_MINUTES, e);
+                    appendError("MAIN_WORKER_TIMEOUT", 0, e);
+                    executor.shutdownNow();
+                    break;
+                } catch (Exception e) {
+                    errorCount++;
+                    logErr("ERROR", "[ERROR] Future.get failed: " + e.getMessage(), e);
+                    appendError("MAIN", 0, e);
+                }
+            }
+
+            executor.shutdown();
+
+            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                log("WARN ", "executor did not terminate in 60 sec. shutdownNow()");
+                List<Runnable> dropped = executor.shutdownNow();
+                log("WARN ", "dropped task count=" + dropped.size());
+
+                if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+                    log("WARN ", "executor still alive after shutdownNow()");
+                }
+            }
+
+            log("INFO ", "INSERT TOTAL=" + total);
+            log("INFO ", "ERROR WORKER COUNT=" + errorCount);
+            log("INFO ", "=== MAIN END ===");
+
+            if (errorCount > 0) {
+                exitCode = 1;
+            }
+
+        } catch (Throwable e) {
+            exitCode = 1;
+            logErr("FATAL", "[FATAL] " + e.getClass().getName() + ": " + e.getMessage(), e);
+            appendError("MAIN", 0, e);
+
+            if (executor != null) {
+                try {
+                    executor.shutdownNow();
+                } catch (Exception ignore) {
+                }
+            }
+
+        } finally {
+            if (executor != null) {
+                try {
+                    if (!executor.isShutdown()) {
+                        executor.shutdownNow();
+                    }
+                } catch (Exception ignore) {
+                }
+            }
+
+            log("INFO ", "=== JVM EXIT code=" + exitCode + " ===");
+            System.out.flush();
+            System.err.flush();
+
+            System.exit(exitCode);
+        }
+    }
+
+    private static List<String> loadPathsFromResultTxt(String fileName) throws IOException {
+        List<String> result = new ArrayList<>();
+        for (String line : Files.readAllLines(Paths.get(fileName))) {
+            if (line != null && !line.trim().isEmpty()) {
+                result.add(line.trim());
+            }
+        }
+        return result;
+    }
+
+
+    private static List<String> filterPathsByInputTxt(List<String> allPaths, String inputFileName) throws IOException {
+        if (allPaths == null) {
+            return new ArrayList<>();
+        }
+
+        Path input = Paths.get(inputFileName);
+        if (!Files.exists(input)) {
+            log("INFO ", "input.txt not found. execute all paths in result.txt.");
+            return allPaths;
+        }
+
+        Set<String> requested = loadRequestedPathsFromInputTxt(input);
+        if (requested.isEmpty()) {
+            log("INFO ", "input.txt has no valid target. execute all paths in result.txt.");
+            return allPaths;
+        }
+
+        List<String> result = new ArrayList<>();
+        Set<String> matched = new LinkedHashSet<>();
+
+        for (String p : allPaths) {
+            String normalized = normalizeRemotePath(p);
+            if (requested.contains(normalized)) {
+                result.add(p);
+                matched.add(normalized);
+            } else {
+                log("INFO ", "[SKIP] not requested by input.txt: " + p);
+            }
+        }
+
+        for (String req : requested) {
+            if (!matched.contains(req)) {
+                log("WARN ", "[INPUT NO MATCH] not found in result.txt: " + req);
+            }
+        }
+
+        return result;
+    }
+
+    private static Set<String> loadRequestedPathsFromInputTxt(Path inputFile) throws IOException {
+        Set<String> result = new LinkedHashSet<>();
+        List<String> lines = Files.readAllLines(inputFile, StandardCharsets.UTF_8);
+
+        int lineNo = 0;
+        for (String line : lines) {
+            lineNo++;
+            if (line == null) {
+                continue;
+            }
+
+            String s = line.trim();
+            if (s.isEmpty()) {
+                continue;
+            }
+
+            if (s.startsWith("#")) {
+                continue;
+            }
+
+            int commentIndex = s.indexOf('#');
+            if (commentIndex >= 0) {
+                s = s.substring(0, commentIndex).trim();
+            }
+
+            if (s.isEmpty()) {
+                continue;
+            }
+
+            String normalized = normalizeRemotePath(s);
+            if (!normalized.startsWith(normalizeRemotePath(REMOTE_MASTER_PREFIX))) {
+                log("WARN ", "[INPUT SKIP] not under /IKO/Master line=" + lineNo + " value=" + s);
+                continue;
+            }
+
+            result.add(normalized);
+        }
+
+        log("INFO ", "input.txt valid target count=" + result.size());
+        for (String p : result) {
+            log("INFO ", "[INPUT TARGET] " + p);
+        }
+
+        return result;
+    }
+
+    private static String normalizeRemotePath(String path) {
+        if (path == null) {
+            return "";
+        }
+
+        String s = path.trim().replace('\\', '/');
+        while (s.contains("//")) {
+            s = s.replace("//", "/");
+        }
+        while (s.length() > 1 && s.endsWith("/")) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s.toLowerCase(Locale.ROOT);
+    }
+
+    private static Session createSession() throws Exception {
+        JSch jsch = new JSch();
+        Session session = jsch.getSession(SSH_USER, SSH_HOST, SSH_PORT);
+        session.setPassword(SSH_PASSWORD);
+        session.setConfig("StrictHostKeyChecking", "no");
+        session.setServerAliveInterval(30000);
+        session.setServerAliveCountMax(10);
+        session.setTimeout(SSH_SOCKET_TIMEOUT_MS);
+        session.connect(SSH_CONNECT_TIMEOUT_MS);
+        return session;
+    }
+
+    private static void initializeDbObjects() throws Exception {
+        log("INFO ", "=== DB INITIALIZE START ===");
+
+        Connection conn = null;
+        Statement st = null;
+
+        try {
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            conn.setAutoCommit(false);
+            st = conn.createStatement();
+
+            setDdlLockTimeout(st);
+
+            // Drop child table first because AI_FILE1 has FK.
+            executeDrop(st, "DROP TABLE AI_FILE1 CASCADE CONSTRAINTS");
+            executeDrop(st, "DROP SEQUENCE AI_FILE1_SEQ");
+            executeDrop(st, "DROP TABLE AI_CONTENT1 CASCADE CONSTRAINTS");
+            executeDrop(st, "DROP SEQUENCE AI_CONTENT1_SEQ");
+
+            executeSql(st,
+                    "CREATE TABLE AI_CONTENT1 (" +
+                    "CONTENT_ID  NUMBER(25)    NOT NULL, " +
+                    "CKSUM       VARCHAR2(30)  NOT NULL, " +
+                    "BYTE        NUMBER(20)    NOT NULL, " +
+                    "SHA256      VARCHAR2(64)  DEFAULT '-' NOT NULL, " +
+                    "GENGO       VARCHAR2(100), " +
+                    "FIRST_ID1   NUMBER(25), " +
+                    "FIRST_PATH  VARCHAR2(1000), " +
+                    "CREATE_TIME VARCHAR2(20), " +
+                    "UPDATE_TIME VARCHAR2(20), " +
+                    "CONSTRAINT PK_AI_CONTENT1 PRIMARY KEY (CONTENT_ID), " +
+                    "CONSTRAINT UK_AI_CONTENT1 UNIQUE (CKSUM, BYTE, SHA256)" +
+                    ")");
+
+            executeSql(st, "CREATE INDEX AI_CONTENT1_IX1 ON AI_CONTENT1 (CKSUM, BYTE)");
+            executeSql(st, "CREATE INDEX AI_CONTENT1_IX2 ON AI_CONTENT1 (SHA256)");
+
+            executeSql(st,
+                    "CREATE SEQUENCE AI_CONTENT1_SEQ " +
+                    "START WITH 1 " +
+                    "INCREMENT BY 1 " +
+                    "MAXVALUE 9999999999 " +
+                    "NOCYCLE " +
+                    "CACHE 10000");
+
+            executeSql(st,
+                    "CREATE TABLE AI_FILE1 (" +
+                    "ID1         NUMBER(25)     NOT NULL, " +
+                    "CONTENT_ID NUMBER(25)     NOT NULL, " +
+                    "FILENAME   VARCHAR2(300), " +
+                    "FILEPATH   VARCHAR2(1000) NOT NULL, " +
+                    "IKOGROUP   VARCHAR2(50), " +
+                    "DIRGROUP   VARCHAR2(50), " +
+                    "GENGO      VARCHAR2(100), " +
+                    "UPDATE_TIME VARCHAR2(20), " +
+                    "BYTE       NUMBER(20), " +
+                    "CKSUM      VARCHAR2(30), " +
+                    "SHA256     VARCHAR2(64) DEFAULT '-' NOT NULL, " +
+                    "CONSTRAINT PK_AI_FILE1 PRIMARY KEY (ID1), " +
+                    "CONSTRAINT UK_AI_FILE1_PATH UNIQUE (FILEPATH), " +
+                    "CONSTRAINT FK_AI_FILE1_CONTENT FOREIGN KEY (CONTENT_ID) " +
+                    "REFERENCES AI_CONTENT1 (CONTENT_ID)" +
+                    ")");
+
+            executeSql(st, "CREATE INDEX AI_FILE1_IX1 ON AI_FILE1 (FILENAME)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX3 ON AI_FILE1 (IKOGROUP, DIRGROUP, CONTENT_ID)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX4 ON AI_FILE1 (DIRGROUP, FILENAME)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX5 ON AI_FILE1 (GENGO, FILENAME)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX6 ON AI_FILE1 (CONTENT_ID, IKOGROUP, DIRGROUP)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX7 ON AI_FILE1 (CONTENT_ID, FILENAME)");
+            executeSql(st, "CREATE INDEX AI_FILE1_IX8 ON AI_FILE1 (CKSUM, BYTE, SHA256)");
+
+            executeSql(st,
+                    "CREATE SEQUENCE AI_FILE1_SEQ " +
+                    "START WITH 1 " +
+                    "INCREMENT BY 1 " +
+                    "MAXVALUE 9999999999 " +
+                    "NOCYCLE " +
+                    "CACHE 10000");
+
+            conn.commit();
+            log("INFO ", "=== DB INITIALIZE END ===");
+
+        } catch (Exception e) {
+            rollbackQuietlyStatic(conn);
+            logErr("ERROR", "[ERROR] DB INITIALIZE failed: " + e.getMessage(), e);
+            appendError("DB_INITIALIZE", 0, e);
+            throw e;
+
+        } finally {
+            closeQuietlyStatic(st);
+            closeQuietlyStatic(conn);
+        }
+    }
+
+    private static void setDdlLockTimeout(Statement st) {
+        try {
+            String sql = "ALTER SESSION SET ddl_lock_timeout = " + DDL_LOCK_TIMEOUT_SECONDS;
+            log("INFO ", "[DDL] " + sql);
+            st.execute(sql);
+        } catch (SQLException e) {
+            log("WARN ", "[DDL WARN] ddl_lock_timeout setting failed. continue by retry. code="
+                    + e.getErrorCode() + " msg=" + e.getMessage());
+        }
+    }
+
+    private static void executeSql(Statement st, String sql) throws SQLException {
+        executeSqlWithRetry(st, sql, false);
+    }
+
+    private static void executeDrop(Statement st, String sql) throws SQLException {
+        executeSqlWithRetry(st, sql, true);
+    }
+
+    private static void executeSqlWithRetry(Statement st, String sql, boolean allowObjectNotExists) throws SQLException {
+        SQLException last = null;
+
+        for (int i = 0; i <= DDL_RESOURCE_BUSY_RETRY_COUNT; i++) {
+            try {
+                if (i == 0) {
+                    log("INFO ", "[DDL] " + sql);
+                } else {
+                    log("WARN ", "[DDL RETRY] retry=" + i + "/" + DDL_RESOURCE_BUSY_RETRY_COUNT + " sql=" + sql);
+                }
+
+                st.execute(sql);
+                return;
+
+            } catch (SQLException e) {
+                int code = e.getErrorCode();
+
+                // ORA-00942: table or view does not exist
+                // ORA-02289: sequence does not exist
+                if (allowObjectNotExists && (code == 942 || code == 2289)) {
+                    log("INFO ", "[DDL SKIP] object not exists: " + sql);
+                    return;
+                }
+
+                // ORA-00054: resource busy
+                if (code == 54) {
+                    last = e;
+
+                    if (i < DDL_RESOURCE_BUSY_RETRY_COUNT) {
+                        log("WARN ", "[DDL BUSY] ORA-00054 resource busy. sleepMs="
+                                + DDL_RESOURCE_BUSY_SLEEP_MS + " sql=" + sql);
+                        sleepQuietly(DDL_RESOURCE_BUSY_SLEEP_MS);
+                        continue;
+                    }
+                }
+
+                throw e;
+            }
+        }
+
+        throw last;
+    }
+
+    private static void sleepQuietly(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private static void rollbackQuietlyStatic(Connection conn) {
+        try {
+            if (conn != null && !conn.getAutoCommit()) {
+                conn.rollback();
+            }
+        } catch (Exception ignore) {
+        }
+    }
+
+    private static void ensureLogDir() {
+        try {
+            Files.createDirectories(Paths.get(LOG_DIR));
+        } catch (Exception e) {
+            throw new RuntimeException("failed to create log directory: " + LOG_DIR, e);
+        }
+    }
+
+    private static String now() {
+        return new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss").format(new java.util.Date());
+    }
+
+    private static void log(String level, String msg) {
+        synchronized (LOG_LOCK) {
+            System.out.println(now() + " [" + level + "] " + msg);
+        }
+    }
+
+    private static void logErr(String level, String msg, Throwable t) {
+        synchronized (LOG_LOCK) {
+            System.err.println(now() + " [" + level + "] " + msg);
+            if (t != null) {
+                t.printStackTrace(System.err);
+            }
+        }
+    }
+
+    private static void appendError(String dirGroupPath, int workerNo, Throwable t) {
+        ensureLogDir();
+
+        synchronized (LOG_LOCK) {
+            BufferedWriter bw = null;
+            PrintWriter pw = null;
+            try {
+                bw = Files.newBufferedWriter(
+                        Paths.get(ERROR_LOG_FILE),
+                        Charset.forName("UTF-8"),
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.WRITE,
+                        StandardOpenOption.APPEND
+                );
+                pw = new PrintWriter(bw);
+
+                pw.println("==================================================");
+                pw.println("DATE        : " + now());
+                pw.println("WORKER      : " + workerNo);
+                pw.println("DIR_GROUP   : " + dirGroupPath);
+                pw.println("ERROR_CLASS : " + (t == null ? "" : t.getClass().getName()));
+                pw.println("MESSAGE     : " + (t == null ? "" : String.valueOf(t.getMessage())));
+                pw.println("STACKTRACE  :");
+                if (t != null) {
+                    t.printStackTrace(pw);
+                }
+                pw.println();
+                pw.flush();
+
+            } catch (Exception ex) {
+                System.err.println(now() + " [ERROR] failed to write ERROR.txt: " + ex.getMessage());
+                ex.printStackTrace(System.err);
+            } finally {
+                closeQuietlyStatic(pw);
+                closeQuietlyStatic(bw);
+            }
+        }
+    }
+
+    private static void closeQuietlyStatic(AutoCloseable c) {
+        try {
+            if (c != null) c.close();
+        } catch (Exception ignore) {
+        }
+    }
+
+    static class Worker implements Callable<Long> {
+
+        int no;
+        String path;
+        AtomicLong counter;
+        private final Map<String, Long> contentCache = new LinkedHashMap<String, Long>(4096, 0.75f, true) {
+            protected boolean removeEldestEntry(Map.Entry<String, Long> eldest) {
+                return size() > 20000;
+            }
+        };
+
+        Worker(int no, String path, AtomicLong counter) {
+            this.no = no;
+            this.path = path;
+            this.counter = counter;
+        }
+
+        @Override
+        public Long call() throws Exception {
+
+            Session session = null;
+            Connection conn = null;
+            PreparedStatement ps = null;
+
+            try {
+                log("INFO ", "[START] Worker-" + no + " path=" + path);
+
+                session = createSession();
+                conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                conn.setAutoCommit(false);
+
+                ps = conn.prepareStatement(
+                        "INSERT /*+ IGNORE_ROW_ON_DUPKEY_INDEX(AI_FILE1 (FILEPATH)) */ " +
+                        "INTO AI_FILE1 (" +
+                        "ID1, CONTENT_ID, FILENAME, FILEPATH, IKOGROUP, DIRGROUP, GENGO, UPDATE_TIME, BYTE, CKSUM, SHA256" +
+                        ") VALUES (AI_FILE1_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                enableOracleBatchIfPossible(ps);
+
+                int batch = 0;
+                long count = 0;
+
+                List<FileRecord> list = fetchFileRecords(session, path);
+
+                for (FileRecord r : list) {
+
+                    if (DEBUG_RECORD_LOG) {
+                        log("INFO ", r.toString());
+                    }
+
+                    r.contentId = getOrCreateContent(conn, r);
+
+                    ps.setLong(1, r.contentId);
+                    ps.setString(2, nvl(r.fileName));
+                    ps.setString(3, nvl(r.dbPath));
+                    ps.setString(4, nvl(r.ikoGroup));
+                    ps.setString(5, nvl(r.dirGroup));
+                    ps.setString(6, nvl(r.gengo));
+                    ps.setString(7, nvl(r.updateTime));
+                    ps.setLong(8, parseLongDefault(r.size, 0L));
+                    ps.setString(9, nvl(r.cksum));
+                    ps.setString(10, nvl(r.sha256));
+
+                    ps.addBatch();
+                    batch++;
+
+                    if (batch >= BATCH_SIZE) {
+                        count += execBatch(ps, conn);
+                        batch = 0;
+                    }
+                }
+
+                if (batch > 0) {
+                    count += execBatch(ps, conn);
+                    batch = 0;
+                }
+
+                List<String> jarPaths = fetchJarPaths(session, path);
+                log("INFO ", "[INFO ] Worker-" + no + " jar count=" + jarPaths.size());
+
+                for (String jarPath : jarPaths) {
+                    if (isSampleJarName(jarPath)) {
+                        log("INFO ", "[SKIP  ] Worker-" + no + " sample.jar skip: " + jarPath);
+                        continue;
+                    }
+
+                    log("INFO ", "[JAR   ] Worker-" + no + " start: " + jarPath);
+
+                    List<FileRecord> jarJavaList;
+                    try {
+                        jarJavaList = fetchJarJavaRecordsByDownload(session, jarPath);
+                    } catch (Exception e) {
+                        if (isIgnorableError(e)) {
+                            log("INFO ", "[SKIP  ] Worker-" + no + " ignorable jar error skipped: "
+                                    + jarPath + " / " + e.getMessage());
+                            continue;
+                        }
+
+                        logErr("WARN ", "[WARN  ] Worker-" + no + " jar process error: "
+                                + jarPath + " / " + e.getMessage(), e);
+                        appendError(path + " / jar=" + jarPath, no, e);
+                        continue;
+                    }
+
+                    log("INFO ", "[INFO ] Worker-" + no + " java count="
+                            + jarJavaList.size() + " / jar=" + jarPath);
+
+                    for (FileRecord r : jarJavaList) {
+
+                        if (DEBUG_RECORD_LOG) {
+                            log("INFO ", "[INSERT-JAR] " + r.toString());
+                        }
+
+                        r.contentId = getOrCreateContent(conn, r);
+
+                        ps.setLong(1, r.contentId);
+                        ps.setString(2, nvl(r.fileName));
+                        ps.setString(3, nvl(r.dbPath));
+                        ps.setString(4, nvl(r.ikoGroup));
+                        ps.setString(5, nvl(r.dirGroup));
+                        ps.setString(6, nvl(r.gengo));
+                        ps.setString(7, nvl(r.updateTime));
+                        ps.setLong(8, parseLongDefault(r.size, 0L));
+                        ps.setString(9, nvl(r.cksum));
+                        ps.setString(10, nvl(r.sha256));
+
+                        ps.addBatch();
+                        batch++;
+
+                        if (batch >= BATCH_SIZE) {
+                            count += execBatch(ps, conn);
+                            batch = 0;
+                        }
+                    }
+
+                    log("INFO ", "[JAR   ] Worker-" + no + " end  : " + jarPath);
+                }
+
+                if (batch > 0) {
+                    count += execBatch(ps, conn);
+                }
+
+                log("INFO ", "[END] Worker-" + no + " inserted=" + count);
+                return count;
+
+            } catch (Exception e) {
+                logErr("ERROR", "[ERROR] Worker-" + no + " path=" + path + " / " + e.getMessage(), e);
+                appendError(path, no, e);
+                throw e;
+
+            } finally {
+                closeQuietly(ps);
+                rollbackQuietly(conn);
+                closeQuietly(conn);
+                disconnectQuietly(session);
+            }
+        }
+
+
+        private long getOrCreateContent(Connection conn, FileRecord r) throws Exception {
+            if (r == null) {
+                throw new IllegalArgumentException("FileRecord is null");
+            }
+
+            r.cksum = nvl(r.cksum).trim();
+            r.size = nvl(r.size).trim();
+            r.sha256 = normalizeContentHash(r);
+
+            if (r.cksum.isEmpty()) {
+                throw new IllegalArgumentException("CKSUM is empty: " + r);
+            }
+
+            long byteSize = parseLongDefault(r.size, 0L);
+            if (byteSize < 0L) {
+                byteSize = 0L;
+            }
+
+            String cacheKey = contentCacheKey(r.cksum, byteSize, r.sha256);
+            Long cached = contentCache.get(cacheKey);
+            if (cached != null) {
+                return cached.longValue();
+            }
+
+            Long existing = selectContentId(conn, r.cksum, byteSize, r.sha256);
+            if (existing != null) {
+                contentCache.put(cacheKey, existing);
+                return existing.longValue();
+            }
+
+            synchronized (CONTENT_LOCK) {
+                existing = selectContentId(conn, r.cksum, byteSize, r.sha256);
+                if (existing != null) {
+                    contentCache.put(cacheKey, existing);
+                    return existing.longValue();
+                }
+
+                long contentId = nextContentId(conn);
+                long inserted = insertContent(conn, contentId, r, byteSize);
+                contentCache.put(cacheKey, inserted);
+                return inserted;
+            }
+        }
+
+        private String contentCacheKey(String cksum, long byteSize, String sha256) {
+            return nvl(cksum) + "|" + byteSize + "|" + nvl(sha256);
+        }
+
+        private Long selectContentId(Connection conn, String cksum, long byteSize, String sha256) throws Exception {
+            String sql =
+                    "SELECT CONTENT_ID " +
+                    "FROM AI_CONTENT1 " +
+                    "WHERE CKSUM = ? AND BYTE = ? AND SHA256 = ?";
+
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, cksum);
+                ps.setLong(2, byteSize);
+                ps.setString(3, sha256);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getLong(1);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private long nextContentId(Connection conn) throws Exception {
+            try (Statement st = conn.createStatement();
+                 ResultSet rs = st.executeQuery("SELECT AI_CONTENT1_SEQ.NEXTVAL FROM DUAL")) {
+                if (!rs.next()) {
+                    throw new SQLException("AI_CONTENT1_SEQ.NEXTVAL failed");
+                }
+                return rs.getLong(1);
+            }
+        }
+
+        private long insertContent(Connection conn, long contentId, FileRecord r, long byteSize) throws Exception {
+            String sql =
+                    "INSERT INTO AI_CONTENT1 (" +
+                    "CONTENT_ID, CKSUM, BYTE, SHA256, GENGO, FIRST_ID1, FIRST_PATH, CREATE_TIME, UPDATE_TIME" +
+                    ") VALUES (?, ?, ?, ?, ?, NULL, ?, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'), ?)";
+
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setLong(1, contentId);
+                ps.setString(2, nvl(r.cksum));
+                ps.setLong(3, byteSize);
+                ps.setString(4, nvl(r.sha256));
+                ps.setString(5, nvl(r.gengo));
+                ps.setString(6, nvl(r.dbPath));
+                ps.setString(7, nvl(r.updateTime));
+                ps.executeUpdate();
+                // AI_CONTENT1の一意キー待ちを長引かせないため、コンテンツ行だけ先に確定する。
+                // AI_FILE1はPreparedStatementの未実行batchなので、このcommitではまだ確定されない。
+                conn.commit();
+
+                return contentId;
+
+            } catch (SQLException e) {
+                Long existing = selectContentId(conn, nvl(r.cksum), byteSize, nvl(r.sha256));
+                if (existing != null) {
+                    return existing.longValue();
+                }
+                throw e;
+            }
+        }
+
+        private String normalizeContentHash(FileRecord r) {
+            String current = r.sha256 == null ? "" : r.sha256.trim();
+            if (!current.isEmpty()) {
+                return current.length() > 64 ? current.substring(0, 64) : current;
+            }
+
+            String key = "CKSUM_" + nvl(r.cksum).trim() + "_" + nvl(r.size).trim();
+            if (key.length() > 64) {
+                return key.substring(0, 64);
+            }
+            return key;
+        }
+
+        private long parseLongDefault(String s, long def) {
+            if (s == null) {
+                return def;
+            }
+            try {
+                String v = s.trim();
+                if (v.isEmpty()) {
+                    return def;
+                }
+                return Long.parseLong(v);
+            } catch (Exception e) {
+                return def;
+            }
+        }
+
+        private void enableOracleBatchIfPossible(PreparedStatement ps) {
+            log("INFO ", "[INFO ] Worker-" + no + " JDBC standard batching enabled.");
+        }
+
+        private String nvl(String s) {
+            return s == null ? "" : s;
+        }
+
+        private long execBatch(PreparedStatement ps, Connection conn) throws Exception {
+            long start = System.currentTimeMillis();
+            int[] ret = ps.executeBatch();
+            ps.clearBatch();
+            conn.commit();
+
+            long ok = 0;
+            for (int v : ret) {
+                if (v >= 0 || v == Statement.SUCCESS_NO_INFO) ok++;
+            }
+
+            counter.addAndGet(ok);
+
+            long end = System.currentTimeMillis();
+            log("INFO ", "[BATCH ] Worker-" + no + " commit rows=" + ok
+                    + " elapsedMs=" + (end - start)
+                    + " time=" + now());
+
+            return ok;
+        }
+
+        private List<FileRecord> fetchFileRecords(Session session, String basePath) throws Exception {
+
+            final List<FileRecord> result = new ArrayList<>();
+
+            boolean zeroSupported = supportsNullSeparatedFindXargs(session, basePath);
+            log("INFO ", "[INFO ] Worker-" + no + " zeroSeparatedSupported=" + zeroSupported);
+
+            String cmd = zeroSupported
+                    ? buildFastFindCommand(basePath)
+                    : buildFallbackFindCommand(basePath);
+
+            execIgnoreMissingPath(session, cmd, line -> {
+                List<FileRecord> rows = parseCombinedLines(line);
+                for (FileRecord r : rows) {
+                    fillLogicalColumns(r);
+                    result.add(r);
+                }
+            });
+
+            return result;
+        }
+
+        private boolean supportsNullSeparatedFindXargs(Session session, String basePath) {
+            String testCmd =
+                    "sh -c " + shq(
+                            "find " + shq(basePath) + " -type f -print0 >/dev/null 2>&1 " +
+                                    "&& printf 'a\\0' | xargs -0 echo >/dev/null 2>&1"
+                    );
+
+            try {
+                exec(session, testCmd, line -> {});
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private String buildFastFindCommand(String basePath) {
+            return "sh -c " + shq(
+                    "find " + shq(basePath) + " -type f -print0 | " +
+                            "xargs -0 -n 128 sh -c '" +
+                            "for f do " +
+                            "  c=`cksum \"$f\" 2>/dev/null` || continue; " +
+                            "  l=`ls -ld \"$f\" 2>/dev/null` || continue; " +
+                            "  set -- $c; " +
+                            "  ck=$1; sz=$2; " +
+                            "  echo \"$ck" + '\u001F' + "$sz" + '\u001F' + "$f" + '\u001F' + "$l" + '\u001E' + "\"; " +
+                            "done' sh"
+            );
+        }
+
+        private String buildFallbackFindCommand(String basePath) {
+            return "sh -c " + shq(
+                    "find " + shq(basePath) + " -type f | " +
+                            "while IFS= read -r f; do " +
+                            "  c=`cksum \"$f\" 2>/dev/null` || continue; " +
+                            "  l=`ls -ld \"$f\" 2>/dev/null` || continue; " +
+                            "  set -- $c; " +
+                            "  ck=$1; sz=$2; " +
+                            "  echo \"$ck" + '\u001F' + "$sz" + '\u001F' + "$f" + '\u001F' + "$l" + '\u001E' + "\"; " +
+                            "done"
+            );
+        }
+
+        private List<FileRecord> parseCombinedLines(String line) {
+            List<FileRecord> list = new ArrayList<>();
+
+            if (line == null) {
+                return list;
+            }
+
+            String[] records = line.split(String.valueOf('\u001E'));
+            for (String rec : records) {
+                if (rec == null || rec.length() == 0) {
+                    continue;
+                }
+
+                String[] sp = rec.split(String.valueOf('\u001F'), 4);
+                if (sp.length < 4) {
+                    continue;
+                }
+
+                String cksum = sp[0];
+                String size = sp[1];
+                String fullPath = sp[2];
+                String lsLine = sp[3];
+
+                FileRecord r = new FileRecord();
+                r.cksum = cksum;
+                r.size = size;
+                r.fullPath = fullPath;
+                r.fileName = getName(fullPath);
+                r.updateTime = parseLsUpdateTime(lsLine, fullPath);
+
+                list.add(r);
+            }
+
+            return list;
+        }
+
+        private String parseLsUpdateTime(String lsLine, String fullPath) {
+            if (lsLine == null) {
+                return "";
+            }
+
+            String s = lsLine.trim();
+            if (s.isEmpty()) {
+                return "";
+            }
+
+            String[] sp = s.split("\\s+");
+            if (sp.length < 8) {
+                return "";
+            }
+
+            String month = sp.length > 5 ? sp[5] : "";
+            String day = sp.length > 6 ? sp[6] : "";
+            String timeOrYear = sp.length > 7 ? sp[7] : "";
+
+            try {
+                return buildUpdateTimeFromLs(month, day, timeOrYear);
+            } catch (Exception e) {
+                return "";
+            }
+        }
+
+        private String buildUpdateTimeFromLs(String monthText, String dayText, String timeOrYear) {
+            String mm = monthToNumber(monthText);
+            String dd = leftPad2(dayText);
+
+            Calendar cal = Calendar.getInstance();
+            int currentYear = cal.get(Calendar.YEAR);
+
+            String yyyy;
+            String hhmmss;
+
+            if (timeOrYear != null && timeOrYear.contains(":")) {
+                yyyy = String.valueOf(currentYear);
+                hhmmss = normalizeHHMMSS(timeOrYear);
+            } else {
+                yyyy = timeOrYear == null ? String.valueOf(currentYear) : timeOrYear;
+                hhmmss = "00:00:00";
+            }
+
+            return yyyy + mm + dd + "_" + hhmmss;
+        }
+
+        private String monthToNumber(String monthText) {
+            if (monthText == null) return "01";
+            String m = monthText.trim().toLowerCase(Locale.ENGLISH);
+            if ("jan".equals(m)) return "01";
+            if ("feb".equals(m)) return "02";
+            if ("mar".equals(m)) return "03";
+            if ("apr".equals(m)) return "04";
+            if ("may".equals(m)) return "05";
+            if ("jun".equals(m)) return "06";
+            if ("jul".equals(m)) return "07";
+            if ("aug".equals(m)) return "08";
+            if ("sep".equals(m)) return "09";
+            if ("oct".equals(m)) return "10";
+            if ("nov".equals(m)) return "11";
+            if ("dec".equals(m)) return "12";
+            return "01";
+        }
+
+        private String leftPad2(String s) {
+            if (s == null) return "00";
+            String v = s.trim();
+            if (v.length() == 1) return "0" + v;
+            return v;
+        }
+
+        private String normalizeHHMMSS(String s) {
+            if (s == null) return "00:00:00";
+            String v = s.trim();
+            if (v.matches("\\d{2}:\\d{2}:\\d{2}")) return v;
+            if (v.matches("\\d{2}:\\d{2}")) return v + ":00";
+            return "00:00:00";
+        }
+
+        private void fillLogicalColumns(FileRecord r) {
+            String p = r.fullPath.replace("/IKO/Master/", "");
+            String[] sp = p.split("/");
+
+            r.ikoGroup = sp.length > 0 ? sp[0] : "";
+            r.dirGroup = sp.length > 1 ? sp[1] : "";
+
+            // GENGO is extension of last file name.
+            String fileNameFromPath = getName(r.fullPath);
+            r.fileName = fileNameFromPath;
+            r.gengo = normalizeGengo(getExtFromFullPath(r.fullPath));
+
+            r.dbPath = "NIKKO." + p;
+        }
+
+        private List<String> fetchJarPaths(Session session, String basePath) throws Exception {
+            List<String> jars = new ArrayList<>();
+
+            execIgnoreMissingPath(session,
+                    "find " + shq(basePath) + " -type f \\( -name '*.jar' -o -name '*.JAR' \\) ! -iname 'sample.jar'",
+                    line -> {
+                        String s = line == null ? "" : line.trim();
+                        if (!s.isEmpty() && !isSampleJarName(s)) {
+                            jars.add(s);
+                        }
+                    });
+
+            return jars;
+        }
+
+        private List<FileRecord> fetchJarJavaRecordsByDownload(Session session, String remoteJarPath) throws Exception {
+
+            List<FileRecord> result = new ArrayList<>();
+
+            if (isSampleJarName(remoteJarPath)) {
+                log("INFO ", "[SKIP  ] Worker-" + no + " sample.jar skip before download: " + remoteJarPath);
+                return result;
+            }
+
+            Path workerRoot = Paths.get(LOCAL_DOWNLOAD_ROOT, "worker_" + no);
+            Files.createDirectories(workerRoot);
+
+            String jarFileName = getName(remoteJarPath);
+            String uniquePrefix = System.currentTimeMillis() + "_" + Thread.currentThread().getId();
+            Path localJar = workerRoot.resolve(uniquePrefix + "_" + jarFileName);
+
+            long start = System.currentTimeMillis();
+
+            try {
+                log("INFO ", "[SFTP  ] Worker-" + no + " download start: "
+                        + remoteJarPath + " -> " + localJar);
+
+                try {
+                    scpFrom(session, remoteJarPath, localJar);
+                } catch (Exception e) {
+                    if (isIgnorableError(e)) {
+                        log("INFO ", "[SKIP  ] Worker-" + no + " download ignored: "
+                                + remoteJarPath + " / " + e.getMessage());
+                        return result;
+                    }
+                    throw e;
+                }
+
+                log("INFO ", "[SFTP  ] Worker-" + no + " download end  : " + remoteJarPath);
+
+                if (!Files.exists(localJar) || !Files.isRegularFile(localJar)) {
+                    log("INFO ", "[SKIP  ] Worker-" + no + " downloaded path is not regular file: " + localJar);
+                    return result;
+                }
+
+                if (isSampleJarName(localJar.getFileName().toString())) {
+                    log("INFO ", "[SKIP  ] Worker-" + no + " local sample.jar skip: " + localJar);
+                    return result;
+                }
+
+                if (!isZipLikeFile(localJar)) {
+                    log("INFO ", "[SKIP  ] Worker-" + no + " not zip/jar format: " + remoteJarPath);
+                    return result;
+                }
+
+                readJarJavaRecordsStreaming(localJar, remoteJarPath, result, start);
+                return result;
+
+            } finally {
+                try {
+                    Files.deleteIfExists(localJar);
+                } catch (Exception e) {
+                    logErr("WARN ", "[WARN  ] Worker-" + no + " localJar delete error: "
+                            + localJar + " / " + e.getMessage(), e);
+                }
+            }
+        }
+
+        private void readJarJavaRecordsStreaming(
+                Path localJar,
+                String remoteJarPath,
+                List<FileRecord> result,
+                long startMillis
+        ) throws Exception {
+            Exception last = null;
+
+            Charset[] candidates = new Charset[] {
+                    StandardCharsets.UTF_8,
+                    Charset.forName("MS932")
+            };
+
+            for (Charset cs : candidates) {
+                try {
+                    readJarJavaRecordsStreamingWithCharset(localJar, remoteJarPath, result, startMillis, cs);
+                    return;
+                } catch (IllegalArgumentException | ZipException | EOFException e) {
+                    result.clear();
+                    last = e;
+                }
+            }
+
+            throw new IOException("JAR read failed: " + localJar + " / " +
+                    (last == null ? "" : last.getClass().getName() + ": " + last.getMessage()), last);
+        }
+
+        private void readJarJavaRecordsStreamingWithCharset(
+                Path localJar,
+                String remoteJarPath,
+                List<FileRecord> result,
+                long startMillis,
+                Charset charset
+        ) throws Exception {
+            int entryCount = 0;
+            int javaCount = 0;
+            String jarUpdateTime = formatFileTime(Files.getLastModifiedTime(localJar));
+
+            try (ZipFile zipFile = new ZipFile(localJar.toFile(), charset)) {
+                Enumeration<? extends ZipEntry> en = zipFile.entries();
+
+                while (en.hasMoreElements()) {
+                    if (Thread.currentThread().isInterrupted()) {
+                        throw new InterruptedException("interrupted while reading jar: " + remoteJarPath);
+                    }
+
+                    long elapsed = System.currentTimeMillis() - startMillis;
+                    if (elapsed > JAR_PROCESS_TIMEOUT_MS) {
+                        throw new TimeoutException("jar process timeout. elapsedMs=" + elapsed + " jar=" + remoteJarPath);
+                    }
+
+                    ZipEntry entry = en.nextElement();
+                    entryCount++;
+
+                    if (entry == null || entry.isDirectory()) {
+                        continue;
+                    }
+
+                    String innerPath = entry.getName();
+                    if (innerPath == null || !innerPath.toLowerCase(Locale.ROOT).endsWith(".java")) {
+                        continue;
+                    }
+
+                    CksumResult c = calcZipEntryCksum(zipFile, entry);
+                    String updateTime = entry.getTime() > 0
+                            ? new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(new java.util.Date(entry.getTime()))
+                            : jarUpdateTime;
+
+                    FileRecord r = new FileRecord();
+                    r.fileName = getName(innerPath);
+                    r.size = c.byteSize;
+                    r.cksum = c.cksum;
+                    r.sha256 = "ZIPCRC_" + c.cksum + "_" + c.byteSize;
+                    if (r.sha256.length() > 64) {
+                        r.sha256 = r.sha256.substring(0, 64);
+                    }
+                    r.updateTime = updateTime;
+                    r.gengo = normalizeGengo(getExtFromFullPath(innerPath));
+
+                    fillLogicalColumnsFromJarPath(r, remoteJarPath, innerPath);
+                    result.add(r);
+                    javaCount++;
+
+                    if (javaCount % PROGRESS_LOG_INTERVAL == 0) {
+                        log("INFO ", "[JAR   ] Worker-" + no + " java progress=" + javaCount
+                                + " entries=" + entryCount + " jar=" + remoteJarPath);
+                    }
+                }
+            }
+
+            log("INFO ", "[JAR   ] Worker-" + no + " streamed entries=" + entryCount
+                    + " java=" + javaCount + " jar=" + remoteJarPath);
+        }
+
+        private CksumResult calcZipEntryCksum(ZipFile zipFile, ZipEntry entry) throws Exception {
+            long crc = entry.getCrc();
+            long size = entry.getSize();
+
+            if (crc >= 0L && size >= 0L) {
+                CksumResult r = new CksumResult();
+                r.cksum = String.valueOf(crc);
+                r.byteSize = String.valueOf(size);
+                return r;
+            }
+
+            CRC32 crc32 = new CRC32();
+            long bytes = 0L;
+            byte[] buf = new byte[65536];
+
+            try (InputStream in = zipFile.getInputStream(entry)) {
+                int len;
+                while ((len = in.read(buf)) != -1) {
+                    crc32.update(buf, 0, len);
+                    bytes += len;
+                }
+            }
+
+            CksumResult r = new CksumResult();
+            r.cksum = String.valueOf(crc32.getValue());
+            r.byteSize = String.valueOf(bytes);
+            return r;
+        }
+
+        private boolean isSampleJarName(String pathOrName) {
+            if (pathOrName == null) {
+                return false;
+            }
+            String name = getName(pathOrName);
+            return "sample.jar".equalsIgnoreCase(name);
+        }
+
+        private boolean isZipLikeFile(Path file) {
+            if (file == null) {
+                return false;
+            }
+            if (!Files.exists(file) || !Files.isRegularFile(file)) {
+                return false;
+            }
+
+            try (InputStream in = Files.newInputStream(file)) {
+                int b1 = in.read();
+                int b2 = in.read();
+                int b3 = in.read();
+                int b4 = in.read();
+                return b1 == 0x50 && b2 == 0x4B && b3 == 0x03 && b4 == 0x04;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean unzipJarQuietly(Path jarFile, Path extractDir) {
+            try {
+                unzipJar(jarFile, extractDir);
+                return true;
+            } catch (Exception e) {
+                try {
+                    deleteRecursively(extractDir);
+                    Files.createDirectories(extractDir);
+                } catch (Exception ignore) {
+                }
+                return false;
+            }
+        }
+
+        private void fillLogicalColumnsFromJarPath(FileRecord r, String remoteJarPath, String innerPath) {
+            String p = remoteJarPath;
+
+            if (p.startsWith(REMOTE_MASTER_PREFIX)) {
+                p = p.substring(REMOTE_MASTER_PREFIX.length());
+            } else if (p.startsWith("/")) {
+                p = p.substring(1);
+            }
+
+            String[] sp = p.split("/");
+
+            r.ikoGroup = sp.length > 0 ? sp[0] : "";
+            r.dirGroup = sp.length > 1 ? sp[1] : "";
+            r.dbPath = "NIKKO." + p + "/" + innerPath;
+            r.fullPath = r.dbPath;
+        }
+
+        private void scpFrom(Session session, String remoteFile, Path localFile) throws Exception {
+            ChannelSftp sftp = null;
+            try {
+                Path parent = localFile.getParent();
+                if (parent != null) {
+                    Files.createDirectories(parent);
+                }
+
+                sftp = (ChannelSftp) session.openChannel("sftp");
+                sftp.connect(CHANNEL_CONNECT_TIMEOUT_MS);
+                sftp.get(remoteFile, localFile.toAbsolutePath().toString());
+            } finally {
+                if (sftp != null) {
+                    try {
+                        sftp.disconnect();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+
+        private int checkAck(InputStream in) throws IOException {
+            int b = in.read();
+            if (b == 0 || b == -1) return b;
+            if (b == 1 || b == 2) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int c;
+                while ((c = in.read()) != '\n') {
+                    if (c < 0) break;
+                    baos.write(c);
+                }
+                throw new IOException("SCP ACK ERROR: " + baos.toString("UTF-8"));
+            }
+            return b;
+        }
+
+        private void readFully(InputStream in, byte[] buf, int len) throws IOException {
+            int off = 0;
+            while (off < len) {
+                int r = in.read(buf, off, len - off);
+                if (r < 0) throw new IOException("unexpected EOF");
+                off += r;
+            }
+        }
+
+        private void unzipJar(Path jarFile, Path extractDir) throws Exception {
+            Files.createDirectories(extractDir);
+
+            Exception last = null;
+
+            Charset[] candidates = new Charset[] {
+                    StandardCharsets.UTF_8,
+                    Charset.forName("MS932")
+            };
+
+            for (Charset cs : candidates) {
+                try {
+                    unzipJarWithCharset(jarFile, extractDir, cs);
+                    return;
+                } catch (IllegalArgumentException | ZipException | EOFException e) {
+                    last = e;
+
+                    try {
+                        deleteRecursively(extractDir);
+                    } catch (Exception ignore) {
+                    }
+                    Files.createDirectories(extractDir);
+                }
+            }
+
+            throw new IOException("JAR unzip failed: " + jarFile + " / " +
+                    (last == null ? "" : last.getClass().getName() + ": " + last.getMessage()), last);
+        }
+
+        private void unzipJarWithCharset(Path jarFile, Path extractDir, Charset charset) throws Exception {
+            byte[] buffer = new byte[8192];
+            Path base = extractDir.toAbsolutePath().normalize();
+
+            try (ZipFile zipFile = new ZipFile(jarFile.toFile(), charset)) {
+                Enumeration<? extends ZipEntry> en = zipFile.entries();
+
+                while (en.hasMoreElements()) {
+                    ZipEntry entry = en.nextElement();
+                    String entryName = entry.getName();
+
+                    if (entryName == null || entryName.trim().isEmpty()) {
+                        continue;
+                    }
+
+                    Path outPath = base.resolve(entryName).normalize();
+
+                    if (!outPath.startsWith(base)) {
+                        throw new IOException("invalid zip entry: " + entryName);
+                    }
+
+                    if (entry.isDirectory()) {
+                        Files.createDirectories(outPath);
+                        continue;
+                    }
+
+                    Path parent = outPath.getParent();
+                    if (parent != null) {
+                        Files.createDirectories(parent);
+                    }
+
+                    try (InputStream is = zipFile.getInputStream(entry);
+                         OutputStream os = new BufferedOutputStream(Files.newOutputStream(
+                                 outPath,
+                                 StandardOpenOption.CREATE,
+                                 StandardOpenOption.TRUNCATE_EXISTING,
+                                 StandardOpenOption.WRITE))) {
+
+                        int len;
+                        while ((len = is.read(buffer)) != -1) {
+                            os.write(buffer, 0, len);
+                        }
+                    }
+
+                    if (entry.getTime() > 0) {
+                        try {
+                            Files.setLastModifiedTime(outPath, FileTime.fromMillis(entry.getTime()));
+                        } catch (Exception ignore) {
+                        }
+                    }
+                }
+            }
+        }
+
+        private CksumResult calcCksum(Path file) throws Exception {
+            ProcessBuilder pb = new ProcessBuilder(
+                    LOCAL_CKSUM_EXE,
+                    file.toAbsolutePath().toString()
+            );
+            pb.redirectErrorStream(true);
+
+            Process p = pb.start();
+
+            String line = null;
+            StringBuilder all = new StringBuilder();
+
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(p.getInputStream(), Charset.defaultCharset()))) {
+                String s;
+                while ((s = br.readLine()) != null) {
+                    if (line == null && !s.trim().isEmpty()) {
+                        line = s;
+                    }
+                    all.append(s).append(System.lineSeparator());
+                }
+            }
+
+            int rc = p.waitFor();
+            if (rc != 0 || line == null || line.trim().isEmpty()) {
+                throw new IOException("cksum command failed: file=" + file
+                        + " exe=" + LOCAL_CKSUM_EXE
+                        + " rc=" + rc
+                        + " output=" + all.toString());
+            }
+
+            String[] sp = line.trim().split("\\s+", 3);
+            if (sp.length < 2) {
+                throw new IOException("invalid cksum output: " + line);
+            }
+
+            CksumResult r = new CksumResult();
+            r.cksum = sp[0];
+            r.byteSize = sp[1];
+            return r;
+        }
+
+        private String formatFileTime(FileTime ft) {
+            return new SimpleDateFormat("yyyyMMdd_HH:mm:ss")
+                    .format(new java.util.Date(ft.toMillis()));
+        }
+
+        private void deleteRecursively(Path path) throws IOException {
+            if (path == null || !Files.exists(path)) {
+                return;
+            }
+
+            Files.walk(path)
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(p -> {
+                        try {
+                            Files.deleteIfExists(p);
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    });
+        }
+
+        private void exec(Session session, String cmd, LineHandler handler) throws Exception {
+
+            ChannelExec ch = null;
+            BufferedReader br = null;
+            ByteArrayOutputStream errBuf = null;
+
+            try {
+                ch = (ChannelExec) session.openChannel("exec");
+                ch.setCommand(cmd);
+                ch.setInputStream(null);
+
+                InputStream in = ch.getInputStream();
+                errBuf = new ByteArrayOutputStream();
+                ch.setErrStream(errBuf);
+
+                ch.connect(CHANNEL_CONNECT_TIMEOUT_MS);
+
+                br = new BufferedReader(new InputStreamReader(in, SSH_CHARSET));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    handler.handle(line);
+                }
+
+                while (!ch.isClosed()) {
+                    Thread.sleep(50);
+                }
+
+                String errText = "";
+                if (errBuf.size() > 0) {
+                    errText = new String(errBuf.toByteArray(), SSH_CHARSET).trim();
+                    if (!errText.isEmpty()) {
+                        log("WARN ", "[SSH-ERR] Worker-" + no + " " + errText);
+                    }
+                }
+
+                if (ch.getExitStatus() != 0) {
+                    throw new RuntimeException("SSH error: " + cmd
+                            + " / exit=" + ch.getExitStatus()
+                            + (errText.isEmpty() ? "" : " / stderr=" + errText));
+                }
+
+            } finally {
+                closeQuietly(br);
+                closeQuietly(errBuf);
+                if (ch != null) {
+                    try {
+                        ch.disconnect();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+
+        private void execIgnoreMissingPath(Session session, String cmd, LineHandler handler) throws Exception {
+
+            ChannelExec ch = null;
+            BufferedReader br = null;
+            ByteArrayOutputStream errBuf = null;
+
+            try {
+                ch = (ChannelExec) session.openChannel("exec");
+                ch.setCommand(cmd);
+                ch.setInputStream(null);
+
+                InputStream in = ch.getInputStream();
+                errBuf = new ByteArrayOutputStream();
+                ch.setErrStream(errBuf);
+
+                ch.connect(CHANNEL_CONNECT_TIMEOUT_MS);
+
+                br = new BufferedReader(new InputStreamReader(in, SSH_CHARSET));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    handler.handle(line);
+                }
+
+                while (!ch.isClosed()) {
+                    Thread.sleep(50);
+                }
+
+                String errText = "";
+                if (errBuf.size() > 0) {
+                    errText = new String(errBuf.toByteArray(), SSH_CHARSET).trim();
+                }
+
+                int exitStatus = ch.getExitStatus();
+                if (exitStatus != 0) {
+                    if (isIgnorableMissingPathError(errText) || isIgnorablePermissionDeniedError(errText)) {
+                        log("INFO ", "[SKIP  ] Worker-" + no + " ignored ssh error: " + cmd
+                                + " / stderr=" + errText);
+                        return;
+                    }
+
+                    if (!errText.isEmpty()) {
+                        log("WARN ", "[SSH-ERR] Worker-" + no + " " + errText);
+                    }
+
+                    throw new RuntimeException("SSH error: " + cmd
+                            + " / exit=" + exitStatus
+                            + (errText.isEmpty() ? "" : " / stderr=" + errText));
+                }
+
+            } finally {
+                closeQuietly(br);
+                closeQuietly(errBuf);
+                if (ch != null) {
+                    try {
+                        ch.disconnect();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+
+        private boolean isIgnorableMissingPathError(String errText) {
+            if (errText == null) {
+                return false;
+            }
+
+            String s = errText.trim();
+            if (s.isEmpty()) {
+                return false;
+            }
+
+            String lower = s.toLowerCase(Locale.ROOT);
+            return lower.contains("no such file or directory");
+        }
+
+        private boolean isIgnorablePermissionDeniedError(String errText) {
+            if (errText == null) {
+                return false;
+            }
+
+            String s = errText.trim();
+            if (s.isEmpty()) {
+                return false;
+            }
+
+            String lower = s.toLowerCase(Locale.ROOT);
+            return lower.contains("permission denied");
+        }
+
+        private boolean isIgnorableError(Throwable t) {
+            if (t == null) {
+                return false;
+            }
+
+            Throwable cur = t;
+            while (cur != null) {
+                String msg = cur.getMessage();
+                if (msg != null) {
+                    String lower = msg.toLowerCase(Locale.ROOT);
+                    if (lower.contains("permission denied")
+                            || lower.contains("no such file or directory")
+                            || lower.contains("could not stat remote file")) {
+                        return true;
+                    }
+                }
+                cur = cur.getCause();
+            }
+            return false;
+        }
+
+        private String shq(String s) {
+            return "'" + s.replace("'", "'\"'\"'") + "'";
+        }
+
+        private String getName(String p) {
+            int i1 = p.lastIndexOf('/');
+            int i2 = p.lastIndexOf('\\');
+            int i = Math.max(i1, i2);
+            return i >= 0 ? p.substring(i + 1) : p;
+        }
+
+        private String getExt(String f) {
+            if (f == null || f.trim().isEmpty()) {
+                return "-";
+            }
+
+            int i = f.lastIndexOf('.');
+            if (i <= 0 || i == f.length() - 1) {
+                return "-";
+            }
+
+            String ext = f.substring(i).trim();
+            if (ext.length() > 50) {
+                return ext.substring(0, 50);
+            }
+            return ext;
+        }
+
+        // extension from full path
+        private String getExtFromFullPath(String fullPath) {
+            String name = getName(fullPath);
+            return getExt(name);
+        }
+
+        private String normalizeGengo(String s) {
+            if (s == null) {
+                return "-";
+            }
+
+            String v = s.trim();
+            if (v.isEmpty()) {
+                return "-";
+            }
+
+            if (v.length() > 50) {
+                v = v.substring(0, 50);
+            }
+
+            return v;
+        }
+
+        private void disconnectQuietly(Session session) {
+            try {
+                if (session != null && session.isConnected()) {
+                    session.disconnect();
+                }
+            } catch (Exception ignore) {
+            }
+        }
+
+        private void rollbackQuietly(Connection conn) {
+            try {
+                if (conn != null && !conn.getAutoCommit()) {
+                    conn.rollback();
+                }
+            } catch (Exception ignore) {
+            }
+        }
+
+        private void closeQuietly(AutoCloseable c) {
+            try {
+                if (c != null) c.close();
+            } catch (Exception ignore) {
+            }
+        }
+    }
+
+    interface LineHandler {
+        void handle(String line) throws Exception;
+    }
+
+    static class CksumResult {
+        String cksum;
+        String byteSize;
+    }
+
+    static class FileRecord {
+        String fullPath;
+        String fileName;
+        String size;
+        String cksum;
+        String sha256;
+        long contentId;
+        String updateTime;
+        String ikoGroup;
+        String dirGroup;
+        String gengo;
+        String dbPath;
+
+        public String toString() {
+            return fullPath + "__"
+                    + fileName + "__"
+                    + size + "__"
+                    + cksum + "__"
+                    + sha256 + "__"
+                    + contentId + "__"
+                    + updateTime + "__"
+                    + ikoGroup + "__"
+                    + dirGroup + "__"
+                    + dbPath + "__"
+                    + gengo;
+        }
+    }
+}
