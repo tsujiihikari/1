@@ -1,0 +1,137 @@
+[1]
+移行グループ nikkoEZ.java17はこれでひとつの移行グループ
+
+なので、.java17だけにいま表示されているので、今後はnikkoEZ.java17として表示して
+
+
+[2]
+
+ArrowRightキーのkeydownや
+ArrowLeftキーのkeydownは、
+以下の処理が走ると思う
+
+function previewRecentTabByKeyboard(offset, options = {}) {
+  // 2026-08-05 サイト修正4:
+  // ArrowLeft / ArrowRight はソースコード数字タブを即時オープンせず、
+  // 数字タブhoverと同じ全幅グレー帯を表示する。Enterでクリック相当のopenCodeを実行する。
+  const tabs = getHeaderKeyboardNavigationRecentTabs();
+  if (!tabs.length) return false;
+
+  const direction = offset >= 0 ? 1 : -1;
+  const currentIndex = getCurrentRecentTabKeyboardPreviewIndex(tabs);
+  const baseIndex = currentIndex >= 0 ? currentIndex : (direction > 0 ? -1 : 0);
+  const nextIndex = (baseIndex + direction + tabs.length) % tabs.length;
+  const item = tabs[nextIndex];
+  if (!item || !item.path) return false;
+
+
+この処理を、
+
+
+<button class="recentNavArrow recentNavArrowRight" type="button" aria-label="右のタブへ移動" title="右のタブへ移動">
+      <svg class="recentNavIconSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M9.8 4.8L15.7 12l-5.9 7.2"></path>
+      </svg>
+    </button>
+
+と
+
+recentNavArrowLeft
+
+の２つのボタンをクリック、またはＥＮＴＥＲを押したときに、以下の処理
+数字タブhoverと同じ全幅グレー帯を表示する。Enterでクリック相当のopenCodeを実行する。
+としてイベント発火させて。
+
+function previewRecentTabByKeyboard(offset, options = {}) {
+  // 2026-08-05 サイト修正4:
+  // ArrowLeft / ArrowRight はソースコード数字タブを即時オープンせず、
+  // 数字タブhoverと同じ全幅グレー帯を表示する。Enterでクリック相当のopenCodeを実行する。
+  const tabs = getHeaderKeyboardNavigationRecentTabs();
+  if (!tabs.length) return false;
+
+  const direction = offset >= 0 ? 1 : -1;
+  const currentIndex = getCurrentRecentTabKeyboardPreviewIndex(tabs);
+  const baseIndex = currentIndex >= 0 ? currentIndex : (direction > 0 ? -1 : 0);
+  const nextIndex = (baseIndex + direction + tabs.length) % tabs.length;
+  const item = tabs[nextIndex];
+  if (!item || !item.path) return false;
+
+
+[3]
+
+１つ前のタブへ戻る
+
+文字変更
+
+ひとつ前のタブへ戻る
+
+
+テキストを縦方向中央に
+
+heightをいまよりもう少し大きく
+
+
+[4]
+
+Javaのハイライト処理を根本的に見直して
+
+ここは難しい修正になるので、
+
+１全体を見直して、修正点を検討
+２其の後、修正
+３そして、修正後、コードインスぺくしょｎ
+４複数のチェック観点（テスト観点）で、再度コードを再点検
+
+１～４のステップを実施
+１プロンプトで行って、全部おわってから回答せよ
+
+
+仕様１
+
+Javaクラスハイライト箇所をクライアントでクリックしたとき、
+import jp.co.fnt.stp1.app.apptier.front.kj.ctt.model.accessor.Kyc0250TableAccessor;
+など、ソースコードのimport部分に上記の完全修飾クラス名が存在するときは、
+Servletにこのjp.co.fnt.stp1.app.apptier.front.kj.ctt.model.accessor.Kyc0250TableAccessorとKyc0250TableAccessorの両方を送る
+
+そして、Kyc0250TableAccessorでAI_FILE1テーブルを検索したときに、複数レコードが返ってきた場合は、
+このjp.co.fnt.stp1.app.apptier.front.kj.ctt.model.accessor.Kyc0250TableAccessorが含まれる方を正解として、
+そのパスのＫｒｕｇｌｅＡＰＩから取得したソースコードを返却する
+
+仕様２
+
+NIKKO.nikkoEZ/ez.web.onlineSrcなどの、zipのなかに.javaが入っている場合がある
+それも同様に、仕様１と同じように検索すると、AI_FILE1テーブルの中に.zipを解凍した.javaのパスも入れておくので、
+それによって、検索ヒットして、対象のパスを取得出来るようになる
+
+
+仕様３
+
+nikkoEZ.java17の移行グループの場合は、AI_FILE1テーブルに一切のデータがない。
+なので、nikkoEZのなかでヒットしたもの（ez.web.onlineSrcやez.web.onlineといったonlineがつく移行グループ優先）を採用し、
+仕様１と仕様２のように対象パスを取得して。
+
+ただし、ez.web.onlineのようにSrcがつかないものは、.classになっているので、検索時の言語や.javaに最後は変換して（検索時の言語とファイル名とパスなども全部.classから.javaへ）
+次のコードを取得して
+
+
+
+[5]
+
+<pre><code id="codeBlock" class="language-java hljs" style="font-size: 12px !important;" data-highlighted="yes"><span class="hljs-keyword">package</span> jp.co.nikkobeans.app.ez_po.sinkoku_jyokyo;	}
+}</code></pre>
+
+このpre領域の右下のほうへ、positon:fixedで以下のタブ戻り操作のＤｉｖをいれて。ボタンの位置を移動させることを臨む。
+pre領域の右下へボタンを表示したい。
+
+<div class="codeSideNavigation codeBackOnlyNavigation" aria-label="タブ戻り操作">
+    <button id="codeBackTabBtn" class="codeSideNavBtn codeBackSideNavBtn codeFloatingBtn" type="button" aria-label="１つ前のタブへ戻る" title="１つ前のタブへ戻る">
+      <span class="codeSideNavText">１つ前のタブへ戻る</span>
+    </button>
+  </div>
+
+
+[6]
+
+ソースコードタブも右上に、解説コードのときの未対応とかと同じスタイルで、
+そのファイル名（Kyc0250TableAccessor.javaなど）を表示して
+
