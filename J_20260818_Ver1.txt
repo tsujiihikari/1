@@ -1,0 +1,881 @@
+[1]
+
+ひとつ前のタブへ戻る
+
+font-size:14px
+letter-spacing:0.1em
+font-weight:bold
+
+
+このCSSを当てて
+かつ、それに伴いheightを増やして
+文字がはみ出さないように
+
+[2]
+ひとつ前のタブへ戻る
+
+今のpositionからＸ方向へ、+30pxして
+
+transform:translateX(30px)
+
+
+今のポジションからX=+30pxして
+
+
+[3]
+
+文字サイズ 小　大のボタン
+
+
+今のpositionからＹ方向へ、+15pxして
+
+transform:translateY(15px)
+
+
+今のポジションからY=+15pxして
+
+
+[4]
+
+検索条件を入れるpanel
+
+検索キーワードの横幅　　現行=330px  ->  修正依頼  350px
+
+移行グループの横幅　　現行=180px  ->  修正依頼  200px
+
+ディレクトリグループの横幅　　現行=180px  ->  修正依頼  200px
+
+言語の横幅　　現行=120px  ->  修正依頼  130px
+
+
+[5]
+
+
+検索条件を入れるpanel
+
+虫眼鏡アイコンで、フィルター欄を出したとき、
+フィルター欄の右端へ×ボタンを、薄く表示して
+それを押すとフィルター条件をクリア（その欄のフィルターの入力をクリアして初期状態にする）にする
+そのクリアの×アイコンを追加
+
+
+[6]
+
+
+
+
+検索条件を入れるpanel
+
+虫眼鏡アイコンで、フィルター欄を出したとき、
+
+下の段がすでに表示されていて、そこに表示されている
+
+そうではなく、最初から検索条件欄の下にフィルターの段は非表示にする。
+
+で、虫眼鏡アイコンをおしたときに、検索条件欄の１つ上の段にフィルータ条件を入れる段を作る
+
+
+[7]
+
+
+フィルター名を部分一致の文字を、入力例）ファイル名でフィルター とする
+
+[8]
+
+
+<select id="languageSelect">
+          <option value="ALL">すべて</option>
+          <option value="java">Java</option>
+          <option value="sql">SQL</option>
+          <option value="xml">XML</option>
+          <option value="shell">ShellSript</option>
+          <option value="perl">Perl</option>
+          <option value="python">Python</option>
+          <option value="jsp">JSP</option>
+          <option value="javascript">JavaScript</option>
+          <option value="html">Html</option>
+          <option value="css">CSS</option>
+          <option value="c">C</option>
+          <option value="csharp">C#</option>
+          <option value="cpp">C++</option>
+          <option value="basic">BASIC</option>
+          <option value="cobol">COBOL</option>
+          <option value="vb.net">VB.NET</option>
+        </select>
+        
+以下として
+
+
+<select id="languageSelect">
+          <option value="ALL">すべて</option>
+          <option value="java">Java</option>
+          <option value="sql">SQL</option>
+          <option value="xml">XML</option>
+          <option value="shell">ShellSript</option>
+          <option value="perl">Perl</option>
+          <option value="python">Python</option>
+          <option value="jsp">JSP</option>
+          <option value="html">Html</option>
+          <option value="javascript">JavaScript</option>
+          <option value="css">CSS</option>
+        </select>
+
+[9]
+
+KrugleAPIで検索結果が2000件以上ある場合は、Servlet内でURLConnectionを読んだときに、
+タイムアウトが起きている
+
+
+以下のresult.cgiを参考に、検索結果データをすべてデータを取得しなくとも、
+件数だけを取得するＡＰＩが用意されていると思う
+
+以下を参考にして、このresult.cgiをServletから読んで、そこで検索結果が2000件を
+超える場合は、なんとかして
+
+１００件だけ表示して、応答に時間がかかりタイムアウトが起こる可能性があるので、100件のみ表示。　検索条件を変更してください。
+の旨のメッセージを記載して
+
+
+result.cgi
+================================
+#!/usr/bin/perl
+#
+# perl版のcvs取得
+#
+# 1.セッション作成
+# 2.ログイン
+# 3.クエリー発行
+#
+use strict;
+use LWP::UserAgent;
+use HTTP::Request::Common;
+use HTTP::Request;
+use Encode;
+use Encode::Guess;
+use XML::Simple;
+use Data::Dumper;
+# 2019/01/16 桐山 add-start ホストJCL取込対応（「#」エスケープ対応）
+use URI::Escape qw(uri_escape_utf8);
+# 2019/01/16 桐山 add-end ホストJCL取込対応（「#」エスケープ対応）
+
+use constant TRUE => 1;
+use constant FALSE => 0;
+
+# 2021/11/22 桐山 add-start apacheエラーログ対応
+#UTF-8フラグON（当プログラム中に記載された文字列を自動的に内部文字列に変換）
+use utf8;
+#標準入出力の文字コードは「UTF-8」
+binmode STDIN, ":utf8";
+binmode STDOUT, ":utf8";
+binmode STDERR, ":utf8";
+# 2021/11/22 桐山 add-end apacheエラーログ対応
+
+our $ACCOUNT = "anonymous-api-krugle-enterprise";
+our $PASSWORD1 = "kjI98Syw";
+our $PASSWORD2 = "P98Jnhy";
+# 2019/11/08 桐山 mod-start Krugleバージョンアップ対応
+#our $PATH = '/v5/client/krugle-enterprise-local';
+our $PATH = '/v6/client/krugle-enterprise-local';
+# 2019/11/08 桐山 mod-end Krugleバージョンアップ対応
+
+our $maxHitsPerResult = 100;
+our $maxDups = 0;
+# 2019/11/08 桐山 add-start Krugleバージョンアップ対応
+our $qtype = "solrq";
+# 2019/11/08 桐山 add-end Krugleバージョンアップ対応
+
+$| = 1;
+##############################################################
+# 本社サーバ
+##############################################################
+# 2019/11/08 桐山 mod-start Krugleバージョンアップ対応
+#our $KRUGLE_IP = "10.202.5.92:8081";
+our $KRUGLE_IP = "10.202.5.246:9100";
+# 2019/11/08 桐山 mod-end Krugleバージョンアップ対応
+
+our $PROXY_URL = 'http://192.168.23.61:8080';
+
+our $client_token;
+our $user_token;
+
+our %POST_PARAM;
+
+sub main
+{
+    # 引数チェック
+    &check_arg();
+#    print "Content-type: text/html; charset=SHIFT_JIS\n\n";
+    print "Content-type: text/html; charset=UTF-8\n\n";
+
+    # 2021/11/22 桐山 add-start 検索結果画面直リンクエラー対応
+    if ( !&check_param() ) {
+        print "<font color=\"red\">\n";
+        print "※検索条件が指定されていません。<br>\n";
+        print "<br>\n";
+        print "　＜必須入力項目＞<br>\n";
+        print "　　対象プロジェクト<br>\n";
+        print "　　言語<br>\n";
+        print "　　検索エリア<br>\n";
+        print "</font>\n";
+        print "<br>\n";
+        print "検索結果を表示する画面に直接アクセスしている可能性があります。<br>\n";
+        # 2024/12/20 桐山 mod-start 検索画面呼称変更対応
+        #print "下記のリンクよりAPIツールにアクセスしてから検索してください。<br>\n";
+        ## 2021/12/07 桐山 mod-start サーバIPアドレス固定値解消対応
+        ##print "<a href=\"http://10.202.5.71/krugle_search.html\" target=\"_top\">Krugle APIツール</a>\n";
+        #print "<a href=\"http://$ENV{'SERVER_NAME'}/krugle_search.html\" target=\"_top\">Krugle APIツール</a>\n";
+        ## 2021/12/07 桐山 mod-end サーバIPアドレス固定値解消対応
+        print "下記のリンク先にアクセスしてから検索してください。<br>\n";
+        print "<a href=\"http://$ENV{'SERVER_NAME'}/krugle_search.html\" target=\"_top\">Krugle(NKSOL版)</a>\n";
+        # 2024/12/20 桐山 mod-end 検索画面呼称変更対応
+        return;
+    }
+    # 2021/11/22 桐山 add-end 検索結果画面直リンクエラー対応
+    # 情報表示
+    &disp_info1();
+    # セッション作成
+    &create_session();
+    # ログイン
+    &login();
+    # クエリー発行
+    &query();
+}
+
+#
+# 引数チェック
+#
+sub check_arg
+{
+    my $post_data;
+    read(STDIN, $post_data, $ENV{'CONTENT_LENGTH'});
+
+    foreach (split(/&/, $post_data)) {
+	my @param = split(/=/);
+	$POST_PARAM{$param[0]} = $param[1];
+	# Cookie
+	print "Set-Cookie: $param[0]=$param[1]; expires=Tue, 1-Jan-2030 00:00:00 GMT;\n";
+    }
+}
+
+# 2021/11/22 桐山 add-start 検索結果画面直リンクエラー対応
+sub check_param
+{
+    # 対象プロジェクト入力チェック
+    if ($POST_PARAM{'project'} eq "") {
+        return FALSE;
+    }
+
+    # 言語入力チェック
+    if ($POST_PARAM{'language'} eq "") {
+        return FALSE;
+    }
+
+    # 検索エリア入力チェック
+    if ($POST_PARAM{'findin'} !~ "ALL|comment|code|doc|functiondef|functioncall|classdef") {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+# 2021/11/22 桐山 add-end 検索結果画面直リンクエラー対応
+
+#
+# 時刻表示
+#
+sub get_time
+{
+    my $time = localtime(time);
+    return $time;
+}
+
+#
+# URLデコード
+#
+sub url_decode($) {
+    my $str = shift;
+    $str =~ tr/+/ /;
+    $str =~ s/%([0-9A-Fa-f][0-9A-Fa-f])/pack('H2', $1)/eg;
+    return $str;
+}
+
+#
+# 情報表示(前半)
+#
+sub disp_info1
+{
+    print "<table border=\"1\">\n";
+    # 検索キーワード
+    print "<tr>\n";
+    print "<td>検索キーワード</td>\n";
+    print "<td>";
+    print "<strong>";
+    # 2021/12/02 桐山 mod-start apacheエラーログ対応
+    #print &url_decode($POST_PARAM{'keyword'});
+    print Encode::decode_utf8(&url_decode($POST_PARAM{'keyword'}));
+    # 2021/12/02 桐山 mod-end apacheエラーログ対応
+    print "</strong>";
+    print "</td>\n";
+    print "</tr>\n";
+    # 対象プロジェクト
+    print "<tr>\n";
+    print "<td>対象プロジェクト</td>\n";
+    print "<td>";
+    print "<strong>";
+    print $POST_PARAM{'project'};
+    print "</strong>";
+    print "</td>\n";
+    print "</tr>\n";
+    # 言語
+    print "<tr>\n";
+    print "<td>言語</td>\n";
+    print "<td>";
+    print "<strong>";
+    # 2018/03/09 桐山 start 記号付き言語(C#,C++等)の文字化け対応
+    #print $POST_PARAM{'language'};
+    if ($POST_PARAM{'language'} eq 'cpp') {
+        print "c++";
+    } elsif ($POST_PARAM{'language'} eq 'csharp') {
+        print "c#";
+    } else {
+        print $POST_PARAM{'language'};
+    }
+    # 2018/03/09 桐山 end 記号付き言語(C#,C++等)の文字化け対応
+    print "</strong>";
+    print "</td>\n";
+    print "</tr>\n";
+    # 検索エリア
+    print "<tr>\n";
+    print "<td>検索エリア</td>\n";
+    print "<td>";
+    print "<strong>";
+    print $POST_PARAM{'findin'};
+    print "</strong>";
+    print "</td>\n";
+    print "</tr>\n";
+    # clone
+    print "<tr>\n";
+    print "<td>cloneファイル</td>\n";
+    print "<td>";
+    print "<strong>";
+    if ($POST_PARAM{'clone'} ne 'NO') {
+        print '表示する';
+    } else {
+        print '表示しない';
+    }
+    print "</strong>";
+    print "</td>\n";
+    print "</tr>\n";
+    # 時間表示
+    print "<tr>\n";
+    print "<td>検索開始時刻</td>\n";
+    print "<td><strong>", &get_time() ,"</strong></td>\n";
+    print "</tr>\n";
+}
+
+
+
+#
+# リクエスト送信
+#
+sub request_post()
+{
+    my ($request) = @_;
+    my $ua = LWP::UserAgent -> new;
+#    $ua->proxy('http', $PROXY_URL);
+    return $ua -> request( $request ) -> as_string;
+}
+
+#
+# セッション作成
+#
+sub create_session
+{
+    my $url = "http://${KRUGLE_IP}${PATH}";
+    my %postdata = ( 'password' => $PASSWORD1 );
+    my $request = POST( $url, \%postdata );
+    my $res = &request_post($request);
+
+    if ($res =~ /<token>(.*)<\/token>/) {
+	$client_token = $1;
+    }
+#    print "$client_token\n";
+}
+
+
+sub login
+{
+    my $url = "http://${KRUGLE_IP}${PATH}/${client_token}/user/${ACCOUNT}";
+    my %postdata = ( 'password' => $PASSWORD2 );
+    my $request = POST( $url, \%postdata );
+    my $res = &request_post($request);
+
+    if ($res =~ /<token>(.*)<\/token>/) {
+	$user_token = $1;
+    }
+#    print "$user_token\n";
+}
+
+
+sub query
+{
+    # スタート番号
+    my $firstHitInResult=0;
+
+    my $file_no = 1;
+
+    my $url_condition = "";
+
+    if ($POST_PARAM{'project'} ne "ALL") {
+	$url_condition .= "&project=" . $POST_PARAM{'project'};
+    }
+    if ($POST_PARAM{'language'} ne "ALL") {
+	$url_condition .= "&lang=" . $POST_PARAM{'language'};
+    }
+    if ($POST_PARAM{'findin'} ne "ALL") {
+	$url_condition .= "&findin=" . $POST_PARAM{'findin'};
+    }
+
+    # ファイルクエリー
+    my $url = "http://${KRUGLE_IP}${PATH}/${client_token}/user/${ACCOUNT}/${user_token}/files?";
+    # 1回の最大ヒット数(100以上には設定できない)
+    $url .= "maxHitsPerResult=" . $maxHitsPerResult;
+    # 詳細モード
+    $url .= "&sln";
+    # クローンの最大数(さすがに100以上はないのでは？)
+    if ($POST_PARAM{'clone'} ne 'NO') {
+        $url .= "&maxDups=" . $maxDups;
+    }
+    # 検索番号(ページ処理を想定)
+    $url .= "&firstHitInResult=" . int($firstHitInResult);
+    # コンディション
+    $url .= $url_condition;
+    # 検索キーワード
+    $url .= "&query=" . $POST_PARAM{'keyword'};
+    # 2019/11/08 桐山 add-start Krugleバージョンアップ対応
+    $url .= "&qtype=" . $qtype;
+    # 2019/11/08 桐山 add-end Krugleバージョンアップ対応
+
+#    print "URL:[", $url, "]\n";
+
+    # リクエスト
+    my $request = GET( $url );
+    my $res = &request_post($request);
+#    my $enc   = guess_encoding($res, qw/euc-jp shiftjis 7bit-jis utf8/);
+#    ref($enc) or die "Can't guess: $enc"; #　自動判定に失敗したときのエラー処理
+    $res = decode("utf8", $res);      # utf8 で保存
+    my $res_backup = $res;
+
+    # xml用に整形
+    $res =~ s/^[^\<]+//;
+    $XML::Simple::PREFERRED_PARSER = 'XML::Parser';
+    my $rData = XMLin($res, ForceArray => 1);
+
+#    print "<pre>";
+#    print Dumper($rData);
+#    print "</pre>";
+
+#
+# 情報表示(後半)
+#
+    # 時間表示
+    print "<tr>\n";
+    print "<td>検索終了時刻</td>\n";
+    print "<td><strong>", &get_time() ,"</strong></td>\n";
+    print "</tr>\n";
+    # ヒット数
+    # 2019/11/08 桐山 mod-start Krugleバージョンアップ対応
+    #my $hit_nb = $rData->{'files-v5-query'}->[0]->{'totalHits'}->[0];
+    my $hit_nb = $rData->{'files-v6-query'}->[0]->{'totalHits'}->[0];
+    # 2019/11/08 桐山 mod-end Krugleバージョンアップ対応
+    print "<tr>\n";
+    print "<td>ヒット数</td>\n";
+    print "<td><strong>", $hit_nb ,"</strong></td>\n";
+    print "</tr>\n";
+    print "</table>\n";
+
+    # 2019/11/08 桐山 mod-start Krugleバージョンアップ対応
+    #my $hasNextResults = $rData->{'files-v5-query'}->[0]->{'hasNextResults'}->[0];
+    my $hasNextResults = $rData->{'files-v6-query'}->[0]->{'hasNextResults'}->[0];
+    # 2019/11/08 桐山 mod-end Krugleバージョンアップ対応
+    if ($hasNextResults eq 'true') {
+    # 2024/08/06 桐山 mod-start Krugle WEBへのアクセス手段明示化対応
+	#print "<p><strong>※ 100件のみ表示しています</strong></p>";
+        # 2024/12/20 桐山 mod-start 検索画面呼称変更対応
+        #print "<p><strong>※ 100件のみ表示しています。101件目以降についても詳細を確認したい場合は「<a href=\"http://10.202.5.246/projects/\" target=\"_blank\">Krugle WEB</a>」をご利用ください。</strong></p>";
+        print "<p><strong>※ 100件のみ表示しています。101件目以降についても詳細を確認したい場合は「<a href=\"http://10.202.5.246/projects/\" target=\"_blank\">Krugle(製品版)</a>」をご利用ください。</strong></p>";
+        # 2024/12/20 桐山 mod-end 検索画面呼称変更対応
+    # 2024/08/06 桐山 mod-end Krugle WEBへのアクセス手段明示化対応
+    }
+
+
+    if ($hit_nb == 0) {
+	print "<p><strong>※対象ファイルはありません</strong></p>";
+	return;
+    } else {
+	if ($POST_PARAM{'clone'} eq 'NO') {
+	    print "<p><strong>※ ヒット数はcloneファイルをカウントしています。結果一覧および全件ダウンロードのみ除外しています。</strong></p>";
+	}
+	if ($POST_PARAM{'source_disp'} eq 'YES') {
+	    print "<p><strong>※ １ファイルに複数個所該当している場合があるため、サマリだけでなくソース全体を確認してください。</strong></p>";
+	    print "<p><strong>※ 全件ダウンロードにはサマリは含みません。</strong></p>";
+	}
+    }
+
+    # CSVボタン
+    if ($hit_nb > 0) {
+	print "<form name=\"search\" method=\"post\" action=\"get_csv.cgi\">";
+    # 2019/08/28 桐山 add-start Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+    print "<table border=\"1\">\n";
+    print "<tr>\n";
+    print "<th>パス列の出力形式</th>\n";
+    print "<th>　</th>\n";
+    print "</tr>\n";
+    print "<tr>\n";
+    print "<td>\n";
+    print "<input type=\"radio\" name=\"path_output_format\" value=\"PATH\" checked=\"checked\">ファイルパス\n";
+    print "<input type=\"radio\" name=\"path_output_format\" value=\"URL\">URL\n";
+    print "</td>\n";
+    print "<td>\n";
+    # 2019/08/28 桐山 add-end Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+	print "<input type=\"hidden\" name=\"keyword\" value=\"", $POST_PARAM{'keyword'} ,"\">";
+	print "<input type=\"hidden\" name=\"project\" value=\"", $POST_PARAM{'project'} ,"\">";
+	print "<input type=\"hidden\" name=\"language\" value=\"", $POST_PARAM{'language'} ,"\">";
+	print "<input type=\"hidden\" name=\"findin\" value=\"", $POST_PARAM{'findin'} ,"\">";
+	print "<input type=\"hidden\" name=\"clone\" value=\"", $POST_PARAM{'clone'} ,"\">";
+	print "<input type=\"submit\" value=\"全件ダウンロード\" />\n";
+    # 2019/08/28 桐山 add-start Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+    print "</td>\n";
+    print "</tr>\n";
+    print "</table>\n";
+    # 2019/08/28 桐山 add-end Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+	print "</form>";
+    # 2021/12/01 桐山 add-start 項目値を「"」で括る対応
+    print "<p><strong><font color=\"green\">※ CSV出力時、各カラムは「\"」で括られています。</font></strong></p>";
+    # 2021/12/01 桐山 add-end 項目値を「"」で括る対応
+    # 2019/11/08 桐山 add-start 検索件数大量時の注意文言追加対応
+    print "<p><strong><font color=\"red\">※ ヒット数が多い場合に全件ダウンロードを実施すると、システムダウンの原因となりうるため、ご注意ください。</font></strong></p>";
+    # 2019/11/08 桐山 add-end 検索件数大量時の注意文言追加対応
+    # 2019/08/28 桐山 add-start Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+    print "<p><strong>※ 「URL」を選択し全件ダウンロードボタンを押下した際は、ソースコードを表示する画面にリンクするURLが出力されます。</strong></p>";
+    # 2019/08/28 桐山 add-end Krugle改善対応（全件ダウンロード時のパス部出力切替対応）
+    }
+
+    print "<hr>";
+
+    # ここより結果画面
+    print "<table border=\"1\">";
+    print "<tr>";
+    print "<th>No.</th>";
+    print "<th>ファイル名</th>";
+    print "<th>行番号</th>";
+    print "<th>プロジェクト名</th>";
+    print "<th>パス</th>";
+    if ($POST_PARAM{'source_disp'} eq 'YES') {
+	print "<th>ソースサマリ</th>";
+    }
+    print "</tr>";
+    
+    # 2019/11/08 桐山 mod-start Krugleバージョンアップ対応
+    #foreach my $file (@{$rData->{'files-v5-query'}->[0]->{'files'}->[0]->{'file'}}) {
+    foreach my $file (@{$rData->{'files-v6-query'}->[0]->{'files'}->[0]->{'file'}}) {
+    # 2019/11/08 桐山 mod-end Krugleバージョンアップ対応
+	print "<tr>";
+	# ファイル番号
+	print "<td>";
+	print $file_no++;
+	print "</td>";
+
+	# Summary
+	# 2018/12/06 桐山 mod-start 空ファイル検索時サマリ情報出力不正対応
+	#my $index = index($res_backup, $file->{'uri'}->[0]);
+	#my $start_pos = index($res_backup, '<summary>', $index) + length('<summary>');
+	#my $end_pos = index($res_backup, '</summary>', $start_pos);
+	#my $summary = substr($res_backup, $start_pos, $end_pos-$start_pos);
+	my $summary = "";
+	
+	# 2019/01/18 桐山 mod-start ホストJCL取込対応（サマリ表示不正対応）
+	#my $uri_pos = index($res_backup, $file->{'uri'}->[0]);
+	# APIから返却された検索結果はHTML特殊文字を名称で表しているため、
+	# URIの検索値も記号から名称に置換する。
+	my $uri = $file->{'uri'}->[0];
+	$uri =~ s/&/&amp;/g;
+	$uri =~ s/</&lt;/g;
+	$uri =~ s/>/&gt;/g;
+	my $uri_pos = index($res_backup, $uri);
+	# 2019/01/18 桐山 mod-end ホストJCL取込対応（サマリ表示不正対応）
+	
+	my $summary_start_pos = index($res_backup, '<summary>', $uri_pos);
+	my $summary_end_pos = index($res_backup, '</summary>', $summary_start_pos);
+	
+	my $summary_empty_tag_pos = index($res_backup, '<summary/>', $uri_pos);
+	
+	my $file_end_pos = index($res_backup, '</file>', $uri_pos);
+	
+	# サマリ情報が存在する場合
+	# （URIから</file>までの間にサマリ情報の開始・終了タグが存在する）
+	if (
+		$uri_pos < $summary_start_pos
+		&& $summary_start_pos < $file_end_pos
+		&& $uri_pos < $summary_end_pos
+		&& $summary_end_pos < $file_end_pos
+	) {
+		my $cut_start_pos = $summary_start_pos + length('<summary>');
+		my $cut_end_pos = $summary_end_pos;
+		
+		$summary = substr($res_backup, $cut_start_pos, $cut_end_pos-$cut_start_pos);
+	# サマリ情報が存在しない場合
+	# （URIから</file>までの間にサマリ情報の空タグが存在する）
+	} elsif (
+		$uri_pos < $summary_empty_tag_pos
+		&& $summary_empty_tag_pos < $file_end_pos
+	) {
+		$summary = " ";
+	# summaryタグが存在しないなど想定外の場合
+	} else {
+		$summary = "※※※ソースサマリの表示に問題があります。※※※\n※※※システム管理者にご連絡ください。　　※※※";
+		
+		my $outputfile="/var/www/cgi-bin/log/SearchResultSummaryError.log";
+		if (open(LOG_FILE, ">>", $outputfile)) {
+			print LOG_FILE "-----------------------------------\n";
+			print LOG_FILE "検索日時：", &get_time(), "\n";
+			print LOG_FILE "検索キーワード：", $POST_PARAM{'keyword'}, "\n";
+			print LOG_FILE "対象プロジェクト：", $POST_PARAM{'project'}, "\n";
+			print LOG_FILE "言語：", $POST_PARAM{'language'}, "\n";
+			print LOG_FILE "検索エリア：", $POST_PARAM{'findin'}, "\n";
+			print LOG_FILE "cloneファイル：", $POST_PARAM{'clone'}, "\n";
+			print LOG_FILE "URI：", $file->{'uri'}->[0], "\n";
+		}
+		close(LOG_FILE);
+	}
+	# 2018/12/06 桐山 mod-end 空ファイル検索時サマリ情報出力不正対応
+
+
+	# ファイル名
+	print "<td>";
+	# tooltip
+	print "<span title=\"";
+	foreach my $line (split('<\/line>', $summary)) {
+	    $line =~ s/^<line number=\"//;
+	    $line =~ s/^(\d+)\">/$1: /;
+	    $line =~ s/<span[^>]+>([^<]+)<\/span>/$1/g;
+	    $line =~ s/\</\&lt\;/g;
+	    $line =~ s/\>/\&gt\;/g;
+	    $line =~ s/\"/”/g;
+	    $line =~ s/\'/’/g;
+	    $line =~ s/’/g￥/g;
+	    print $line, "&#13;";
+	}
+	print "\">";
+	print $file->{'name'}->[0];
+	print "</span>";
+	print "</td>";
+	# 行番号
+	print "<td>";
+    # 2019/11/08 桐山 add-start Krugleバージョンアップ対応
+    # ハッシュが格納されているか確認
+    if (ref($file->{'summary'}->[0]) eq 'HASH') {
+        # キーに「line」が含まれているか確認
+        if (exists $file->{'summary'}->[0]{'line'}) {
+    # 2019/11/08 桐山 add-end Krugleバージョンアップ対応
+	foreach my $line (@{$file->{'summary'}->[0]->{'line'}}) {
+	    if ( ref($line) ne "HASH" ) {
+		print "-";
+		last;
+	    }
+	    unless (ref $line->{'span'}->[0]) {
+		;
+	    } else {
+		print $line->{'number'};
+		last;
+	    }
+	}
+    # 2019/11/08 桐山 add-start Krugleバージョンアップ対応
+        }
+    }
+    # 2019/11/08 桐山 add-end Krugleバージョンアップ対応
+	print "</td>";
+	
+	# プロジェクト名
+	print "<td>";
+	my $prj_name = $file->{'projectName'}->[0];
+	print $prj_name  ;
+	print "</td>";
+
+	# パス
+	my $path_name = $file->{'uri'}->[0];
+	$path_name =~ s/^[^\/]+\/[^\/]+\/[^\/]+\///;
+	
+	print "<td>";
+
+	 # NIKKO.sin -> NIKKO.sin_merge @kawa -> 不要
+	 # BANK.rBank -> BANK.rBank_merge @kawa
+	 # NIKKO.djk -> NIKKO.djk_merge @kawa
+	 # NIKKO.stp -> NIKKO.stp_merge @kawa
+	#$prj_name =~ s/^NIKKO\.sin/NIKKO\.sin_merge/;
+	#$prj_name =~ s/^BANK\.rBank/BANK\.rBank_merge/;
+	#$prj_name =~ s/^NIKKO\.djk/NIKKO\.djk_merge/;
+	#$prj_name =~ s/^NIKKO\.stp/NIKKO\.stp_merge/;
+	#$prj_name =~ s/^BPS\.SMBC/BPS\.SMBC_merge/;
+    #    $prj_name =~ s/^BPS\.bps/BPS/;
+    #    $prj_name =~ s/^BPS\.bpd/BPS\.bpd_merge/;
+	# NIKKO.sin -> NIKKO.sin_merge @kawa -> 不要
+	# BANK.rBank -> BANK.rBank_merge @kawa
+	# NIKKO.djk -> NIKKO.djk_merge @kawa
+	# NIKKO.stp -> NIKKO.stp_merge @kawa
+	#$prj_name =~ s/^NIKKO\.sin/NIKKO\.sin_merge/;
+	#$prj_name =~ s/^NIKKO\.stp/NIKKO\.stp_merge/;
+
+	# 2017/07/21 岩崎「BPS.bps」完全一致の場合のみ「BPS」とするよう変更
+	# $prj_name =~ s/^BPS\.bps/BPS/;
+	if ($prj_name eq 'BPS.bps') {
+		$prj_name = 'BPS';
+	}
+
+    # 2019/08/28 桐山 del-start 削除済みプロジェクト用処理の削除対応
+	## 2017/07/21 岩崎「BANK.rBank」完全一致の場合のみ「merge」を付与するよう変更
+	## $prj_name =~ s/^BANK\.rBank/BANK\.rBank_merge/;
+	#if ($prj_name eq 'BANK.rBank') {
+	#	$prj_name = 'BANK.rBank_merge';
+	#}
+    # 2019/08/28 桐山 del-end 削除済みプロジェクト用処理の削除対応
+
+    # 2019/08/28 桐山 del-start 削除済みプロジェクト用処理の削除対応
+	## 2017/07/21 岩崎「NIKKO.djk」完全一致の場合のみ「merge」を付与するよう変更
+	## $prj_name =~ s/^NIKKO\.djk/NIKKO\.djk_merge/;
+	#if ($prj_name eq 'NIKKO.djk') {
+	#	$prj_name = 'NIKKO.djk_merge';
+	#}
+    # 2019/08/28 桐山 del-end 削除済みプロジェクト用処理の削除対応
+
+	# 2017/07/21 岩崎「BPS.SMBC」完全一致の場合のみ「merge」を付与するよう変更
+	# $prj_name =~ s/^BPS\.SMBC/BPS\.SMBC_merge/;
+	if ($prj_name eq 'BPS.SMBC') {
+		$prj_name = 'BPS.SMBC_merge';
+	}
+
+	# 2017/07/21 岩崎「BPS.bpd」完全一致の場合のみ「merge」を付与するよう変更
+	# $prj_name =~ s/^BPS\.bpd/BPS\.bpd_merge/;
+	if ($prj_name eq 'BPS.bpd') {
+		$prj_name = 'BPS.bpd_merge';
+	}
+
+	# 2017/07/24 岩崎「NIKKO.EZtradeEOL」完全一致の場合のみ「NIKKO.ezTrade」とするよう追加
+	if ($prj_name eq 'NIKKO.EZtradeEOL') {
+		$prj_name = 'NIKKO.ezTrade';
+	}
+	
+	# 2019/12/06 桐山 add-start 廃止済プロジェクト名称変更対応
+	if ($prj_name eq 'BANK.rbCCIS_EOS') {
+		$prj_name = 'BANK.rbCCIS';
+	}
+	if ($prj_name eq 'BANK.rbISA_EOS') {
+		$prj_name = 'BANK.rbISA';
+	}
+	if ($prj_name eq 'BANK.rbWF_EOS') {
+		$prj_name = 'BANK.rbWF';
+	}
+	if ($prj_name eq 'BANK.rbCCIS_BoisUke_EOS') {
+		$prj_name = 'BANK.rbCCIS_BoisUke';
+	}
+	if ($prj_name eq 'BANK.rbezISA_EOS') {
+		$prj_name = 'BANK.rbezISA';
+	}
+	# 2019/12/06 桐山 add-end 廃止済プロジェクト名称変更対応
+
+	# 2022/11/07 桐山 add-start ホストPGM取込対応
+	if ($prj_name eq 'SY1_MCR') {
+		$prj_name = 'MCRO.DSECT_PGM';
+	}
+	if ($prj_name eq 'SYA2_MCR') {
+		$prj_name = 'KMCRO.DSECT_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDM0AP') {
+		$prj_name = 'CARDM0AP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMAAP') {
+		$prj_name = 'CARDMAAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMCAP') {
+		$prj_name = 'CARDMCAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMGAP') {
+		$prj_name = 'CARDMGAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMHAP') {
+		$prj_name = 'CARDMHAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMIAP') {
+		$prj_name = 'CARDMIAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMJAP') {
+		$prj_name = 'CARDMJAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMKAP') {
+		$prj_name = 'CARDMKAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMLAP') {
+		$prj_name = 'CARDMLAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMNAP') {
+		$prj_name = 'CARDMNAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMPAP') {
+		$prj_name = 'CARDMPAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMSAP') {
+		$prj_name = 'CARDMSAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMZAP') {
+		$prj_name = 'CARDMZAP_PGM';
+	}
+	if ($prj_name eq 'BPS_CARDMTOL') {
+		$prj_name = 'CARDMTOL_PGM';
+	}
+	if ($prj_name eq 'BPS_MCR') {
+		$prj_name = 'MCRO.M0DSECT_PGM';
+	}
+	# 2022/11/07 桐山 add-end ホストPGM取込対応
+
+	# 2019/01/16 桐山 mod-start ホストJCL取込対応（「#」エスケープ対応）
+	#print "<a href=\"source_disp.cgi?${prj_name}/$path_name\">";
+	my $path_name_escape = uri_escape_utf8($path_name);
+	print "<a href=\"source_disp.cgi?${prj_name}/$path_name_escape\">";
+	# 2019/01/16 桐山 mod-end ホストJCL取込対応（「#」エスケープ対応）
+	print $path_name;
+	print "</a>";
+	print "</td>";
+
+	# ソース表示
+	if ($POST_PARAM{'source_disp'} eq 'YES') {
+	    print "<td>";
+	    print "<pre>";
+	    foreach my $line (split('<\/line>', $summary)) {
+		$line =~ s/^<line number=\"//;
+		$line =~ s/^(\d+)\">/$1: /;
+		$line =~ s/<span[^>]+>([^<]+)<\/span>/$1/g;
+		$line =~ s/\</\&lt\;/g;
+		$line =~ s/\>/\&gt\;/g;
+		print $line, "\n";
+	    }
+	    print "</pre>";
+	    print "</td>";
+	}
+    	print "</tr>";
+    }
+
+    print "</table>";
+}
+
+# Cookie
+sub set_cookie
+{
+    print "Set-Cookie: Cookie=TTTTEST; expires=31-Dec-2009;\n";
+}
+
+&main();
+
+# end of script
+
+
+
+
