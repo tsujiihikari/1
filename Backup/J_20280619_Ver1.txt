@@ -1,0 +1,120 @@
+[1]
+
+ひとつ前のタブへ戻るのボタン
+
+font-size:14px
+letter-spacing:0.25em
+
+にして
+
+[2]
+検索キーワードの欄のクリアボタン
+
+positionを今の位置から、translate(4px,-8px)として
+
+かつ、クリアボタンの前に、×アイコンも入れて
+
+※アイコンイメージ（期待するイメージ）は、フィルターの箇所の×のようなイメージ
+
+
+[3]
+
+ソースコードタブ、解説コードタブ、要約説明タブ
+
+これをtranslateY方向に、2px移動させて、ひとつしたのdivと重なるようにする
+
+[4]
+
+Downloadボタン、Copyボタンをhoverしたとき、色が変わるhoverのＣＳＳのスタイルが
+完了するまでのアニメーション時間がながい。いまの半分にして。
+
+かつ、ひとつ前のタブへ戻るのボタンにhoverをあてたときに、Downloadボタン、Copyボタンをhoverしたとき
+と同じＣＳＳをあてて
+
+
+[5]
+
+KYC0010のようなテーブル情報のＤＤＬを表示するタブで、BackSpaceを押すと、
+普段はひとつ前のヘッダーのタブに戻るだが、そうではなくこの場合はヘッダーは同一のタブを
+ひらいたまま、そのタブにあるソースコードタブへ戻るように機能改修して
+
+
+普段　＝＞　ヘッダーのひとつ前のタブへ戻る
+ＫＹＣ００１０のようなテーブル情報のタブ　ー＞　その同一ヘッダータブのソースコードタブを開く
+
+[6]
+
+ハイライト表示 OFF ON
+文字サイズ　小　大
+
+このpositionを、以下のように修正して
+
+１　初期表示
+
+ハイライト表示 OFF ON　ー＞　Y軸へ+15px
+文字サイズ　小　大　ー＞　Y軸へ+20px
+
+
+２　スクロール時（スティッキーヘッダーのように）
+
+ハイライト表示 OFF ON　ー＞　いまのまま
+文字サイズ　小　大　ー＞　Y軸へ+30px
+
+
+
+
+
+[7]
+
+検索結果タブで、Downloadボタンをおしたときのみ、Servletの挙動を替えて
+
+ここでポイントは、検索結果タブで、Downloadボタンをおしたときのみ
+
+検索結果タブで、Downloadボタンをおしたときだけ、特別扱いして、それ以外はいまの仕様で問題ない
+
+
+このときは、Servletで検索条件でＫｒｕｇｌｅＡＰＩを呼び出すとき、
+タイムアウト値を10分にして、タイムアウトが起きないようにして
+
+つまりダウンロードだけは、かなり件数が多くてもダウンロード出来るようにする
+
+ただし、ＫｒｕｇｌｅＡＰＩ自体でダウンが掛かってしまうことは仕方なし。
+でも、Servletではタイムアウトにしたくない。
+
+
+
+[8]
+
+初期表示の過去の閲覧履歴 ／ 検索キーワードは、以下に変更して。
+
+No	過去の閲覧履歴 ／ 検索キーワード	対象プロジェクト	言語
+1	KYF1940	すべて	すべて
+2	残高照会	nkCCIS	SQL
+3	取引照会	nkCCIS	JSP
+4	コンタクト履歴	nkCCIS	XML
+5	TableAccessor	ALL	ALL
+6	CUSTOMER_ID	nkCCIS	java
+7	Command Task Accessor	BPNet	Java
+8	MST_CUSTOMER	SMBC	SQL
+9	QueryAccessor	fast2024	XML
+10	AccountUpdate	nikkoEZ	ALL
+11	KYF1940	ALL	java
+12	8jjj8jjeJEjee	nkCCIS	Java
+13	TableAccessor009	BPNet	SQL
+14	CUSTOMER_ID010	SMBC	XML
+15	Command Task Accessor011	fast2024	ALL
+16	MST_CUSTOMER012	nikkoEZ	java
+17	QueryAccessor013	ALL	Java
+18	AccountUpdate014	nkCCIS	SQL
+19	KYF1940015	BPNet	XML
+20	8jjj8jjeJEjee016	SMBC	ALL
+21	TableAccessor017	fast2024	java
+22	CUSTOMER_ID018	nikkoEZ	Java
+23	Command Task Accessor019	ALL	SQL
+24	MST_CUSTOMER020	nkCCIS	XML
+25	QueryAccessor021	BPNet	ALL
+26	AccountUpdate022	SMBC	java
+27	KYF1940023	fast2024	Java
+28	8jjj8jjeJEjee024	nikkoEZ	SQL
+29	TableAccessor025	ALL	XML
+30	CUSTOMER_ID026	nkCCIS	ALL
