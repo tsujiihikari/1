@@ -1,0 +1,968 @@
+[1]
+
+初期状態のときに、fileStrageに保存し、かつ過去の閲覧履歴 ／ ファイル名は
+以下の順番に変更して。いまは順番がバラバラになっている。
+
+
+No	過去の閲覧履歴 ／ ファイル名	移行グループ	ディレクトリグループ
+1	MeigaraIchiran.java	nikkoEZ	ez.web.onlineSrc
+2	KbSnkokMeisaiApplication.java	nikkoEZ	ez.web.onlineSrc
+3	KbSnkokMeisaiApplicationCommand.java	nikkoEZ	ez.web.onlineSrc
+4	KbSnkokMeisaiBbApplication.java	nikkoEZ	ez.web.onlineSrc
+5	KbSnkokMeisaiBbApplicationCommand.java	nikkoEZ	ez.web.onlineSrc
+6	KbSnkokMeisaiPoApplication.java	nikkoEZ	ez.web.onlineSrc
+7	MeigaraIchiran.java	nikkoEZ	ez.web.onlineSrc
+8	KbSnkokMeisaiBbPOApplication.java	nikkoEZ	ez.web.onlineSrc
+9	KyakJkyKjnHjnSyutkTask.java	nkCCIS	kyak.online
+10	KjoYmdSyutkTask.java	nkCCIS	kyak.online
+11	KjoYmdUpdTask.java	nkCCIS	kyak.online
+12	KjEddHojnJohoTask.java	nkCCIS	kyak.online
+13	KjEddKabunusiYakuinTorkTask.java	nkCCIS	kyak.online
+14	SaknRyuhoGKjo1K2KMainTask.java	nkCCIS	kyak.online
+15	KjUhkDelTask.java	nkCCIS	kyak.online
+16	KjUhkJohoSearchTask.java	nkCCIS	kyak.online
+17	KysJohoKjnSyutkTask.java	nkCCIS	kyak.online
+18	SaknRyuhoGKjoInqTask.java	nkCCIS	kyak.online
+19	SaknRyuhoGKjoTask.java	nkCCIS	kyak.online
+20	CCIS_KYK5470_upd.sql	nkCCIS	kyak.batch
+21	CCIS_KYF9800_Ikan.sql	nkCCIS	kyak.batch
+22	CCIS_KYF6510_INS.sql	nkCCIS	kyak.batch
+23	CCIS_KYF4410_spool.sql	nkCCIS	kyak.batch
+24	CCIS_KYF3030upd_From_CC.sql	nkCCIS	kyak.batch
+25	CCISD0607_KYK5300_02_SPOOL.sql	nkCCIS	kyak.batch
+26	CCIS_KYF3030spool_To_CC.sql	nkCCIS	kyak.batch
+27	CCIS_KYF4400_BZN_spool.sql	nkCCIS	kyak.batch
+28	CCISALTD218.sql	nkCCIS	kyak.batch
+29	CCIS_KYF4301_PL_SEL.sql	nkCCIS	kyak.batch
+30	CCISALTD078.sql	nkCCIS	kyak.batch
+
+
+
+
+[2]
+
+ひとつ前のタブへ戻る　ボタンの
+Backspaceの文字は、縦文字として、ボタンの右下にもう少し大きく表示して
+
+今のデザイン（文字色などは）イメージ通り　合っている
+
+
+[3]
+
+ひとつ前のタブへ戻る　ボタンへhoverしたときのhoverのＣＳＳは以下として
+
+曖昧検索ボタンへhoverしたときのＣＳＳ（曖昧検索のhoverのＣＳＳ）を当てて
+
+[4]
+
+ヘッダーにあるソースコード表示のタブをクリックしたときの、ソースコードパス
+と
+他のソースコードの中でクラス名をクリックして開いたときのパスが違う
+
+それによって、以下のメッセージが出ている。
+ServletからＪａｖａＳｃｒｉｐｔからパスから全部見直して、一式このバグを修正して
+
+---------------------
+※対象のファイルがKrugleサーバ上に存在しません。
+
+　しばらくお時間をおいてから、再度アクセスしてください。
+---------------------
+
+
+再現方向
+①NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/meigara/MeigaraIchiran.javaのソースコードを開く
+package jp.co.nikkobeans.app.ez_ipo.meigara;
+
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+import java.sql.*;
+import java.lang.reflect.*;
+import jp.co.nikkobeans.common.*;
+import jp.co.nikkobeans.framework.*;
+import jp.co.nikkobeans.app.common.util.*;
+import jp.co.nikkobeans.app.common.dataaccess.table.Nol25H0TableRecord;
+import jp.co.nikkobeans.app.common.exception.*;
+
+import jp.co.nikkobeans.app.ez_ipo.common.IpoDataAccess;
+import jp.co.nikkobeans.app.ez_ipo.common.KbKoub;
+import jp.co.nikkobeans.app.ez_ipo.common.ManifactMeigCd;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.BeanCreator;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Command;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Iterator;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.MethodInvokerUtility;
+import jp.co.nikkobeans.app.ez_ipo.meigara.interfacebean.*;
+import jp.co.nikkobeans.app.ez_ipo.kb_bosy.dataaccess.querys.*;
+import jp.co.nikkobeans.app.ez_ipo.meigara.constant.MeigDisplayConstant;
+
+/**
+ * <!--
+ * Copyright (C) 1999 by Nikko Business Systems, Co.,Ltd
+ *     All rights reserved.
+ * -->
+ * <H3>
+ * 株式募集銘柄一覧データ編集クラス
+ * </H3>
+ * 株式募集銘柄の一覧データを編集してResponseBeanにセットする。
+ *
+ * @auther 新日本製鐵株式會社
+ */
+public class MeigaraIchiran {
+	Hashtable setToGet = new Hashtable();
+	Vector v = new Vector();
+	MeigaraIchiranQuery q = null;
+/**
+ * KbBosyCollector コンストラクター。
+ */
+public MeigaraIchiran() {
+	super();
+/**
+	setToGet.put("BbComment", "BbComment");
+	setToGet.put("BbKaisibi", "BbKaisibi");
+	setToGet.put("BbSimeji", "BbSimeji");
+	setToGet.put("BbSyuryobi", "BbSyuryobi");
+	setToGet.put("BbaiUnit", "BbaiUnit");
+	setToGet.put("BosyKey", "BosyKey");
+	setToGet.put("BosyKubun", "BosyKubun");
+	setToGet.put("Jogen", "Jogen");
+	setToGet.put("Kagen", "Kagen");
+	setToGet.put("KokaibiComment", "KokaibiComment");
+	setToGet.put("KokaibiKokaibi", "KokaibiKokaibi");
+	setToGet.put("KoubUnit", "KoubUnit");
+	setToGet.put("Sijo", "Sijo");
+	setToGet.put("UridsUnit", "UridsUnit");
+	setToGet.put("BosyPr", "BosyTnkYen");
+	setToGet.put("MeigCd", "Meigcd");
+	setToGet.put("MeigNm", "MeigRyaknm1Knj");
+*/
+		setToGet.put("EZSeqno", "Seqno");
+		setToGet.put("EZBosyKey", "BosyKey");
+		setToGet.put("EZTblkbn", "Tblkbn");
+		setToGet.put("EZMeigcd",  "Meigcd");
+		setToGet.put("EZKetsugibi",  "Ketsugibi");
+		setToGet.put("EZMeigRyaknm1Knj", "MeigRyaknm1Knj");
+		setToGet.put("EZSijo",  "Sijo");
+		setToGet.put("EZBsoyKubun", "BosyKubun");
+		setToGet.put("EZBbaiUnit",  "BbaiUnit");
+		setToGet.put("EZKoubUnit",  "KoubUnit");
+		setToGet.put("EZWaratUnit",  "WaratUnit");
+		setToGet.put("EZBosyTnkYen",  "BosyTnkYen");
+		setToGet.put("EZBbKaisibi",  "BbKaisibi");
+		setToGet.put("EZEzBbKaisiji",  "EzBbKaisiji");
+		setToGet.put("EZBbSuryobi",  "BbSyuryobi");
+		setToGet.put("EZBbSimeji",  "BbSimeji");
+		setToGet.put("EZBosyKaisibi",  "BosyKaisibi");
+		setToGet.put("EZBeansBosyKaisiji", "BeansBosyKaisiji");
+		setToGet.put("EZBosySuryobi",  "BosySyuryobi");
+		setToGet.put("EZBosySimeji",  "BosySimeji");
+		setToGet.put("EZKokaibiKokaibi",  "KokaibiKokaibi");
+		setToGet.put("EZTysnbi",  "Tysnbi");
+		setToGet.put("EZTysnFlag",  "TysnFlag");
+		setToGet.put("EZEzWaratSuKeisya", "EzWaratSuKeisya");
+		setToGet.put("EZEzKariCndUlmtTk",  "EzKariCndUlmtTk");
+		setToGet.put("EZEzKariCndLlmtTk",  "EzKariCndLlmtTk");
+		setToGet.put("EZKariCndTeijiYoteiYmd",  "KariCndTeijiYoteiYmd");
+		setToGet.put("EZCndKttebi",  "CndKttebi");
+		setToGet.put("EZHakkoUridKakak", "HakkoUridKakak");
+		// 2006/10/31 EZ_IPO	　上場中止対応 TRS酒井 Start
+		setToGet.put("EZJoJtaiFlg", "JoJtaiFlg");
+		// 2006/10/31 EZ_IPO　上場中止対応 TRS酒井  End
+//2011/03/18 JASTEC 01-2010-11-203（PO対応） 追加開始
+		setToGet.put("EZKariMeigcdFlg", "KariMeigcdFlg");
+//2011/03/18 JASTEC 01-2010-11-203（PO対応） 追加終了
+}
+/**
+ * 登録中の公開株のデータを収集してResponseBeanにセットする。
+ *
+ * @param response 株式公募一覧レスポンスビーン
+ * *******************************************************
+ */
+public void execIchiran(MeigaraResponseBean response) {
+	final Vector beans = new Vector();
+
+	// 募集価格，受付状態フラグは一意にセットできないので
+	// 変換処理が必要となる。
+	try {
+		//コネクション
+		final IAppContext ctx = Current.getAppContext();
+		final IConnectionMgr jdbc = ctx.getConnectionMgr();
+		final Connection connect = jdbc.getJdbcConnection(ConnectionPoolNames.ORACLE);
+
+		// For debug
+		q = new MeigaraIchiranQuery(connect);
+
+		final MethodInvokerUtility miu = new MethodInvokerUtility(setToGet, MeigaraIchiranQueryRecord.class, MeigQueryRecordBean.class);
+		q.executeQuery();
+		Iterator iterator = new Iterator(q);
+		iterator.repeat(new BeanCreator(MeigQueryRecordBean.class, new Command() {
+			public void evaluate(Object o) throws Exception {
+				Object[] args = (Object[]) o;
+
+
+②このなかで、MeigaraIchiranQueryRecordのキーワードをクリック
+　↓
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/query/jp/co/nikkobeans/app/ez_ipo/kb_bosy/dataaccess/querys/MeigaraIchiranQueryRecord.java
+このコードが開く
+
+③NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/query/jp/co/nikkobeans/app/ez_ipo/kb_bosy/dataaccess/querys/MeigaraIchiranQueryRecord.javaのソースコードタブ
+//このソースはジェネレータで生成されました．
+//このソースを直接編集してはいけません．
+//ジェネレータバージョン：$Id$
+
+package jp.co.nikkobeans.app.ez_ipo.kb_bosy.dataaccess.querys;
+
+import java.math.BigDecimal;
+import java.sql.*;
+import jp.co.nikkobeans.app.common.dataaccess.*;
+
+/**
+ * <strong>MeigaraIchiran問い合わせレコード</strong>.
+ * <p>
+ *
+ * <blockquote><pre>
+	 *
+	 *
+	 * select A.SEQNO,
+	 * 		A.BOSY_KEY,
+	 * 		A.TBLKBN,
+	 * 		A.MEIGCD,
+	 * 		A.KETSUGIBI,
+	 * 		A.MEIG_RYAKNM_1_KNJ,
+	 * 		A.SIJO,
+	 * 		A.BOSY_KUBUN,
+	 * 		A.BBAI_UNIT,
+	 * 		A.KOUB_UNIT,
+	 * 		A.WARAT_UNIT,
+	 * 		A.BOSY_TNK_YEN,
+	 * 		A.BB_KAISIBI,
+	 * 		A.EZ_BB_KAISIJI,
+	 * 		A.BB_SYURYOBI,
+	 * 		A.BB_SIMEJI,
+	 * 		A.BOSY_KAISIBI,
+	 * 		A.BEANS_BOSY_KAISIJI,
+	 * 		A.BOSY_SYURYOBI,
+	 * 		A.BOSY_SIMEJI,
+	 * 		A.KOKAIBI_KOKAIBI,
+	 * 		A.TYSNBI,
+	 * 		A.TYSN_FLAG,
+	 * 		A.EZ_WARAT_SU_KEISYA,
+	 * 		A.EZ_KARI_CND_ULMT_TK,
+	 * 		A.EZ_KARI_CND_LLMT_TK,
+	 * 		A.KARI_CND_TEIJI_YOTEI_YMD,
+	 * 		A.CND_KTTEBI,
+	 * 		A.HAKKO_URID_KAKAK,
+	 * 		A.JO_JTAI_FLG,
+	 * 		A.KARI_MEIGCD_FLG
+	 * from   NOL1070 A, NOL25H0 B
+	 * where   A.BOSY_KUBUN IN ('1', '3') and A.EZ_ANK_ITRN_HIHYJI_FLG = '0'
+	 *   and   A.SEQNO = B.SEQNO
+	 *   and   A.TBLKBN = B.TBLKBN
+	 *   and   B.ST_KBN = '0'
+	 * ORDER BY DECODE(A.KOKAIBI_KOKAIBI, NULL, '99999999', '00000000', '99999999', A.KOKAIBI_KOKAIBI) DESC,
+	 * DECODE(A.BB_KAISIBI, NULL, '99999999', '00000000', '99999999', A.BB_KAISIBI) DESC,
+	 * DECODE(A.BB_SYURYOBI, NULL, '99999999', '00000000', '99999999', A.BB_SYURYOBI) DESC,
+	 * DECODE(A.CND_KTTEBI, NULL, '99999999', '00000000', '99999999', A.CND_KTTEBI) DESC,
+	 * DECODE(A.BOSY_KAISIBI, NULL, '99999999', '00000000', '99999999', A.BOSY_KAISIBI) DESC,
+	 * DECODE(A.BOSY_SYURYOBI, NULL, '99999999', '00000000', '99999999', A.BOSY_SYURYOBI)DESC ,
+	 * A.MEIGCD
+	 *
+	 *
+ * </pre></blockquote>
+ * を元にして生成されたデータベースクエリオブジェクトと共に利用され、問い合わせ結果の各レコードの
+ * 値をアクセスするためのクラス.
+ *
+ * @author ファイナンシャル・ネットワーク・テクノロジーズ
+ */
+public class MeigaraIchiranQueryRecord extends DbRecord {
+	/**
+	 * MeigaraIchiranQueryRecord コンストラクター.
+	 *
+	 * @param query 関連するDbQueryオブジェクト
+	 */
+	protected MeigaraIchiranQueryRecord(MeigaraIchiranQuery query) {
+		super(query);
+	}
+
+	/**
+	 * MeigaraIchiranQueryRecord コンストラクター.
+	 *
+	 * @param query 関連するDbQueryオブジェクト
+	 *
+	 * @param seqno 項目SEQNOの値
+	 * @param bosyKey 項目BOSY_KEYの値
+	 * @param tblkbn 項目TBLKBNの値
+	 * @param meigcd 項目MEIGCDの値
+	 * @param ketsugibi 項目KETSUGIBIの値
+	 * @param meigRyaknm1Knj 項目MEIG_RYAKNM_1_KNJの値
+	 * @param sijo 項目SIJOの値
+	 * @param bosyKubun 項目BOSY_KUBUNの値
+	 * @param bbaiUnit 項目BBAI_UNITの値
+	 * @param koubUnit 項目KOUB_UNITの値
+	 * @param waratUnit 項目WARAT_UNITの値
+	 * @param bosyTnkYen 項目BOSY_TNK_YENの値
+	 * @param bbKaisibi 項目BB_KAISIBIの値
+	 * @param ezBbKaisiji 項目EZ_BB_KAISIJIの値
+	 * @param bbSyuryobi 項目BB_SYURYOBIの値
+	 * @param bbSimeji 項目BB_SIMEJIの値
+	 * @param bosyKaisibi 項目BOSY_KAISIBIの値
+	 * @param beansBosyKaisiji 項目BEANS_BOSY_KAISIJIの値
+	 * @param bosySyuryobi 項目BOSY_SYURYOBIの値
+	 * @param bosySimeji 項目BOSY_SIMEJIの値
+	 * @param kokaibiKokaibi 項目KOKAIBI_KOKAIBIの値
+	 * @param tysnbi 項目TYSNBIの値
+	 * @param tysnFlag 項目TYSN_FLAGの値
+	 * @param ezWaratSuKeisya 項目EZ_WARAT_SU_KEISYAの値
+	 * @param ezKariCndUlmtTk 項目EZ_KARI_CND_ULMT_TKの値
+	 * @param ezKariCndLlmtTk 項目EZ_KARI_CND_LLMT_TKの値
+	 * @param kariCndTeijiYoteiYmd 項目KARI_CND_TEIJI_YOTEI_YMDの値
+	 * @param cndKttebi 項目CND_KTTEBIの値
+	 * @param hakkoUridKakak 項目HAKKO_URID_KAKAKの値
+	 * @param joJtaiFlg 項目JO_JTAI_FLGの値
+	 * @param kariMeigcdFlg 項目KARI_MEIGCD_FLGの値
+	 */
+	public MeigaraIchiranQueryRecord(
+		MeigaraIchiranQuery query,
+		String seqno,
+		BigDecimal bosyKey,
+		String tblkbn,
+		String meigcd,
+		String ketsugibi,
+		String meigRyaknm1Knj,
+		String sijo,
+		String bosyKubun,
+		BigDecimal bbaiUnit,
+		BigDecimal koubUnit,
+		BigDecimal waratUnit,
+		BigDecimal bosyTnkYen,
+		String bbKaisibi,
+		String ezBbKaisiji,
+		String bbSyuryobi,
+		String bbSimeji,
+		String bosyKaisibi,
+		String beansBosyKaisiji,
+		String bosySyuryobi,
+		String bosySimeji,
+		String kokaibiKokaibi,
+		String tysnbi,
+		BigDecimal tysnFlag,
+		BigDecimal ezWaratSuKeisya,
+		BigDecimal ezKariCndUlmtTk,
+		BigDecimal ezKariCndLlmtTk,
+		String kariCndTeijiYoteiYmd,
+		String cndKttebi,
+		BigDecimal hakkoUridKakak,
+		String joJtaiFlg,
+		String kariMeigcdFlg
+	) {
+		super(query);
+		setSeqno(seqno);
+		setBosyKey(bosyKey);
+		setTblkbn(tblkbn);
+		setMeigcd(meigcd);
+		setKetsugibi(ketsugibi);
+		setMeigRyaknm1Knj(meigRyaknm1Knj);
+		setSijo(sijo);
+		setBosyKubun(bosyKubun);
+		setBbaiUnit(bbaiUnit);
+		setKoubUnit(koubUnit);
+		setWaratUnit(waratUnit);
+		setBosyTnkYen(bosyTnkYen);
+		setBbKaisibi(bbKaisibi);
+		setEzBbKaisiji(ezBbKaisiji);
+		setBbSyuryobi(bbSyuryobi);
+		setBbSimeji(bbSimeji);
+		setBosyKaisibi(bosyKaisibi);
+		setBeansBosyKaisiji(beansBosyKaisiji);
+		setBosySyuryobi(bosySyuryobi);
+		setBosySimeji(bosySimeji);
+		setKokaibiKokaibi(kokaibiKokaibi);
+		setTysnbi(tysnbi);
+		setTysnFlag(tysnFlag);
+		setEzWaratSuKeisya(ezWaratSuKeisya);
+		setEzKariCndUlmtTk(ezKariCndUlmtTk);
+		setEzKariCndLlmtTk(ezKariCndLlmtTk);
+		setKariCndTeijiYoteiYmd(kariCndTeijiYoteiYmd);
+		setCndKttebi(cndKttebi);
+		setHakkoUridKakak(hakkoUridKakak);
+		setJoJtaiFlg(joJtaiFlg);
+		setKariMeigcdFlg(kariMeigcdFlg);
+	}
+
+	/**
+	 * 項目seqnoの値を取得する.
+	 *
+	 * @return 取得された項目seqnoの値
+	 */
+	public String getSeqno() {
+		return (String) getValue(0);
+	}
+
+	/**
+	 * 項目seqnoの値を設定する.
+	 *
+	 * @param seqno 設定する項目値
+	 */
+	public void setSeqno(String seqno) {
+		setValue(0, seqno);
+	}
+
+	/**
+	 * 項目bosyKeyの値を取得する.
+	 *
+	 * @return 取得された項目bosyKeyの値
+	 */
+	public BigDecimal getBosyKey() {
+		return (BigDecimal) getValue(1);
+	}
+
+	/**
+	 * 項目bosyKeyの値を設定する.
+	 *
+	 * @param bosyKey 設定する項目値
+	 */
+	public void setBosyKey(BigDecimal bosyKey) {
+		setValue(1, bosyKey);
+	}
+
+	/**
+	 * 項目tblkbnの値を取得する.
+	 *
+	 * @return 取得された項目tblkbnの値
+	 */
+	public String getTblkbn() {
+		return (String) getValue(2);
+	}
+
+	/**
+	 * 項目tblkbnの値を設定する.
+	 *
+	 * @param tblkbn 設定する項目値
+	 */
+	public void setTblkbn(String tblkbn) {
+		setValue(2, tblkbn);
+	}
+
+	/**
+	 * 項目meigcdの値を取得する.
+	 *
+	 * @return 取得された項目meigcdの値
+	 */
+	public String getMeigcd() {
+		return (String) getValue(3);
+	}
+
+	/**
+	 * 項目meigcdの値を設定する.
+	 *
+	 * @param meigcd 設定する項目値
+	 */
+	public void setMeigcd(String meigcd) {
+		setValue(3, meigcd);
+	}
+
+	/**
+	 * 項目ketsugibiの値を取得する.
+	 *
+	 * @return 取得された項目ketsugibiの値
+	 */
+	public String getKetsugibi() {
+		return (String) getValue(4);
+	}
+
+	/**
+	 * 項目ketsugibiの値を設定する.
+	 *
+	 * @param ketsugibi 設定する項目値
+	 */
+	public void setKetsugibi(String ketsugibi) {
+		setValue(4, ketsugibi);
+	}
+
+	/**
+	 * 項目meigRyaknm1Knjの値を取得する.
+	 *
+	 * @return 取得された項目meigRyaknm1Knjの値
+	 */
+	public String getMeigRyaknm1Knj() {
+		return (String) getValue(5);
+	}
+
+	/**
+	 * 項目meigRyaknm1Knjの値を設定する.
+	 *
+	 * @param meigRyaknm1Knj 設定する項目値
+	 */
+	public void setMeigRyaknm1Knj(String meigRyaknm1Knj) {
+		setValue(5, meigRyaknm1Knj);
+	}
+
+	/**
+	 * 項目sijoの値を取得する.
+	 *
+	 * @return 取得された項目sijoの値
+	 */
+	public String getSijo() {
+		return (String) getValue(6);
+	}
+
+	/**
+	 * 項目sijoの値を設定する.
+	 *
+	 * @param sijo 設定する項目値
+	 */
+	public void setSijo(String sijo) {
+		setValue(6, sijo);
+	}
+
+	/**
+	 * 項目bosyKubunの値を取得する.
+	 *
+	 * @return 取得された項目bosyKubunの値
+	 */
+	public String getBosyKubun() {
+		return (String) getValue(7);
+	}
+
+	/**
+	 * 項目bosyKubunの値を設定する.
+	 *
+	 * @param bosyKubun 設定する項目値
+	 */
+	public void setBosyKubun(String bosyKubun) {
+		setValue(7, bosyKubun);
+	}
+
+	/**
+	 * 項目bbaiUnitの値を取得する.
+	 *
+	 * @return 取得された項目bbaiUnitの値
+	 */
+	public BigDecimal getBbaiUnit() {
+		return (BigDecimal) getValue(8);
+	}
+
+	/**
+	 * 項目bbaiUnitの値を設定する.
+	 *
+	 * @param bbaiUnit 設定する項目値
+	 */
+	public void setBbaiUnit(BigDecimal bbaiUnit) {
+		setValue(8, bbaiUnit);
+	}
+
+	/**
+	 * 項目koubUnitの値を取得する.
+	 *
+	 * @return 取得された項目koubUnitの値
+	 */
+	public BigDecimal getKoubUnit() {
+		return (BigDecimal) getValue(9);
+	}
+
+	/**
+	 * 項目koubUnitの値を設定する.
+	 *
+	 * @param koubUnit 設定する項目値
+	 */
+	public void setKoubUnit(BigDecimal koubUnit) {
+		setValue(9, koubUnit);
+	}
+
+	/**
+	 * 項目waratUnitの値を取得する.
+	 *
+	 * @return 取得された項目waratUnitの値
+	 */
+	public BigDecimal getWaratUnit() {
+		return (BigDecimal) getValue(10);
+	}
+
+	/**
+	 * 項目waratUnitの値を設定する.
+	 *
+	 * @param waratUnit 設定する項目値
+	 */
+	public void setWaratUnit(BigDecimal waratUnit) {
+		setValue(10, waratUnit);
+	}
+
+	/**
+	 * 項目bosyTnkYenの値を取得する.
+	 *
+	 * @return 取得された項目bosyTnkYenの値
+	 */
+	public BigDecimal getBosyTnkYen() {
+		return (BigDecimal) getValue(11);
+	}
+
+	/**
+	 * 項目bosyTnkYenの値を設定する.
+	 *
+	 * @param bosyTnkYen 設定する項目値
+	 */
+	public void setBosyTnkYen(BigDecimal bosyTnkYen) {
+		setValue(11, bosyTnkYen);
+	}
+
+	/**
+	 * 項目bbKaisibiの値を取得する.
+	 *
+	 * @return 取得された項目bbKaisibiの値
+	 */
+	public String getBbKaisibi() {
+		return (String) getValue(12);
+	}
+
+	/**
+	 * 項目bbKaisibiの値を設定する.
+	 *
+	 * @param bbKaisibi 設定する項目値
+	 */
+	public void setBbKaisibi(String bbKaisibi) {
+		setValue(12, bbKaisibi);
+	}
+
+	/**
+	 * 項目ezBbKaisijiの値を取得する.
+	 *
+	 * @return 取得された項目ezBbKaisijiの値
+	 */
+	public String getEzBbKaisiji() {
+		return (String) getValue(13);
+	}
+
+	/**
+	 * 項目ezBbKaisijiの値を設定する.
+	 *
+	 * @param ezBbKaisiji 設定する項目値
+	 */
+	public void setEzBbKaisiji(String ezBbKaisiji) {
+		setValue(13, ezBbKaisiji);
+	}
+
+	/**
+	 * 項目bbSyuryobiの値を取得する.
+	 *
+	 * @return 取得された項目bbSyuryobiの値
+	 */
+	public String getBbSyuryobi() {
+		return (String) getValue(14);
+	}
+
+	/**
+	 * 項目bbSyuryobiの値を設定する.
+	 *
+	 * @param bbSyuryobi 設定する項目値
+	 */
+	public void setBbSyuryobi(String bbSyuryobi) {
+		setValue(14, bbSyuryobi);
+	}
+
+	/**
+	 * 項目bbSimejiの値を取得する.
+	 *
+	 * @return 取得された項目bbSimejiの値
+	 */
+	public String getBbSimeji() {
+		return (String) getValue(15);
+	}
+
+	/**
+	 * 項目bbSimejiの値を設定する.
+	 *
+	 * @param bbSimeji 設定する項目値
+	 */
+	public void setBbSimeji(String bbSimeji) {
+		setValue(15, bbSimeji);
+	}
+
+	/**
+	 * 項目bosyKaisibiの値を取得する.
+	 *
+	 * @return 取得された項目bosyKaisibiの値
+	 */
+	public String getBosyKaisibi() {
+		return (String) getValue(16);
+	}
+
+	/**
+	 * 項目bosyKaisibiの値を設定する.
+	 *
+	 * @param bosyKaisibi 設定する項目値
+	 */
+	public void setBosyKaisibi(String bosyKaisibi) {
+		setValue(16, bosyKaisibi);
+	}
+
+	/**
+	 * 項目beansBosyKaisijiの値を取得する.
+	 *
+	 * @return 取得された項目beansBosyKaisijiの値
+	 */
+	public String getBeansBosyKaisiji() {
+		return (String) getValue(17);
+	}
+
+	/**
+	 * 項目beansBosyKaisijiの値を設定する.
+	 *
+	 * @param beansBosyKaisiji 設定する項目値
+	 */
+	public void setBeansBosyKaisiji(String beansBosyKaisiji) {
+		setValue(17, beansBosyKaisiji);
+	}
+
+	/**
+	 * 項目bosySyuryobiの値を取得する.
+	 *
+	 * @return 取得された項目bosySyuryobiの値
+	 */
+	public String getBosySyuryobi() {
+		return (String) getValue(18);
+	}
+
+	/**
+	 * 項目bosySyuryobiの値を設定する.
+	 *
+	 * @param bosySyuryobi 設定する項目値
+	 */
+	public void setBosySyuryobi(String bosySyuryobi) {
+		setValue(18, bosySyuryobi);
+	}
+
+	/**
+	 * 項目bosySimejiの値を取得する.
+	 *
+	 * @return 取得された項目bosySimejiの値
+	 */
+	public String getBosySimeji() {
+		return (String) getValue(19);
+	}
+
+	/**
+	 * 項目bosySimejiの値を設定する.
+	 *
+	 * @param bosySimeji 設定する項目値
+	 */
+	public void setBosySimeji(String bosySimeji) {
+		setValue(19, bosySimeji);
+	}
+
+	/**
+	 * 項目kokaibiKokaibiの値を取得する.
+	 *
+	 * @return 取得された項目kokaibiKokaibiの値
+	 */
+	public String getKokaibiKokaibi() {
+		return (String) getValue(20);
+	}
+
+	/**
+	 * 項目kokaibiKokaibiの値を設定する.
+	 *
+	 * @param kokaibiKokaibi 設定する項目値
+	 */
+	public void setKokaibiKokaibi(String kokaibiKokaibi) {
+		setValue(20, kokaibiKokaibi);
+	}
+
+	/**
+	 * 項目tysnbiの値を取得する.
+	 *
+	 * @return 取得された項目tysnbiの値
+	 */
+	public String getTysnbi() {
+		return (String) getValue(21);
+	}
+
+	/**
+	 * 項目tysnbiの値を設定する.
+	 *
+	 * @param tysnbi 設定する項目値
+	 */
+	public void setTysnbi(String tysnbi) {
+		setValue(21, tysnbi);
+	}
+
+	/**
+	 * 項目tysnFlagの値を取得する.
+	 *
+	 * @return 取得された項目tysnFlagの値
+	 */
+	public BigDecimal getTysnFlag() {
+		return (BigDecimal) getValue(22);
+	}
+
+	/**
+	 * 項目tysnFlagの値を設定する.
+	 *
+	 * @param tysnFlag 設定する項目値
+	 */
+	public void setTysnFlag(BigDecimal tysnFlag) {
+		setValue(22, tysnFlag);
+	}
+
+	/**
+	 * 項目ezWaratSuKeisyaの値を取得する.
+	 *
+	 * @return 取得された項目ezWaratSuKeisyaの値
+	 */
+	public BigDecimal getEzWaratSuKeisya() {
+		return (BigDecimal) getValue(23);
+	}
+
+	/**
+	 * 項目ezWaratSuKeisyaの値を設定する.
+	 *
+	 * @param ezWaratSuKeisya 設定する項目値
+	 */
+	public void setEzWaratSuKeisya(BigDecimal ezWaratSuKeisya) {
+		setValue(23, ezWaratSuKeisya);
+	}
+
+	/**
+	 * 項目ezKariCndUlmtTkの値を取得する.
+	 *
+	 * @return 取得された項目ezKariCndUlmtTkの値
+	 */
+	public BigDecimal getEzKariCndUlmtTk() {
+		return (BigDecimal) getValue(24);
+	}
+
+	/**
+	 * 項目ezKariCndUlmtTkの値を設定する.
+	 *
+	 * @param ezKariCndUlmtTk 設定する項目値
+	 */
+	public void setEzKariCndUlmtTk(BigDecimal ezKariCndUlmtTk) {
+		setValue(24, ezKariCndUlmtTk);
+	}
+
+	/**
+	 * 項目ezKariCndLlmtTkの値を取得する.
+	 *
+	 * @return 取得された項目ezKariCndLlmtTkの値
+	 */
+	public BigDecimal getEzKariCndLlmtTk() {
+		return (BigDecimal) getValue(25);
+	}
+
+	/**
+	 * 項目ezKariCndLlmtTkの値を設定する.
+	 *
+	 * @param ezKariCndLlmtTk 設定する項目値
+	 */
+	public void setEzKariCndLlmtTk(BigDecimal ezKariCndLlmtTk) {
+		setValue(25, ezKariCndLlmtTk);
+	}
+
+	/**
+	 * 項目kariCndTeijiYoteiYmdの値を取得する.
+	 *
+	 * @return 取得された項目kariCndTeijiYoteiYmdの値
+	 */
+	public String getKariCndTeijiYoteiYmd() {
+		return (String) getValue(26);
+	}
+
+	/**
+	 * 項目kariCndTeijiYoteiYmdの値を設定する.
+	 *
+	 * @param kariCndTeijiYoteiYmd 設定する項目値
+	 */
+	public void setKariCndTeijiYoteiYmd(String kariCndTeijiYoteiYmd) {
+		setValue(26, kariCndTeijiYoteiYmd);
+	}
+
+	/**
+	 * 項目cndKttebiの値を取得する.
+	 *
+	 * @return 取得された項目cndKttebiの値
+	 */
+	public String getCndKttebi() {
+		return (String) getValue(27);
+	}
+
+	/**
+	 * 項目cndKttebiの値を設定する.
+	 *
+	 * @param cndKttebi 設定する項目値
+	 */
+	public void setCndKttebi(String cndKttebi) {
+		setValue(27, cndKttebi);
+	}
+
+	/**
+	 * 項目hakkoUridKakakの値を取得する.
+	 *
+	 * @return 取得された項目hakkoUridKakakの値
+	 */
+	public BigDecimal getHakkoUridKakak() {
+		return (BigDecimal) getValue(28);
+	}
+
+	/**
+	 * 項目hakkoUridKakakの値を設定する.
+	 *
+	 * @param hakkoUridKakak 設定する項目値
+	 */
+	public void setHakkoUridKakak(BigDecimal hakkoUridKakak) {
+		setValue(28, hakkoUridKakak);
+	}
+
+	/**
+	 * 項目joJtaiFlgの値を取得する.
+	 *
+	 * @return 取得された項目joJtaiFlgの値
+	 */
+	public String getJoJtaiFlg() {
+		return (String) getValue(29);
+	}
+
+	/**
+	 * 項目joJtaiFlgの値を設定する.
+	 *
+	 * @param joJtaiFlg 設定する項目値
+	 */
+	public void setJoJtaiFlg(String joJtaiFlg) {
+		setValue(29, joJtaiFlg);
+	}
+
+	/**
+	 * 項目kariMeigcdFlgの値を取得する.
+	 *
+	 * @return 取得された項目kariMeigcdFlgの値
+	 */
+	public String getKariMeigcdFlg() {
+		return (String) getValue(30);
+	}
+
+	/**
+	 * 項目kariMeigcdFlgの値を設定する.
+	 *
+	 * @param kariMeigcdFlg 設定する項目値
+	 */
+	public void setKariMeigcdFlg(String kariMeigcdFlg) {
+		setValue(30, kariMeigcdFlg);
+	}
+
+}
+
+
+④其の後、他のソースコードタブへうつる画面操作を実施し、その後BackSpaceキーでタブを戻ったとき、
+MeigaraIchiranQueryRecord.javaまで戻ったとき、パスが変わっていて、ＫｒｕｇｌｅＡＰＩから
+ソースコード表示出来ない
+駄目なパス
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/meigara/MeigaraIchiranQueryRecord.java
+
+
+
+元々
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/query/jp/co/nikkobeans/app/ez_ipo/kb_bosy/dataaccess/querys/MeigaraIchiranQueryRecord.java
+変わってしまって駄目になったパス
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/meigara/MeigaraIchiranQueryRecord.java
+
+「５」
+<div id="codeTitle" class="codeTitle">KYF3030（顧客性向）　　　DBTYPE　：　KYKDB　　　スキーマ　：　KYKOWNER　　　Version　：　3.3</div>
+このid="codeTitle"は、font-size:15pxに変更して
+
