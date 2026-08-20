@@ -1,0 +1,96 @@
+[1]
+
+ServletのRPS_TABLE_LISTとRPS_TABLE_DATAの２つのテーブルの
+接続先がPostgreSQLに変更になった。
+
+PDBCドライバは、Ｗａｒの中に包含済み
+
+接続先とテーブルを以下に変更して
+
+DBMSPostgreSQLサーバ名10.205.7.19ポート5432ユーザIDpostgresパスワードpostgresデータベース名postgres
+
+RPS_TABLE_LISTとRPS_TABLE_DATA　　テーブル
+
+
+テーブル定義とデータの中身は一切変わっていない
+
+Ｊａｖａ修正して
+
+[2]
+
+検索キーワード、移行グループ、言語の条件欄にも×ボタンをそのinputタグの右端に
+配置して、それを押すとその条件欄のみクリア（初期状態にもどる）ようにせよ
+
+フィルータのときの×ボタンのイメージで、その欄の検索条件だけクリアしたいのが要望
+
+
+[3]
+
+<button id="codeBackTabBtn" class="codeSideNavBtn codeBackSideNavBtn codeFloatingBtn isCopyDownloadHover" type="button" aria-label="ひとつ前のタブへ戻る" title="ひとつ前のタブへ戻る">
+      <span class="codeSideNavText">ひとつ前のタブへ戻る</span>
+      <span class="codeBackShortcutHint" aria-hidden="true">BackSpace</span>
+    </button>
+
+このBackSpaceが右下にあるが、右上に配置
+font-sizeは今より+3px大きく
+そして、位置もボタン内にあるというより、ボタンの外側のborderに少し文字が重なるように
+もうボタン内といより、ボタンの外側で、すこしボタンに重なるようにして
+
+
+[4]
+
+button id="codeBackTabBtn"
+
+ここにhoverしたときに、ボタンが白いまま
+
+そうではなく、Downloadボタンにhoverしたときと同じように、
+アニメーションを入れつつ、薄い緑色になるようなＣＳＳをあてて
+Downloadボタンにhoverしたときと同じようなスタイル（CSS)をあなたがＣＳＳで
+どうあてればよいか考えて、コード修正（CSS追加）して
+
+
+[5]
+
+ソースコードを表示している箇所で、パスをクリップボードコピー出来るようにしたい。
+
+パスの右にパスをコピーのボタンを配置して、それをクリックまたはENTERキーを押すと
+パスをクリップボードコピー出来るようにする
+
+またパスをダブルクリックで、全パスを黄色背景にして、クリップボードコピー出来るようにする
+
+
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplicationCommand.java
+
+[6]
+
+ホームタブの
+No	過去の閲覧履歴 ／ ファイル名
+
+No	過去の閲覧履歴 ／ 検索キーワード
+
+この２つのfileStrageの仕様を変更
+
+①
+まず、初回表示は初期データを30件登録する
+②
+<button id="historyClearBtn" class="historyClearBtn" type="button" aria-label="閲覧履歴と検索キーワード履歴を初期化" title="履歴を初期データ30件に戻す">クリア</button>
+このクリアボタンを押したときも、初期データを30件に戻す
+③
+それ以外は、以下が登録条件
+
+３－１
+No	過去の閲覧履歴 ／ ファイル名
+これは、ヘッダーのソースコードのタブが開くたびに、１行追加になる。
+それはfileStrageにその開いたソースコードの全パスが保持され、その
+全パスからNo	過去の閲覧履歴 ／ ファイル名のデータ、ファイル名、移行グループ、ディレクトリグループ、言語は
+復元されるイメージ
+
+つまり、ソースコードを開くたびにデータは入れる
+
+３－２
+No	過去の閲覧履歴 ／ 検索キーワード
+検索ボタンや曖昧検索ボタンのみならず、ソースコードのなかで
+キーワードを選択して、検索をかけたときなども、No	過去の閲覧履歴 ／ 検索キーワードは入れる
+
+
+これは30件でローテーションが掛かるわけではなく、表示最大500件とする。
