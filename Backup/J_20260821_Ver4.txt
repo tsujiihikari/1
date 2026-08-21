@@ -1,0 +1,166 @@
+[1]
+
+<div class="codeContentHeader">
+        <div id="codeTitle" class="codeTitle isPathCopyTarget" title="ダブルクリックでパス全体をコピー">NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplication.java</div>
+      </div>
+
+div.codeContentHeaderのdivにhoverしたときに、今の太字でtransformのＣＳＳが発火するようにして。
+いまは、NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplication.javaの
+文字にhoverしたときに、NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplication.javaが
+太字になっている。
+
+そうではなく、div.codeContentHeaderのdiv領域全体にhoverしたときにＣＳＳが発火してほしい
+
+
+[2]
+
+div.codeContentHeaderのdivをクリックすると、
+NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplication.java
+のクリップボードコピーのイベントが発火してほしい
+
+いまは、id="codeTitle"をダブルクリックしたときになっている。
+
+廃止　id="codeTitle"をダブルクリックしたとき
+追加　div.codeContentHeaderのdivをクリックしたとき
+
+
+[3]
+
+<div id="codeTitle" class="codeTitle">KYA8040（サービスステータス）　　　DBTYPE　：　KYKDB　　　スキーマ　：　KYKOWNER　　　Version　：　1.0</div>
+
+
+id="codeTitle"は、font-size:15pxにして
+
+[4]
+<div class="codeContentHeader">
+        <div id="codeTitle" class="codeTitle">KYA8040（サービスステータス）　　　DBTYPE　：　KYKDB　　　スキーマ　：　KYKOWNER　　　Version　：　1.0</div>
+      </div>
+
+ここのclass="codeContentHeader"の右端に、×アイコンをおいて
+おすと、そのテーブル情報のタブは閉じるようにする
+
+テーブル情報を表示するたぶ、KYF0010タブなどを閉じる術がないので、閉じたいときに
+この×アイコンが必要
+
+[5]
+
+テーブル情報を開いたとき、例えばKYF0010,KYF1940タブなど
+このソースコードパス（NIKKO.nikkoEZ/ez.web.onlineSrc/jar/app_primary-src.zip/java/jp/co/nikkobeans/app/ez_ipo/sinkoku_jyokyo/KbSnkokMeisaiApplication.java）
+を再度開いたときに、先ほど開いたテーブル情報のタブが閉じてしまっている
+
+初期状態がテーブル情報がないから
+
+これをfileStrageに保存して、次回開いたときも、このテーブルを
+開いた状態としてほしい
+
+ServletにＤＢＴＹＰＥ、SCHEMA、テーブル名を渡して、テーブル情報を取って来るように
+
+くれぐれも、テーブル定義全部をfileStrageには保存しないでね！
+
+[6]
+
+<span class="codeBackShortcutHint" aria-hidden="true">BackSpace</span>
+
+文字列を変更
+BackSpace　　→　　BackSpaceキー
+
+writing-mode:vartilor-rlなどの縦文字指定のＣＳＳは当たっているが、
+全然Downloadボタンのような縦書き文字にはなっていない
+
+そもそもこのspanが包含されている一つ上の要素のdivのＣＳＳなども
+全体的に見直して、またfont-familyなども見直して、どこが効かない理由化を判断して
+正しく直して
+
+縦書き文字を希望
+
+
+
+
+[7]
+
+<span class="codeBackShortcutHint" aria-hidden="true">BackSpace</span>
+
+positionを変更
+
+X軸へ+2px移動して
+
+
+[8]
+
+いま、解説コードタブや要約説明タブが非表示になっている
+
+ここの仕様があやまり
+
+非表示ではなく、タブは表示し、以前のコードを探して未対応の文字を
+上に付けた上で、グレーの非活性状態として
+
+
+[9]
+
+解説コードタブや要約説明タブを活性してほしい条件がある
+
+以下の移行グループかつディレクトリグループで、ファイル名が以下のときは
+パスがどうであれば、移行グループかつディレクトリグループで、ファイル名が一致すれば
+WEB-INFの中にあるすでにコメント追加されたソースコードや、要約説明のマークドローファイルを
+サイト表示して。
+
+その場合のみ、未対応ではなく、タブが活性化して、タブの中身が見られるようになる仕様
+
+
+
+1	MeigaraIchiran.java	nikkoEZ	ez.web.onlineSrc
+2	KbSnkokMeisaiApplication.java	nikkoEZ	ez.web.onlineSrc
+3	KbSnkokMeisaiApplicationCommand.java	nikkoEZ	ez.web.onlineSrc
+4	KbSnkokMeisaiBbApplication.java	nikkoEZ	ez.web.onlineSrc
+5	KbSnkokMeisaiBbApplicationCommand.java	nikkoEZ	ez.web.onlineSrc
+6	KbSnkokMeisaiPoApplication.java	nikkoEZ	ez.web.onlineSrc
+7	MeigaraIchiran.java	nikkoEZ	ez.web.onlineSrc
+8	KbSnkokMeisaiBbPOApplication.java	nikkoEZ	ez.web.onlineSrc
+9	KyakJkyKjnHjnSyutkTask.java	nkCCIS	kyak.online
+10	KjoYmdSyutkTask.java	nkCCIS	kyak.online
+11	KjoYmdUpdTask.java	nkCCIS	kyak.online
+12	KjEddHojnJohoTask.java	nkCCIS	kyak.online
+13	KjEddKabunusiYakuinTorkTask.java	nkCCIS	kyak.online
+14	SaknRyuhoGKjo1K2KMainTask.java	nkCCIS	kyak.online
+15	KjUhkDelTask.java	nkCCIS	kyak.online
+16	KjUhkJohoSearchTask.java	nkCCIS	kyak.online
+17	KysJohoKjnSyutkTask.java	nkCCIS	kyak.online
+18	SaknRyuhoGKjoInqTask.java	nkCCIS	kyak.online
+19	SaknRyuhoGKjoTask.java	nkCCIS	kyak.online
+20	CCIS_KYK5470_upd.sql	nkCCIS	kyak.batch
+21	CCIS_KYF9800_Ikan.sql	nkCCIS	kyak.batch
+22	CCIS_KYF6510_INS.sql	nkCCIS	kyak.batch
+23	CCIS_KYF4410_spool.sql	nkCCIS	kyak.batch
+24	CCIS_KYF3030upd_From_CC.sql	nkCCIS	kyak.batch
+25	CCISD0607_KYK5300_02_SPOOL.sql	nkCCIS	kyak.batch
+26	CCIS_KYF3030spool_To_CC.sql	nkCCIS	kyak.batch
+27	CCIS_KYF4400_BZN_spool.sql	nkCCIS	kyak.batch
+28	CCISALTD218.sql	nkCCIS	kyak.batch
+29	CCIS_KYF4301_PL_SEL.sql	nkCCIS	kyak.batch
+30	CCISALTD078.sql	nkCCIS	kyak.batch
+
+
+
+[10]
+
+
+
+[11]
+
+
+
+[12]
+
+
+
+[13]
+
+
+
+[14]
+
+
+
+[15]
+
+
