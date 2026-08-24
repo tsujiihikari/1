@@ -1,0 +1,64 @@
+[1]
+
+Servletで、Javaのハイライトから、遷移先のソースコードの全パスを、取得する箇所で、再度チェックを実施してほしい
+
+理由は、この全パスの取得が間違えると、それを正解の遷移先（Javaの参照先）と勘違いを人々に与えてしまって大変なことになる。
+この目的（絶対にパスを取り違えない）ということを厳守せよ。
+
+そのうえで、以下のルールに従っているか、再度Java側の実装（Servletないの実装）を確認し、補足や安全処理を追加して、
+全パスの取り違えが発生しないようにして。
+
+ルール１
+JavaのImportからクラスのFQDNを取得する。
+===============================================================
+import jp.co.nikkobeans.app.ez_ipo.common.KbKoub;
+import jp.co.nikkobeans.app.ez_ipo.common.PoDataAccess;
+import jp.co.nikkobeans.app.ez_ipo.common.PoDispChecker;
+import jp.co.nikkobeans.app.ez_ipo.common.PoMessage;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.BeanCreator;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Command;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.Iterator;
+import jp.co.nikkobeans.app.ez_ipo.dataaccess.util.MethodInvokerUtility;
+===============================================================
+
+
+ルール２
+Jarや移行グループやディレクトリグループは、以下の優先度で取得する。
+テーブルAI_FILE1テーブルから値を取得したとき（jp.co.nikkobeans.app.ez_ipo.common.KbKoubなどのフルパスで
+検索をかけたとき）に、複数データがSelect結果としてHITしたときに、優先度を決めてどのデータを選択するかは
+以下のルールとして
+
+　１　同一Jarに含まれるものが最優先
+　　　もし同一Ｊａｒ or 同一Ｚｉｐのデータがあれば、それが最優先で選択
+　２　同一ディレクトリグループかつ同一移行グループ
+　　　この同一ディレクトリグループかつ同一移行グループ内にあるものがほとんど正解
+　　　移行グループが異なるや、ディレクトリグループが異なるはほとんど誤り。
+　　　可能性はなくはないが、もし同一ディレクトリグループかつ同一移行グループがあればそれを選ぶ
+　３　同一移行グループはあるが、異なるディレクトりグループの場合はある
+　　　これは３番ン目の優先度として、選択背ｙ補
+　４　nikkoEZ.java17は、AI_FILE1テーブルにデータがない
+　　　それだと、ソースコードの遷移ができなくなってしまう。
+　　　この場合は、以下として、パスを取得せよ。
+　　　　＝＞　ルール３へ記載
+　５　もしimport jp.co.nikkobeans.framework.*;のように、*の場合はFQDNが取得できない
+　　　その場合は、AI_FILE1テーブルにそのクラス名だけで検索をかける
+　　　しかし、FQDNは同判定するか。
+　　　それは、遷移元の暮らすのFQDNのパッケージと同一か、途中まで一致が一番可能性としては高い。
+　　　全然別のパッケージ名は可能性は低い。
+　　　なので、I_FILE1テーブルにそのクラス名だけで検索をかけた結果、パッケージ名が遷移元と近く、
+　　　かつ同一Jar or 同一Zip、同一ディレクトリグループかつ同一移行グループのように優先度に
+　　　したがって、複数データを選定して
+
+
+ルール３
+　　　nikkoEZ.java17は、AI_FILE1テーブルにデータがない
+
+　　　この場合は、NIKKO.nikkoEZ/ez.web.onlineSrcのデータが、
+　　　nikkoEZ.java17と対比されていて、HITしやすい。
+
+　　　このデータ（AI_FILE1テーブル）のデータを引いて、コードが遷移できるようにして
+
+
+
+
+
