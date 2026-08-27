@@ -1,0 +1,498 @@
+■Ｊａｖａサイトを作成してほしい
+
+１ Adapterクラスのクラス名だけ取得する
+
+find /home/aiuser/nkSec/tools/iko-rsync-main/IKO/Master/nikkoEZ/ -type f | perl -pe 's{^(.*)}{zipinfo $1 | grep Adapter.class}g' | bash | awk '{print $9}' | sort | uniq 
+jp/co/nksol/vpoint/keyak/adapter/VPointKeyakKiyakAdapter.class
+jp/co/nksol/vpoint/keyak/adapter/VPointKeyakUktkAdapter.class
+jp/co/nksol/vpoint/sso/adapter/VPointSsoKyakDoiAdapter.class
+jp/co/nksol/vpoint/sso/adapter/VPointSsoKyakDoiRedirectAdapter.class
+jp/co/nksol/vpoint/sso/adapter/VPointSsoNinsyoKeyHakkoAdapter.class
+jp/co/nksol/vpoint/sso/adapter/VPointSsoNinsyoKeyInitAdapter.class
+jp/co/nksol/vpoint/sso/adapter/VPointSsoSyokaiSeniAdapter.class
+：
+：
+
+↓
+VPointSsoSyokaiSeniAdapterやVPointKeyakUktkAdapterを取得する
+
+このJava自体もＬｉｎｕｘ（Ubuntsで動かす想定なので、findコマンドを実行してもよい）
+
+実行ユーザはaiuser
+
+
+2
+
+ #!/bin/bash
+
+BASE_URL="http://10.202.6.34/BatchSupportSiteManager"
+COOKIE_FILE="cookie.txt"
+
+# 1回目: セッション取得
+curl -s \
+  -c "${COOKIE_FILE}" \
+  "${BASE_URL}/ezRealCrud/ezRealCrudInit" \
+  > /dev/null
+
+# 2回目: POST
+curl -s \
+  -b "${COOKIE_FILE}" \
+  -c "${COOKIE_FILE}" \
+  -X POST \
+  "${BASE_URL}/ezRealCrud/search" \
+  --data-urlencode "transferReal=on" \
+  --data-urlencode "dispCount=0" \
+  --data-urlencode "_errorJspF=on" \
+  --data-urlencode "ezRealSysnm=ez.web.online" \
+  --data-urlencode "ezUrl=" \
+  --data-urlencode "adapter=SinkkTrikesiNGJusinAdapter" \
+  --data-urlencode "ezGamenName=" \
+  --data-urlencode "ezJspName=" \
+  --data-urlencode "ezTableSidPblshC=" \
+  --data-urlencode "_crudJohoCF=on" \
+  --data-urlencode "_crudJohoRF=on" \
+  --data-urlencode "_crudJohoUF=on" \
+  --data-urlencode "_crudJohoDF=on" \
+| iconv -f CP932 -t UTF-8
+
+このように２つサイトをアクセスして、期待するＨＴＭＬを取得
+
+aiuser@promaxgb10-ad18:~/Person/tsujii/CRUDCurlSample$ bash a.sh
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html;charset=Windows-31J">
+<link rel="stylesheet" type="text/css" href="/BatchSupportSiteManager/resources/css/BathSupportSite.css" />
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/activeManagerapp.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/FwChild.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/FaChild.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/HkjBase.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/dtree.js"></script>
+<script type="text/javascript" src="/BatchSupportSiteManager/resources/js/BathSupportSite.js"></script>
+
+<head>
+<title>EZ・リアルCRUD 情報検索</title>
+</head>
+<script type="text/javascript">
+function popup(page) {
+window.open(page);
+}
+
+function submitCheck() {
+
+        var sysnmSelect = document.getElementById("ezRealSysnm");
+        var sysnmIndex = sysnmSelect.selectedIndex;
+
+        var radioAll = document.getElementsByName("dispCount");
+
+        for ( var i = 0; i < radioAll.length; i++) {
+
+                if (radioAll[i].checked && radioAll[i].value == "1") {
+
+                        if (sysnmSelect.options[sysnmIndex].text == "") {
+                                alert("システム名を選択してください。");
+                                return;
+                        }
+                }
+        }
+        document.forms[0].submit();
+}
+
+function submitForm() {
+
+        // submitFlg=trueの場合、画面のFormを提出
+        if (false) {
+                document.forms[0].submit();
+                //submitFlgはfalseを設定
+
+        }
+}
+
+</script>
+<body class="body_style" onload="javascript:menuFix();submitForm();">
+<!-- メッセージ領域 -->
+
+
+
+
+
+
+
+<div style="border:0px solid #A2A27C; background:#F0A0E5; padding:0px; width: 538;">
+
+</div>
+
+
+<div style="border:0px solid #A2A27C; ;color : blue; padding:0px; width: 538;">
+
+</div>
+
+
+<div style="border:0px solid #A2A27C; background:#F0A0E5; padding:0px; width: 538;">
+
+</div>
+
+<!-- ------------ -->
+<!-- 表示領域開始 -->
+<!-- ------------ -->
+
+ <form id="ezSearchRealCrudCmdInOut" action="/BatchSupportSiteManager/ezRealCrud/search" method="post">
+
+<!-- デフォルトボディヘッダ -->
+<table cellspacing="0" cellpadding="4" width="100%">
+        <tr>
+                <td class="nksolBathSupportSite_style"><a href="/BatchSupportSiteManager/menu/menuInit"
+                        class="nksolBathSupportSite_style2" style="font-size:24px"><b>CRUDサーチツール</b></a></td>
+                <!-- <td class="nksolBathSupportSite_style" align="right" width="80%"><font style="font-size:14px"><b>問い合わせ先&nbsp;：</b>&nbsp;&nbsp;<a href="mailto:crud-search@nksol.co.jp?Subject=Request for Crud Search" style="font-weight:bolder;color:white;">crud-search@nksol.co.jp</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td> -->
+        </tr>
+        <tr>
+                <td class="menu_style" colspan="2">
+
+                        <div id="menu">
+                                <ul>
+                                        <li><a href="/BatchSupportSiteManager/menu/menuInit" id ="on">HOME</a></li>
+                                        <li><a href="#">バッチ情報</a>
+                                                <ul>
+                                                        <li><a href="/BatchSupportSiteManager/crud/crudInit">CRUD情報</a></li>
+                                                        <li><a href="/BatchSupportSiteManager/program/programInit">プログラム情報</a></li>
+                                                        <li><a href="/BatchSupportSiteManager/sndFile/sndFileInit">後続JOBのHULFT送信有無</a></li>
+                                                        <li><a href="/BatchSupportSiteManager/netJoho/netJohoInit">ジョブネット経路</a></li>
+                                                </ul></li>
+                                        <li><a href="#">リアル情報</a>
+                                                <ul>
+                                                        <li><a href="/BatchSupportSiteManager/realCrud/realCrudInit">CCIS・CRUD情報</a></li>
+                                                        <li><a href="/BatchSupportSiteManager/realEuvCrud/euvCrudInit">CCIS・EUV・CRUD情報</a></li>
+                                                        <li><a href="/BatchSupportSiteManager/ezRealCrud/ezRealCrudInit">EZ・CRUD情報</a></li>
+                                                </ul></li>
+                                        <li><a href="/BatchSupportSiteManager/table/tableInit"" id="on">テーブル情報</a></li>
+                                        <li><a href="/BatchSupportSiteManager/upload/uploadInit" id="on">一括登録</a></li>
+                                </ul>
+                        </div>
+                </td>
+
+        </tr>
+</table>
+  <table>
+    <tr>
+     <td class="title_style"><font style="font-size:13px;">&nbsp;&nbsp;&nbsp;引継（リアル情報）&nbsp;<input id="transferReal1" name="transferReal" type="radio" value="on" checked="checked"/>on<input id="transferReal2" name="transferReal" type="radio" value="off"/>off</font></td>
+    </tr>
+    <tr>
+     <td class="title_style"><h2>EZ・リアルCRUD 情報検索</h2></td>
+    </tr>
+    <tr>
+      <td class="title_style">
+        <font style="font-size:13px;">
+          <input id="dispCount1" name="dispCount" type="radio" value="0" checked="checked"/>1000件まで表示&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input id="dispCount2" name="dispCount" type="radio" value="1"/>全件表示&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input id="errorJspF1" name="errorJspF" type="checkbox" value="1"/><input type="hidden" name="_errorJspF" value="on"/>エラーJSP非表示
+        </font>
+      </td>
+    </tr>
+   </table>
+   <table class="table_style">
+   <tr>
+     <td class="td_search_style">システム名</td>
+     <td class="td_search_style2">URL/電文ID</td>
+     <td class="td_search_style2">Adapter</td>
+     <td class="td_search_style2">画面名</td>
+     <td class="td_search_style2">JSP名</td>
+     <td class="td_search_style2">テーブル</td>
+     <td class="td_search_style2">C</td>
+     <td class="td_search_style2">R</td>
+     <td class="td_search_style2">U</td>
+     <td class="td_search_style2">D</td>
+     <td class="td_search_style3">検索</td>
+    </tr>
+
+      <tr>
+      <td class="td_search_style4" align="center" width="10%"><select id="ezRealSysnm" name="ezRealSysnm" style="width:100%"> <option value="%%"></option><option value="ez.web.online" selected="selected">ez.web.online</option></select></td>
+      <td class="td_search_style5"><input id="ezUrl" name="ezUrl" style="width:96%" type="text" value="" maxlength="400"/></td>
+      <td class="td_search_style5"><input id="adapter" name="adapter" style="width:96%" type="text" value="SinkkTrikesiNGJusinAdapter" maxlength="400"/></td>
+      <td class="td_search_style5" align="center" width="10%"><input id="ezGamenName" name="ezGamenName" style="width:96%" type="text" value="" maxlength="400"/></td>
+      <td class="td_search_style5"><input id="ezJspName" name="ezJspName" style="width:96%" type="text" value="" maxlength="400"/></td>
+      <td class="td_search_style5"><input id="ezTableSidPblshC" name="ezTableSidPblshC" style="width:96%" type="text" value="" maxlength="400"/></td>
+      <td class="td_search_checkBox_style"><input id="crudJohoCF1" name="crudJohoCF" type="checkbox" value="1"/><input type="hidden" name="_crudJohoCF" value="on"/></td>
+      <td class="td_search_checkBox_style"><input id="crudJohoRF1" name="crudJohoRF" type="checkbox" value="1"/><input type="hidden" name="_crudJohoRF" value="on"/></td>
+      <td class="td_search_checkBox_style"><input id="crudJohoUF1" name="crudJohoUF" type="checkbox" value="1"/><input type="hidden" name="_crudJohoUF" value="on"/></td>
+      <td class="td_search_checkBox_style"><input id="crudJohoDF1" name="crudJohoDF" type="checkbox" value="1"/><input type="hidden" name="_crudJohoDF" value="on"/></td>
+
+      <td class="td_search_style6"><button type="button" onclick="submitCheck()"><img src="/BatchSupportSiteManager/resources/images/eol/search.png"></button>
+  </td>
+      </tr>
+
+   </table>
+<p style="font-family:Verdana;font-size:15px;margin:4px 14px;padding:4px;">必ず制限事項を理解した上でご利用ください。 <a href="link">リアル・バッチ情報サイト情報の画面項目と 制限事項</a><br>
+出力結果が増えるにつれて、処理時間が極端に長くなります。なるべく条件を増やし、結果を絞ってください。
+</p>
+   <br>
+
+
+   <table class="table_style">
+   <tr>
+       <th class="count_style">該当件数&nbsp;&nbsp;</th>
+       <th class="count_style">5件</th>
+   <tr>
+   </table>
+
+
+
+
+   <div style="display:block;width: 1732px;">
+   <table class="table_style" width="1605" style="table-layout: fixed;">
+    <thead>
+      <tr>
+       <td class="td_table_line_style19" align="center">システム名</td>
+       <td class="td_table_line_style10" align="center">調査基準日付</td>
+       <td class="td_table_line_style9" align="center">URL/電文ID</td>
+       <td class="td_table_line_style17" align="center">Adapter</td>
+       <td class="td_table_line_style9" align="center">画面名</td>
+       <td class="td_table_line_style9" align="center">JSP名</td>
+       <td class="td_table_line_style9" align="center">テーブル</td>
+       <td class="td_table_line_style12" align="center">C</td>
+       <td class="td_table_line_style12" align="center">R</td>
+       <td class="td_table_line_style12" align="center">U</td>
+       <td class="td_table_line_style12" align="center">D</td>
+      </tr>
+     </thead>
+   </table>
+   </div>
+   <div style="display:block; height: 815px; width: 1732px; overflow-x: auto; overflow-y: auto;">
+   <table class="table_style" width="1605" style="table-layout: fixed; word-wrap:break-word;">
+     <tbody>
+
+
+
+
+
+              <tr>
+
+
+
+
+
+
+
+              <td class="td_table_line_style6" rowspan="5" align="left" targetId="realSysnm"> ez.web.online<br></td>
+              <td class="td_table_line_style6" rowspan="5" align="left" targetId="basedate"> 2026/07/19<br></td>
+              <td class="td_table_line_style3" rowspan="5" align="left" targetId="url"> 3991<br></td>
+              <td class="td_table_line_style18" rowspan="5" align="left" targetId="adapter"> jp.co.nikkobeans.app.odr_yak.kb_bosy.jysin.adapter.SinkkTrikesiNGJusinAdapter<br></td>
+              <td class="td_table_line_style3" rowspan="5" align="left" targetId="gamenName"> 電文受信<br></td>
+              <td class="td_table_line_style3" rowspan="5" align="left" targetId="jspName"> -<br></td>
+
+
+                      <td class="td_table_line_style3" align="left"targetId="tableSidPblshC"><a href="../tableDetailJoho/tableDetailJohoShow?schemaTableNm=EZOWNER.NOL1070&backFlag=4"> EZOWNER.NOL1070</a><br></td>
+
+
+
+              <td class="td_table_CURD_IO_line_style" align="center" targetId="crudJohoCF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center" targetId="crudJohoRF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center" targetId="crudJohoUF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center" targetId="crudJohoDF"> <br></td>
+
+
+
+
+
+
+
+
+              <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      <td class="td_table_line_style3" align="left"targetId="tableSidPblshC"><a href="../tableDetailJoho/tableDetailJohoShow?schemaTableNm=EZOWNER.NOL3120&backFlag=4"> EZOWNER.NOL3120</a><br></td>
+
+
+
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoCF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoRF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoUF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoDF"> <br></td>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      <td class="td_table_line_style3" align="left"targetId="tableSidPblshC"><a href="../tableDetailJoho/tableDetailJohoShow?schemaTableNm=EZOWNER.NOL3800&backFlag=4"> EZOWNER.NOL3800</a><br></td>
+
+
+
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoCF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoRF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoUF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoDF"> <br></td>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      <td class="td_table_line_style3" align="left"targetId="tableSidPblshC"><a href="../tableDetailJoho/tableDetailJohoShow?schemaTableNm=EZOWNER.NOL8000&backFlag=4"> EZOWNER.NOL8000</a><br></td>
+
+
+
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoCF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoRF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoUF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoDF"> <br></td>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      <td class="td_table_line_style3" align="left"targetId="tableSidPblshC"><a href="../tableDetailJoho/tableDetailJohoShow?schemaTableNm=EZOWNER.PRK8000&backFlag=4"> EZOWNER.PRK8000</a><br></td>
+
+
+
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoCF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoRF"> <br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoUF"> ○<br></td>
+              <td class="td_table_CURD_IO_line_style" align="center"  targetId="crudJohoDF"> <br></td>
+
+
+
+
+
+
+
+
+
+
+
+      </tbody>
+     </table>
+     </div>
+
+
+ </form>
+ </body>
+ </html>aiuser@promaxgb10-ad18:~/Person/tsujii/CRUDCurlSample$
+ 
+ 
+ 
+ 
+３
+その取得したデータを、ＰｏｓｔｇｒｅＳＱＬにいれる
+ServerName=10.205.7.19, Port=5432, Database=postgres
+
+ID=postgres
+PASS=postgres
+
+
+
+テーブル１　　テーブル名は、CRUD_ONLINE_EZ1
+ID	システム名	調査基準日付	URL/電文ID	Adapter	画面名	JSP名
+
+テーブル２　　テーブル名は、CRUD_ONLINE_EZ2
+ID	システム名	Adapter	テーブル	C	R	U	D
+
+カラムの日本語名は上記、これを英語版にしてテーブル定義を出して
+
+2で取得したＨＴＭＬから２テーブルに入れるデータを作ってＩｎｓｅｒｔ分を実行せよ
+
+
+■期待する生成してほしいもの
+Main.java
+CRUD_EZ.ddl
+
+それのダウンロードリンクだけでよい。
+作成コードの内容説明は一切不要
+
+
