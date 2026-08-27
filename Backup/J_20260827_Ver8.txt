@@ -1,0 +1,17 @@
+aiuser@promaxgb10-ad18:~/nkSec/tools/crud-main/01.EZ/crud-online-data-tool$ java -Xmx2048m -classpath "./lib/*:./lib/" Main
+[START] Adapter scan: /home/aiuser/nkSec/tools/iko-rsync-main/IKO/Master/nikkoEZ
+[SCAN] adapters=3021, archives=759, unreadableArchives=0
+[PROGRESS] 100/3021 adapters, headerRows=194, crudRows=20797
+[PROGRESS] 200/3021 adapters, headerRows=450, crudRows=114888
+[PROGRESS] 300/3021 adapters, headerRows=734, crudRows=212433
+[PROGRESS] 400/3021 adapters, headerRows=1168, crudRows=293565
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+        at java.util.Arrays.copyOf(Arrays.java:3332)
+        at java.lang.StringCoding.safeTrim(StringCoding.java:89)
+        at java.lang.StringCoding.decode(StringCoding.java:230)
+        at java.lang.String.<init>(String.java:463)
+        at java.lang.String.<init>(String.java:515)
+        at Main$HttpClient.decodeBody(Main.java:611)
+        at Main$HttpClient.doSearch(Main.java:520)
+        at Main$HttpClient.search(Main.java:490)
+        at Main.main(Main.java:123)
