@@ -1,0 +1,15 @@
+aiuser@promaxgb10-ad18:~/nkSec/tools/crud-main/01.EZ/crud-online-data-tool/Log$ ls
+Tool.log
+aiuser@promaxgb10-ad18:~/nkSec/tools/crud-main/01.EZ/crud-online-data-tool/Log$ tail -f Tool.log
+        at org.postgresql.jdbc.PgStatement.executeBatch(PgStatement.java:919)
+        at org.postgresql.jdbc.PgPreparedStatement.executeBatch(PgPreparedStatement.java:1685)
+        at Main$BatchInserter.flushCruds(Main.java:698)
+        at Main$BatchInserter.addCrud(Main.java:679)
+        at Main.main(Main.java:130)
+Caused by: org.postgresql.util.PSQLException: ERROR: リレーション"stg_crud_online_ez2"の列"system_name"のNULL値が非NULL制約に違反しています
+  詳細: 失敗した行は(null, jp.co.nikkobeans.app.t_card.kanri.adapter.AdvInfoSyokaiHyojiAdap..., EZOWNER.FRI6320, f, t, f, f)を含みます
+        at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2713)
+        at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2401)
+        ... 7 more
+^C
+aiuser@promaxgb10-ad18:~/nkSec/tools/crud-main/01.EZ/crud-online-data-tool/Log$
