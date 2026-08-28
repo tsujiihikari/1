@@ -1,0 +1,25 @@
+
+
+[1]処理ーフローの結果出力でようなものを削除
+　仕様みなおし
+　
+①
+Adapterクラスでは、ROOTをpublic boolean doApplication()だけのルートに絞って構わない
+
+②
+UnyokaisyaIchiranResponseクラスのようなXXXXXResponseクラスの呼び出し箇所、参照元箇所は一切フローには記載不要
+つまりUnyokaisyaIchiranResponseクラスは表れない
+
+③
+コンストラクトやクラスのnew()の箇所は処理フローには一切表さない
+
+④
+java.lang.xxxx()のようなＪＤＫのメソッド呼び出しは一切表さない
+
+
+⑤
+close()メソッドの呼び出しは一切表さない
+
+
+
+
