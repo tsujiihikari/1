@@ -1,0 +1,22 @@
+# FIXME temporary PostgreSQL method-call flow sample
+# Source: JAVA_ASM_METHOD_CALL / JAVA_ASM_CLASS_DEF
+# Start Adapter: jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.adapter.TsnmeigUnyCorpDelexeAdapter
+# Root method: public boolean doApplication() only.
+# Hidden from flow: caller/callee in any .framework. or .util. package; *Bean/*Exception classes; classes containing UnyokaisyaIchiran; constructors; close(); and method names containing Bean.
+# Calls are emitted in JAVA_ASM_METHOD_CALL.ID order, which follows ASM bytecode visitation/insertion order.
+# This is a static bytecode call-flow approximation; branches, loops and runtime polymorphic dispatch are not an execution trace.
+
+============================================================
+GROUP: nikkoEZ/ez.web.online
+START: jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.adapter.TsnmeigUnyCorpDelexeAdapter [jar=nikkoEZ/ez.web.online/jar/app_tsn_meigara.jar]
+ROOT_METHOD_COUNT: 1
+
+ROOT 1: TsnmeigUnyCorpDelexeAdapter :: public boolean doApplication()
+  1. -> TsnmeigUnyCorpDelexeController :: public void execExe(jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaRequestBean, jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaIchiranResponse) [line=65] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    1. -> TsnmeigUnyCorpDelexeController :: private boolean deleteNOL1050() [line=115] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+      1. -> Nol1050Table :: boolean executeQuery(java.lang.String) [line=57] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      2. -> Nol1050Table :: jp.co.nikkobeans.app.common.dataaccess.table.Nol1050TableRecord nextRecord() [line=61] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      3. -> Nol1050TableRecord :: int delete() [line=69] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+
+
+
