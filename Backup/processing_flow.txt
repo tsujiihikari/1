@@ -1,0 +1,94 @@
+# FIXME temporary PostgreSQL method-call flow sample
+# Source: JAVA_ASM_METHOD_CALL / JAVA_ASM_CLASS_DEF
+# Start Adapter: jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.adapter.TsnmeigUnyCorpDelexeAdapter
+# Hidden from flow: any .framework. package, any .util. package, *Bean classes, *Exception classes.
+# Calls are emitted in JAVA_ASM_METHOD_CALL.ID order, which follows ASM bytecode visitation/insertion order.
+# This is a static bytecode call-flow approximation; branches, loops and runtime polymorphic dispatch are not an execution trace.
+
+============================================================
+GROUP: nikkoEZ/ez.web.online
+START: jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.adapter.TsnmeigUnyCorpDelexeAdapter [jar=nikkoEZ/ez.web.online/jar/app_tsn_meigara.jar]
+ROOT_METHOD_COUNT: 4
+
+ROOT 1: TsnmeigUnyCorpDelexeAdapter :: public TsnmeigUnyCorpDelexeAdapter()
+  1. -> ServletAdapter :: ServletAdapter() [line=33] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED] [status=NOT_FOUND_IN_GROUP]
+  2. -> UnyokaisyaIchiranResponse :: public UnyokaisyaIchiranResponse() [line=28] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+
+ROOT 2: TsnmeigUnyCorpDelexeAdapter :: public boolean createResult()
+  1. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.app.common.menu.MenuBean getMenuBean() [line=40] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+  2. -> UnyokaisyaIchiranPresen :: public UnyokaisyaIchiranPresen() [line=41] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+  3. -> UnyokaisyaIchiranResponse :: public java.lang.String getErrCode() [line=43] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+  4. -> UnyokaisyaIchiranResponse :: public java.lang.String getErrCode() [line=46] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+  5. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.framework.IJspParam getJspParam() [line=48] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+  6. -> TsnmeigUnyCorpDelexeAdapter :: private void setPresenBean(jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.presenbean.UnyokaisyaIchiranPresen) [line=49] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+    1. -> UnyokaisyaIchiranResponse :: public java.lang.String getHyojijun() [line=92] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    2. -> UnyokaisyaIchiranPresen :: public void setHyojijun(java.lang.String) [line=92] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    3. -> UnyokaisyaIchiranResponse :: public java.lang.String getHenkomaeHyojijun() [line=94] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    4. -> UnyokaisyaIchiranPresen :: public void setHenkomaeHyojijun(java.lang.String) [line=94] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    5. -> UnyokaisyaIchiranResponse :: public java.lang.String getUnyokaisyaCd() [line=96] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    6. -> UnyokaisyaIchiranPresen :: public void setUnyokaisyaCd(java.lang.String) [line=96] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    7. -> UnyokaisyaIchiranResponse :: public java.lang.String getUnyokaisyaCdHidden() [line=98] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    8. -> UnyokaisyaIchiranPresen :: public void setUnyokaisyaCdHidden(java.lang.String) [line=98] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    9. -> UnyokaisyaIchiranResponse :: public java.lang.String getUnyokaisyaNm() [line=100] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    10. -> UnyokaisyaIchiranPresen :: public void setUnyokaisyaNm(java.lang.String) [line=100] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    11. -> UnyokaisyaIchiranResponse :: public java.lang.String getUnyokaisyaNmKana() [line=102] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    12. -> UnyokaisyaIchiranPresen :: public void setUnyokaisyaNmKana(java.lang.String) [line=102] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    13. -> UnyokaisyaIchiranResponse :: public java.lang.String getUnyokaisyaNmRyak() [line=104] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    14. -> UnyokaisyaIchiranPresen :: public void setUnyokaisyaNmRyak(java.lang.String) [line=104] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    15. -> UnyokaisyaIchiranResponse :: public java.lang.String getSaiyoStartbi() [line=106] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    16. -> UnyokaisyaIchiranResponse :: public java.lang.String getSaiyoStartbi() [line=107] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    17. -> UnyokaisyaIchiranPresen :: public void setSaiyoStartbi(java.lang.String) [line=107] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    18. -> UnyokaisyaIchiranResponse :: public java.lang.String getSaiyoEndbi() [line=110] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    19. -> UnyokaisyaIchiranResponse :: public java.lang.String getSaiyoEndbi() [line=111] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    20. -> UnyokaisyaIchiranPresen :: public void setSaiyoEndbi(java.lang.String) [line=111] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    21. -> UnyokaisyaIchiranResponse :: public java.lang.String getSakuseibi() [line=114] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    22. -> UnyokaisyaIchiranResponse :: public java.lang.String getSakuseibi() [line=115] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    23. -> UnyokaisyaIchiranPresen :: public void setSakuseibi(java.lang.String) [line=115] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    24. -> UnyokaisyaIchiranResponse :: public java.lang.String getSakuseibiHidden() [line=118] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    25. -> UnyokaisyaIchiranPresen :: public void setSakuseibiHidden(java.lang.String) [line=118] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    26. -> UnyokaisyaIchiranResponse :: public java.lang.String getUpdatebi() [line=120] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    27. -> UnyokaisyaIchiranResponse :: public java.lang.String getUpdatebi() [line=121] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    28. -> UnyokaisyaIchiranPresen :: public void setUpdatebi(java.lang.String) [line=121] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+  7. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.framework.IJspParam getJspParam() [line=51] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+  8. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.framework.IJspParam getJspParam() [line=52] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+  9. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.framework.IJspParam getJspParam() [line=54] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+  10. -> TsnmeigUnyCorpDelexeAdapter :: jp.co.nikkobeans.framework.IJspParam getJspParam() [line=55] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+
+ROOT 3: TsnmeigUnyCorpDelexeAdapter :: public boolean doApplication()
+  1. -> TsnmeigUnyCorpDelexeController :: public TsnmeigUnyCorpDelexeController() [line=64] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+  2. -> TsnmeigUnyCorpDelexeController :: public void execExe(jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaRequestBean, jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaIchiranResponse) [line=65] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    1. -> TsnmeigUnyCorpDelexeController :: private boolean deleteNOL1050() [line=115] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED]
+      1. -> Nol1050Table :: Nol1050Table(java.sql.Connection) [line=51] [INVOKESPECIAL] [dispatch=STATICALLY_RESOLVED] [status=NOT_FOUND_IN_GROUP]
+      2. -> Nol1050Table :: boolean executeQuery(java.lang.String) [line=57] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      3. -> Nol1050Table :: jp.co.nikkobeans.app.common.dataaccess.table.Nol1050TableRecord nextRecord() [line=61] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      4. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=64] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      5. -> Nol1050Table :: void close() [line=80] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      6. -> Nol1050TableRecord :: int delete() [line=69] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      7. -> Nol1050Table :: void close() [line=80] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      8. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=75] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+      9. -> Nol1050Table :: void close() [line=80] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      10. -> Nol1050Table :: void close() [line=80] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+      11. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=84] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+      12. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=90] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    2. -> TsnmeigUnyCorpDelexeController :: public void setModExeBean(jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaRequestBean, jp.co.eztrade.app.tsn_meigara.unyokaisya_kanri.interfacebean.UnyokaisyaIchiranResponse) [line=116] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      1. -> UnyokaisyaIchiranResponse :: public void setUnyokaisyaCd(java.lang.String) [line=150] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      2. -> UnyokaisyaIchiranResponse :: public void setUnyokaisyaCdHidden(java.lang.String) [line=152] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      3. -> UnyokaisyaIchiranResponse :: public void setUnyokaisyaNm(java.lang.String) [line=154] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      4. -> UnyokaisyaIchiranResponse :: public void setUnyokaisyaNmKana(java.lang.String) [line=156] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      5. -> UnyokaisyaIchiranResponse :: public void setUnyokaisyaNmRyak(java.lang.String) [line=158] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      6. -> UnyokaisyaIchiranResponse :: public void setHyojijun(java.lang.String) [line=160] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      7. -> UnyokaisyaIchiranResponse :: public void setHenkomaeHyojijun(java.lang.String) [line=162] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      8. -> UnyokaisyaIchiranResponse :: public void setSaiyoStartbi(java.lang.String) [line=164] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      9. -> UnyokaisyaIchiranResponse :: public void setSaiyoEndbi(java.lang.String) [line=166] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      10. -> UnyokaisyaIchiranResponse :: public void setSakuseibi(java.lang.String) [line=168] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+      11. -> UnyokaisyaIchiranResponse :: public void setUpdatebi(java.lang.String) [line=170] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    3. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=122] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    4. -> UnyokaisyaIchiranResponse :: public java.lang.String getErrCode() [line=124] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE]
+    5. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=128] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    6. -> UnyokaisyaIchiranResponse :: public java.lang.String getErrCode() [line=130] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    7. -> UnyokaisyaIchiranResponse :: public void setErrCode(java.lang.String) [line=134] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+    8. -> UnyokaisyaIchiranResponse :: public java.lang.String getErrCode() [line=136] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [ALREADY_EXPANDED]
+
+ROOT 4: TsnmeigUnyCorpDelexeAdapter :: public boolean parseParam()
+  1. -> TsnmeigUnyCorpDelexeAdapter :: java.lang.String getParameter(java.lang.String) [line=73] [INVOKEVIRTUAL] [dispatch=DYNAMIC_DISPATCH_POSSIBLE] [status=NOT_FOUND_IN_GROUP]
+
