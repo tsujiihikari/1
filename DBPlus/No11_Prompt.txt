@@ -1,0 +1,161 @@
+
+
+
+
+サイト修正およびServletを修正して
+
+以下の要望を修正し、添付のdbplus.warを修正した形で、再度dbplus.warのダウンロードリンクを提示して
+
+修正する際は、以下方針として
+１）いきなりコードを修正すると、ChatGPTのコードは間違いやすいので、修正方針と影響調査（どこをどうなおすかの検討）として
+２）その修正方針と影響調査をもとに、コード修正案を出す
+３）そのコード修正案を充てた際、ただしく動くか、期待する修正になるかをチェック
+４）１～３が問題なければ、コードを修正する
+５）コード修正後に、再度要望と修正内容が合致しており、ただしい修正になっているかをインスペクション
+６）問題があれば、コードを元に戻し、１～５を再帰的にやりなおして、正しいコードに導く
+
+
+修正点
+
+[1]
+
+
+No.	DBデータ	DB識別名	テーブル名	Ver	Par	日本語名称	最大想定件数	最終更新日	担当者	個人情報	統計情報	DDL
+
+このデータ行へhoverしたときは、もっと背景色を薄くして
+
+いま濃すぎる
+もうすこしスタイリッシュに
+
+色がどぎつい
+
+
+[2]
+
+ひとつまえのページとかの
+
+ページなどがハイフンになっている
+
+ーの文字だと縦書き文字がきくので、
+一覧をコピーとかも全部ーにして
+
+[3]
+
+DDLボタンのfont-sizeが大きすぎる
+-1pxして
+
+[4]
+
+検索ボタン
+曖昧検索ボタン
+
+ボタンの横幅の長さを曖昧検索ボタンと同じ幅にして
+
+ふたつとも同じはば
+
+[5]
+
+ヘッダーのAGA0010タブの上にあるkYKOWNERとかのスキーマ文字
+
+
+transform(4px,1px)にして
+
+かつAGA0010のテーブル名称の縦方向の位置が、いまホームという文字より字下げされている
+
+それはスキーマ名が邪魔しているから
+
+position:absoluteでスキーマ名は指定するようにして、このスキーマ名による字下げはやめて
+
+
+[6]
+
+
+ServletからDBSchema.csvが参照できないみたい
+
+だからいったん以下の
+あたいをJavaでくらすないに固定でていぎ
+
+それで
+うごかして
+
+
+id,type,db_type,sid,host,port,service_name,user_name,password,rps_schema_name,source_db_version
+1,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,ATMAPLS,JH_USER,ATMAPLS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+2,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZAQ,JH_USER,EZAQ,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+3,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZOWNER,JH_USER,EZOWNER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+4,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZOWNER_NIGHT,JH_USER,EZOWNER_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+5,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,IMPUSER,JH_USER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+6,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,ATMAPLSTS,ATMAPLSTS,ATMAPLSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+7,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZSTAQ1,EZSTAQ1,EZSTAQ1,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+8,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERST,EZOWNERST,EZOWNERST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+9,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERST_NIGHT,EZOWNERST_NIGHT,EZOWNERST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+10,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+11,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,ATMAPLLTS,ATMAPLLTS,ATMAPLSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+12,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZLTAQ1,EZLTAQ1,EZSTAQ1,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+13,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERLT,EZOWNERLT,EZOWNERST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+14,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERLT_NIGHT,EZOWNERLT_NIGHT,EZOWNERST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+15,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,ATMADM,JH_USER,ATMADM,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+16,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,ATMAPL,JH_USER,ATMAPL,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+17,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,EZOWNERS,JH_USER,EZOWNERS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+18,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,EZOWNERS_NIGHT,JH_USER,EZOWNERS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+19,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,IMPUSER,JH_USER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+20,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMST,ATMADMST,ATMADMST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+21,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMST_NIGHT,ATMADMST_NIGHT,ATMADMST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+22,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMAPLST,ATMAPLST,ATMAPLST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+23,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERSTS,EZOWNERSTS,EZOWNERSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+24,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERSTS_NIGHT,EZOWNERSTS_NIGHT,EZOWNERSTS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+25,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+26,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMLT,ATMADMLT,ATMADMLT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+27,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMLT_NIGHT,ATMADMLT_NIGHT,ATMADMLT_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+28,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMAPLLT,ATMAPLLT,ATMAPLLT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+29,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERLTS,EZOWNERLTS,EZOWNERLTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+30,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERLTS_NIGHT,EZOWNERLTS_NIGHT,EZOWNERLTS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+1,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_AIFAOWNER,JH_USER,AIFAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+2,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_BIZOWNER,JH_USER,BIZOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+3,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_CTMOWNER,JH_USER,CTMOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+4,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_EXTOWNER,JH_USER,EXTOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+5,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_FIFAOWNER,JH_USER,FIFAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+6,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_ICTMOWNER,JH_USER,ICTMOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+7,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IEXTOWNER,JH_USER,IEXTOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+8,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IISAOWNER,JH_USER,IISAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+9,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IKYKOWNER,JH_USER,IKYKOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+10,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_ISAOWNER,JH_USER,ISAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+11,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKIPA,JH_USER,KYKIPA,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+12,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKMAINT,JH_USER,KYKMAINT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+13,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKOWNER,JH_USER,KYKOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+14,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,IMPORTER,JH_USER,IMPORTER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+15,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_AIFAEST,OBJECT_USER_AIFAEST,AIFAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+16,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_BIZEST,OBJECT_USER_BIZEST,BIZEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+17,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_CTMEST,OBJECT_USER_CTMEST,CTMEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+18,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_EXTEST,OBJECT_USER_EXTEST,EXTEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+19,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_FIFAEST,OBJECT_USER_FIFAEST,FIFAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+20,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_ICTMEST,OBJECT_USER_ICTMEST,ICTMEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+21,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IEXTEST,OBJECT_USER_IEXTEST,IEXTEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+22,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IISAST,OBJECT_USER_IISAST,IISAST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+23,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IKYKEST,OBJECT_USER_IKYKEST,IKYKEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+24,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_ISAST,OBJECT_USER_ISAST,ISAST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+25,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_KYKEST,OBJECT_USER_KYKEST,KYKEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+26,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_KYKIPAEST,OBJECT_USER_KYKIPAEST,KYKIPAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+27,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,IMPORTER,IMPORTER,IMPORTER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+28,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_AIFAELT,OBJECT_USER_AIFAELT,AIFAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+29,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_AIFAHLT,OBJECT_USER_AIFAHLT,AIFAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+30,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_BIZELT,OBJECT_USER_BIZELT,BIZELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+31,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_CTMELT,OBJECT_USER_CTMELT,CTMELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+32,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_CTMHLT,OBJECT_USER_CTMHLT,CTMHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+33,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_EXTELT,OBJECT_USER_EXTELT,EXTELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+34,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_FIFAELT,OBJECT_USER_FIFAELT,FIFAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+35,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ICTMELT,OBJECT_USER_ICTMELT,ICTMELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+36,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ICTMHLT,OBJECT_USER_ICTMHLT,ICTMHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+37,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IEXTELT,OBJECT_USER_IEXTELT,IEXTELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+38,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IISAHLT,OBJECT_USER_IISAHLT,IISAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+39,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IISALT,OBJECT_USER_IISALT,IISALT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+40,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IKYKELT,OBJECT_USER_IKYKELT,IKYKELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+41,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IKYKHLT,OBJECT_USER_IKYKHLT,IKYKHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+42,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ISAHLT,OBJECT_USER_ISAHLT,ISAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+43,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ISALT,OBJECT_USER_ISALT,ISALT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+44,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKELT,OBJECT_USER_KYKELT,KYKELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+45,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKHLT,OBJECT_USER_KYKHLT,KYKHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+46,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKIPAELT,OBJECT_USER_KYKIPAELT,KYKIPAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+47,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+
+
