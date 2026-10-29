@@ -1,0 +1,457 @@
+
+
+
+
+サイト修正およびServletを修正して
+
+以下の要望を修正し、添付のdbplus.warを修正した形で、再度dbplus.warのダウンロードリンクを提示して
+
+修正する際は、以下方針として
+１）いきなりコードを修正すると、ChatGPTのコードは間違いやすいので、修正方針と影響調査（どこをどうなおすかの検討）として
+２）その修正方針と影響調査をもとに、コード修正案を出す
+３）そのコード修正案を充てた際、ただしく動くか、期待する修正になるかをチェック
+４）１～３が問題なければ、コードを修正する
+５）コード修正後に、再度要望と修正内容が合致しており、ただしい修正になっているかをインスペクション
+６）問題があれば、コードを元に戻し、１～５を再帰的にやりなおして、正しいコードに導く
+
+
+修正点
+
+[1]
+
+一覧をコピーとCSVを保存のボタンの高さ（ボタン長）をもっと長くする
+
+いま狭いので、きつきつに感じる
+
+
+ひとつ前のページへボタンぐらいの長さ、なんならもうすこしながくてもよい
+
+
+
+
+[2]
+
+CSVを保存は、CSVで全件保存に変更
+
+ServletでＲＰＳからいまpage=1とかで絞っているが、全件ＲＰＳサイトから取得するＵＲＬに変更して
+全件ダウンロードするように仕様を変更して	
+
+[3]
+
+DDLボタンのfont-sizeをいまより-１ｐｘして
+
+
+[4]
+
+DBTYPE
+KYKDB
+環境
+JH
+スキーマ / 接続先
+
+ここの値は、最初この画面を表示したときに、Servletからすべての接続先をDBSchema.csvか固定Ｊａｖａかはさておき
+クライアント側へダウンどーど（情報を全部わたす）ことはできると思う
+
+それでこのＳｅｌｅｃｔボックスに文字を入力すると、絞り込んで選択できる要素を限定するように
+クライアントでしてほしい
+
+
+また、いまの要素（Selectボックス）の画面描画の並べ方が気に入っていない
+
+最終的にスキーマ（これは絶対に一意）だけ特定できれば、そこからDBTYPE
+KYKDB
+環境
+JH
+スキーマ / 接続先
+
+
+この情報は全部特定可能（つまり、スキーマのＳｅｌｅｃｔボックスのValueに指定しておけば、その値は取得できる）
+
+
+そして、Servletから取得するとき、プルダウンにはIMPORTERやIMPUSERは出したくない
+
+これは除外して
+
+
+Ｓｅｌｅｃｔボックスはこうする
+
+
+スキーマ	環境	DBTYPE	接続先
+
+
+この接続先はＳｅｌｅｃｔボックスでなくてよく、ただ文字列として表示するＤｉｖ領域
+
+
+接続先は、サービス名指定の直接接続sqlplusを記載	
+
+[5]
+
+
+ヘッダーのKYKOENERとAGA0020とかのテーブル名において、KYKOWNERのスキーマ名も薄いグレーのborder（丸しかくでかせんなし）で加工
+またテーブル名のタブに重なり、右上に表示されるようにpositionも調整して
+
+[6]
+
+DB_UPDJI1
+ＤＢ作成時間
+DB_UPDJI2
+ＤＢ更新時間
+NYU_USERID
+入力ユーザＩＤ
+UPD_USERID
+更新ユーザID
+CO_HYJUN_C
+会社標準コード
+BI_MEIG_C
+銘柄コード
+BI_MEIG_C_ED
+銘
+
+
+などのテーブルデータ一覧において、以下に変更
+
+length（カラム長）によって、列幅は変えて
+
+また、ヘッダーの文字が小さい　　もっと大きく
+
+そして、先に日本語カラム名　下段に英字のカラム名　として
+
+とくに日本語カラム名の文字サイズは、英字のカラム名よりも1px大きく
+
+
+
+
+[7]
+
+テーブルデータ一覧において、以下に変更
+
+右へスクロールしないと、全部のデータが見れない
+
+これは仕方ないとしても、右スクロールが大変なので、以下の処理を追加して
+
+
+ふわっとpositon:absoluteで右三角のボタンを出す
+
+このボタンを１かいおすと、少し右へスクロールする
+
+このとき、移動がぱっとカーソルのposiotonＸを移動させずに、
+スムーズスクロールのように、ふわっとアニメーションで移動させて
+
+このボタンを連打すると、最後の一番右までいけるという仕様
+
+
+一番右に到着すると、右三角アイコンは消える
+
+
+左への移動も上記と同様
+
+右と左を反転させただけの仕様とする
+
+
+
+[8]
+
+インデックスのタブを開いた時の表示が全然スタイルが違う
+
+HTMLから変更して
+
+以下のように（これは１データのみ）、複数インデックスがある場合は検討が必要だが
+インデックスの内容表示部分は以下のＨＴＭＬのテーブル形式にして
+
+複数の場合は、それをつられている（下にこの塊のＨＴＭＬを複数並べるイメージ）イメージ
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="UTF-8">
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
+<link rel="stylesheet" media="all" href="/assets/application-9b5a3ebe6d5acae0b145e28a599fed4970dd0cba8c2a9fd82ef27b5849f8015a.css" data-turbolinks-track="reload" />
+<script src="/assets/application-69d539303ab439d26f6d25effdf4a2eb9fa3757321e256a6d0dd9c978077a7f9.js" data-turbolinks-track="reload"></script>
+<title>開発RPS</title>
+
+<script language="text/JavaScript">
+history.forward();
+<!--
+idprev ='';
+
+function get_Browser(id){ // ブラウザの取得
+  if(document.all) myObj=document.all[id].style; // IE
+}
+
+function Show_obj( id ) { // マウスが乗った時サブメニューを表示
+  Hide_obj(idprev);
+
+  get_Browser(id); // ブラウザオブジェクト
+  myObj.visibility = "visible"; // サブメニュー表示
+  idprev = id;
+  event.cancelBubble = true;
+}
+
+function Hide_obj( id ) {
+  if(id.length != 0){
+    get_Browser(id); // ブラウザオブジェクト
+    myObj.visibility ="hidden"; // 非表示
+  }
+}
+
+function Hide_objclk(){
+  if(idprev.length != 0){
+    Hide_obj( idprev );
+  }
+}
+function goPopup(E)
+{
+    popup_url = '/tool/search_schema';
+
+    var x = getMouseX(E);
+    var y = getMouseY(E)+20;
+    win = open(popup_url,'_blank','left='+x+',top='+y+',width=400,height=250,scrollbars=yes');
+    win.focus();
+}
+function getMouseX(E){
+   if( document.all )
+      return window.event.screenX;
+   else if ( document.layers || document.getElementById )
+      return E.screenX;
+}
+function getMouseY(E){
+   if( document.all )
+      return window.event.screenY;
+   else if( document.layers || document.getElementById )
+      return E.screenY;
+}
+function search()
+{
+
+        if(confirm("マスター定義を更新します。よろしいですか？")){
+            document.form_update.submit();
+
+
+   document.form_schema.action = '/schema/search_schema?schema=' +  encodeURI(document.form_schema.schema.value);
+   document.form_schema.submit();
+}
+// -->
+</script>
+</head>
+
+<body>
+<table border="0" cellspacing="0" cellpadding="0">
+
+<tr height=30 bgcolor=darkred>
+
+<td width=120 nowrap>
+<a href="/rpsmain/index" style="color:white;font-size:22px;font-weight:bold;text-decoration:none;">開発RPS</a>
+</td>
+
+<td width=1000 nowrap align=left valign=bottom>
+
+<table class=std_zero width=100%>
+<tr>
+<td align=left>
+<font color=white>
+
+アカウント: 8045984&nbsp;&nbsp;名前: <a class="top" href="/accmgr/show_basic">辻井　歩</a>&nbsp;&nbsp;<a class="top" href="/">ログアウト</a></font>
+</td>
+
+<td align=right>
+<font color=white>
+&nbsp;&nbsp;ガイド： <a class="top" href="/rpsmain/support_doc">RPSサポート文書</a>&nbsp;&nbsp;問い合わせ先：<a class="top" href="/help/rpsdba">DBチーム</a></font>
+</td>
+</tr>
+
+<tr>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+</td>
+</tr>
+
+<tr>
+<td width=120 valign=top>
+<br>
+<table width="100%" border=0 cellspacing=0 cellpadding=0>
+<tr>
+<td width="100%">
+<table width="100%" border=0 cellspacing=1 cellpadding=0>
+
+<script type="text/javascript">
+<!--
+function search()
+{
+   document.form_schema.action = '/schema/search_schema?schema=' +  encodeURI(document.form_schema.schema.value);
+   document.form_schema.submit();
+}
+// -->
+</script>
+<form action="/schema/set_schema" method="post" name="form_schema">
+<div  style="width:180px;">スキーマ：
+<a href="JavaScript:search();" style="color:blue;text-decoration:none;">検索</a><br>
+<input type="text" name="schema" id="schema" value="KYKOWNER" size="13" maxlength="30" class="std" />&nbsp;
+<form action="/schema/set_schema" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="gRBwAsjfQdRrG96IqflGRnpEtaExBXYAMll2BmVsFBVKH5acURz7RYdDmb2Gi8H/T0IvTDLit1zcujTZKgIdjg==" />
+<input type="button" value="設定" onclick="submit();" class="std_b">
+<td nowrap align="left">
+</div>
+</td>
+</form>
+・<a href="/table/list?pm=ent">エントリ定義</a><br>
+<br>
+<tr><td nowrap><b>メニュー</b></td></tr>
+<tr><td>
+・<a href="/rpsmain">Top</a><br>
+・<a href="/rpsmain/search">マスタ定義</a><br>
+  ・<a href="/anken/list_anken">案件情報</a><br>
+・<a target="_blank" href="/transition/top">移行カレンダ</a><br>
+<br>
+</td></tr>
+
+<tr><td nowrap><b>情報</b></td></tr>
+<tr><td>
+・<a href="/dbname/list">DB識別名一覧</a><br>
+・<a href="/schema/list">スキーマ</a><br>
+<!-- ユーザー別参照絞り込み対応 -->
+・<a href="/info/show">インスタンス状況</a><br>
+・<a href="/server/list_tablespace">表領域使用率一覧</a><br>
+・<a href="/server/list_password">パスワード一覧</a><br>
+・<a href="/item/search?gamn_syor_k=1">項目アイテム検索</a><br>
+・<a href="/schema/dmr_list">DMR対象スキーマ一覧</a><br>
+
+<br>
+</td></tr>
+
+<tr><td nowrap><b>管理</b></td></tr>
+<tr><td>
+・<a href="/accmgr/list_privs">アカウント</a><br>
+
+<br>
+</td></tr>
+
+<!-- ユーザー別参照絞り込み対応 -->
+<tr><td nowrap><b>開発</b></td></tr>
+<tr><td>
+・<a href="/preregistry">事前登録(DIRECTORY)</a><br>
+・<a href="/preregistry/list_user2">新規ユーザー申請</a><br>
+・<a href="/personalinfo/list_reserve">個人情報予約テーブル検索</a><br>
+・<a href="/relation/list_skewer">オブジェクト名串刺し検索</a><br>
+
+<br>
+</td></tr>
+
+<tr><td nowrap><b>スキーマ間比較</b></td></tr>
+<tr><td>
+・<a href="/compare">(開発RPS)</a><br>
+・<a href="/compare/index5">(開発RPS-開発SRPS)</a><br>
+・<a href="/compare/index3">(開発-本番RPS)</a><br>
+・<a href="/compare/index4">(開発-本番SRPS)</a><br>
+・<a href="/compare/index2">(DB上)</a><br>
+・<a href="/compare/compare_master">マスター定義比較</a><br>
+・<a href="/compare/compare_table">オブジェクト定義比較</a><br>
+
+<br>
+</td></tr>
+
+<tr><td nowrap><b>関連情報</b></td></tr>
+<tr><td nowrap>
+・<a href="http://10.202.168.238:19010/" target="_blank">開発SRPS</a><br>
+・<a href="http://10.202.168.238:13010/" target="_blank">本番RPS</a><br>
+<!-- ユーザー別参照絞り込み対応 -->
+・<a href="http://10.202.240.25:19000/" target="_blank">ST2開発RPS</a><br>
+・<a href="http://10.206.249.24:19000/" target="_blank">ST3開発RPS</a><br>
+・<a href="http://10.202.168.238:19100/" target="_blank">開発RPS@SYBASE</a><br>
+<br>
+</td></tr>
+
+<tr><td nowrap><b>ヘルプ</b></td></tr>
+<tr><td nowrap>
+
+・<a href="/rpsmain/support_doc" >RPSサポート文書</a><br>
+・<a href="/rpscolumn/index" >RPS定義テーブル一覧</a><br>
+・<a href="/rpsmain/rps_change_log" >RPSバージョン情報</a><br>
+<br>
+</td></tr>
+
+
+</table>
+</td>
+</tr>
+</table>
+
+</td>
+
+<td valign=top>
+<br>
+<font class="header">カラム一覧&nbsp;(
+エントリー定義
+)</font>
+<hr size="1" />
+<h2>DB識別名：KYKDB&nbsp;&nbsp;Ver:1.0&nbsp;&nbsp;インデックス名:KYF0000_IXP&nbsp;&lt; 主キー用ユニーク索引 &gt;</h2>
+<br>
+※テーブル名：KYF0000&nbsp;
+(Ver:2.0&nbsp;&nbsp;DB識別名:KYKDB)
+<br>
+
+<table class="std_hover">
+  <tr bgcolor="#FFFF99">
+    <td bgcolor="#FFFF99" nowrap>No.</td>
+    <td bgcolor="#FFFF99" nowrap>項目名</td>
+    <td bgcolor="#FFFF99" nowrap>Par</td>
+    <td bgcolor="#FFFF99" nowrap>データ型</td>
+    <td bgcolor="#FFFF99" nowrap>データ長</td>
+    <td bgcolor="#FFFF99" nowrap width="80">NULL制約</td>
+    <td bgcolor="#FFFF99" nowrap width="150">日本語名称</td>
+  </tr>
+  <tr>
+    <td align="left">10&nbsp;</td>
+    <td>CO_HYJUN_C&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>VARCHAR2&nbsp;</td>
+    <td>(5)&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>会社標準コード&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="left">20&nbsp;</td>
+    <td>KYAK_CIF_C&nbsp;</td>
+    <td>O&nbsp;</td>
+    <td>VARCHAR2&nbsp;</td>
+    <td>(11)&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>顧客ＣＩＦコード&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="left">30&nbsp;</td>
+    <td>KOZA_KANR_K&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>VARCHAR2&nbsp;</td>
+    <td>(3)&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>口座管理区分&nbsp;</td>
+  </tr>
+</table>
+
+<form action="/extent/list_index" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<input type="hidden" name="pm" id="pm" value="ent" />
+<input type="hidden" name="schema" id="schema" value="KYKOWNER" />
+<input type="hidden" name="instance" id="instance" value="KYKDB" />
+<input type="hidden" name="version" id="version" value="1.0" />
+<input type="hidden" name="index_name" id="index_name" value="KYF0000_IXP" />
+<input type="hidden" name="tab_instance" id="tab_instance" value="KYKDB" />
+<input type="hidden" name="tab_version" id="tab_version" value="2.0" />
+<input type="hidden" name="table_name" id="table_name" value="KYF0000" />
+<input type="submit" name="commit" value="エクステント情報" class="std_b" data-disable-with="エクステント情報" />
+</form><br />
+
+
+</td>
+
+</tr>
+</table>
+
+</body>
+</html>
