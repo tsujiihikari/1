@@ -1,0 +1,44 @@
+
+
+
+やっぱりKYKOWNERもＥＺＯＷＮＥＲもＢＩＺＯＷＮＥＲもＲＰＳサイトからテーブル一覧を取得できない
+
+以下が、正しいＲＰＳサイトからのＵＲＬ取得方法
+
+このＵＲＬを正として、もう一回今のRPSサイトからの取得方法を見直して、全体的に修正して
+
+
+ RPSサイトからのHTML取得のＵＲＬ
+
+ログイン　GET
+http://10.202.168.238:19001/login/login?domain=nss.nksol.co.jp&shain_cd=8045984&pass=072HikariNaho
+
+スキーマセット　POST
+http://10.202.168.238:19001/schema/set_schema?schema=KYKOWNER&authenticity_token=MfJ3cHU0NK6wW9qQBMKIkf4oX6W7USdPKlE%2BDic%2FjH1VWDX1FEA6cdM9vumW3F5KQXQvyQb4xnYQbFEO%2FTZBMQ%3D%3D
+
+テーブル取得（50件上限）
+http://10.202.168.238:19001/table/list?keyword_db=&keyword_description=&keyword_group_name=&keyword_object_name=&page=1&pm=ent&submit=%E6%A4%9C%E7%B4%A2&utf8=%E2%9C%93
+
+インデックス取得（50件上限）
+http://10.202.168.238:19001/index/list?keyword_db=&keyword_description=&keyword_group_name=&keyword_object_name=&keyword_table_name=&page=1&pm=ent&submit=%E6%A4%9C%E7%B4%A2&utf8=%E2%9C%93
+
+ビュー取得（50件上限）
+http://10.202.168.238:19001/view/list?keyword_db=&keyword_description=&keyword_group_name=&keyword_object_name=&page=1&pm=ent&submit=%E6%A4%9C%E7%B4%A2&utf8=%E2%9C%93
+
+シノニム取得（50件上限）
+http://10.202.168.238:19001/synonym/list?keyword_db=&keyword_group_name=&keyword_name=&keyword_obj_name=&page=1&pm=ent&submit=%E6%A4%9C%E7%B4%A2&utf8=%E2%9C%93
+
+テーブル取得（全件数取得）
+http://10.202.168.238:19001/table/list?utf8=%E2%9C%93&pm=ent&keyword_db=&keyword_object_name=&keyword_description=&keyword_group_name=&submit=%E5%85%A8%E4%BB%B6%E8%A1%A8%E7%A4%BA
+
+インデックス取得（全件数取得）
+http://10.202.168.238:19001/index/list?utf8=%E2%9C%93&pm=ent&keyword_db=&keyword_object_name=&keyword_table_name=&keyword_description=&keyword_group_name=&submit=%E5%85%A8%E4%BB%B6%E8%A1%A8%E7%A4%BA
+
+ビュー取得（全件数取得）
+http://10.202.168.238:19001/view/list?utf8=%E2%9C%93&pm=ent&keyword_db=&keyword_object_name=&keyword_description=&keyword_group_name=&submit=%E5%85%A8%E4%BB%B6%E8%A1%A8%E7%A4%BA
+
+シノニム取得（全件数取得）
+http://10.202.168.238:19001/synonym/list?utf8=%E2%9C%93&pm=ent&keyword_db=&keyword_name=&keyword_obj_name=&keyword_group_name=&submit=%E5%85%A8%E4%BB%B6%E8%A1%A8%E7%A4%BA
+
+
+
