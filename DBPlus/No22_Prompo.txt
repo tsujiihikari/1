@@ -1,0 +1,206 @@
+DBSchema.csvがあやまっていたようで、以下のようにしゅうせいいらいをだすので、
+修正したうえで、再度warに固めて私に返して
+
+
+◇今のＣＳＶ
+id,type,db_type,sid,host,port,service_name,user_name,password,rps_schema_name,source_db_version
+1,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,ATMAPLS,JH_USER,ATMAPLS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+2,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZAQ,JH_USER,EZAQ,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+3,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZOWNER,JH_USER,EZOWNER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+4,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,EZOWNER_NIGHT,JH_USER,EZOWNER_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+5,JH,EZDB,ezuat,172.28.134.107,1621,y1ez.world,IMPUSER,JH_USER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+6,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,ATMAPLSTS,ATMAPLSTS,ATMAPLSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+7,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZSTAQ1,EZSTAQ1,EZSTAQ1,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+8,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERST,EZOWNERST,EZOWNERST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+9,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERST_NIGHT,EZOWNERST_NIGHT,EZOWNERST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+10,ST,EZDB,dzez1v,172.28.134.100,1621,dzez.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+11,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,ATMAPLLTS,ATMAPLLTS,ATMAPLSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+12,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZLTAQ1,EZLTAQ1,EZSTAQ1,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+13,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERLT,EZOWNERLT,EZOWNERST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+14,LT,EZDB,dzez1v,172.28.134.100,1621,dzez.world,EZOWNERLT_NIGHT,EZOWNERLT_NIGHT,EZOWNERST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+15,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,ATMADM,JH_USER,ATMADM,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+16,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,ATMAPL,JH_USER,ATMAPL,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+17,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,EZOWNERS,JH_USER,EZOWNERS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+18,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,EZOWNERS_NIGHT,JH_USER,EZOWNERS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+19,JH,EZDB,atmuat,172.28.134.113,1621,y1atm.world,IMPUSER,JH_USER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+20,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMST,ATMADMST,ATMADMST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+21,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMST_NIGHT,ATMADMST_NIGHT,ATMADMST_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+22,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMAPLST,ATMAPLST,ATMAPLST,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+23,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERSTS,EZOWNERSTS,EZOWNERSTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+24,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERSTS_NIGHT,EZOWNERSTS_NIGHT,EZOWNERSTS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+25,ST,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+26,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMLT,ATMADMLT,ATMADMLT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+27,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMADMLT_NIGHT,ATMADMLT_NIGHT,ATMADMLT_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+28,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,ATMAPLLT,ATMAPLLT,ATMAPLLT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+29,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERLTS,EZOWNERLTS,EZOWNERLTS,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+30,LT,EZDB,dzatm1v,172.28.134.102,1621,dzatm.world,EZOWNERLTS_NIGHT,EZOWNERLTS_NIGHT,EZOWNERLTS_NIGHT,Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - ProductionVersion 19.27.0.0.0
+1,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_AIFAOWNER,JH_USER,AIFAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+2,JH,BIZDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_BIZOWNER,JH_USER,BIZOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+3,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_CTMOWNER,JH_USER,CTMOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+4,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_EXTOWNER,JH_USER,EXTOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+5,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_FIFAOWNER,JH_USER,FIFAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+6,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_ICTMOWNER,JH_USER,ICTMOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+7,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IEXTOWNER,JH_USER,IEXTOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+8,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IISAOWNER,JH_USER,IISAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+9,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_IKYKOWNER,JH_USER,IKYKOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+10,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_ISAOWNER,JH_USER,ISAOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+11,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKIPA,JH_USER,KYKIPA,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+12,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKMAINT,JH_USER,KYKMAINT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+13,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,OBJECT_KYKOWNER,JH_USER,KYKOWNER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+14,JH,KYKDB,mktuat1,172.28.140.94,1621,mkt.world,IMPORTER,JH_USER,IMPORTER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+15,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_AIFAEST,OBJECT_USER_AIFAEST,AIFAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+16,APP,BIZDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_BIZEST,OBJECT_USER_BIZEST,BIZEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+17,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_CTMEST,OBJECT_USER_CTMEST,CTMEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+18,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_EXTEST,OBJECT_USER_EXTEST,EXTEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+19,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_FIFAEST,OBJECT_USER_FIFAEST,FIFAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+20,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_ICTMEST,OBJECT_USER_ICTMEST,ICTMEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+21,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IEXTEST,OBJECT_USER_IEXTEST,IEXTEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+22,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IISAST,OBJECT_USER_IISAST,IISAST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+23,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_IKYKEST,OBJECT_USER_IKYKEST,IKYKEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+24,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_ISAST,OBJECT_USER_ISAST,ISAST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+25,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_KYKEST,OBJECT_USER_KYKEST,KYKEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+26,APP,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,OBJECT_KYKIPAEST,OBJECT_USER_KYKIPAEST,KYKIPAEST,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+27,ST,KYKDB,oskt7,172.28.140.202,1621,oskt7.world,IMPORTER,IMPORTER,IMPORTER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+28,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_AIFAELT,OBJECT_USER_AIFAELT,AIFAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+29,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_AIFAHLT,OBJECT_USER_AIFAHLT,AIFAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+30,LT,BIZDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_BIZELT,OBJECT_USER_BIZELT,BIZELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+31,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_CTMELT,OBJECT_USER_CTMELT,CTMELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+32,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_CTMHLT,OBJECT_USER_CTMHLT,CTMHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+33,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_EXTELT,OBJECT_USER_EXTELT,EXTELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+34,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_FIFAELT,OBJECT_USER_FIFAELT,FIFAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+35,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ICTMELT,OBJECT_USER_ICTMELT,ICTMELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+36,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ICTMHLT,OBJECT_USER_ICTMHLT,ICTMHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+37,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IEXTELT,OBJECT_USER_IEXTELT,IEXTELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+38,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IISAHLT,OBJECT_USER_IISAHLT,IISAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+39,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IISALT,OBJECT_USER_IISALT,IISALT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+40,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IKYKELT,OBJECT_USER_IKYKELT,IKYKELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+41,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_IKYKHLT,OBJECT_USER_IKYKHLT,IKYKHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+42,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ISAHLT,OBJECT_USER_ISAHLT,ISAHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+43,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_ISALT,OBJECT_USER_ISALT,ISALT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+44,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKELT,OBJECT_USER_KYKELT,KYKELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+45,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKHLT,OBJECT_USER_KYKHLT,KYKHLT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+46,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,OBJECT_KYKIPAELT,OBJECT_USER_KYKIPAELT,KYKIPAELT,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+47,LT,KYKDB,dlmkt1v,10.206.12.112,1621,dlmkt1.world,IMPUSER,IMPUSER,IMPUSER,Oracle Database 11g Enterprise Edition Release 11.1.0.7.0Version 19.27.0.0.0
+
+
+◇
+３列目のＫＹＫＤＢやＢＩＺＤＢの箇所が修正必要
+
+ただしい情報が書かれたＨＴＭＬは以下
+ただし、このＨＴＭＬに含まれないＥＺＤＢやＩＭＰＯＲＴＥＲスキーマなどは、このＣＳＶの情報をせいとして、そのまま修正せずに記載を残す
+順番もそのまま
+修正する箇所だけ、ＤＢＴＹＰＥを変更したＣＳＶを出して、それを.warに含めて返却して
+
+
+ＨＴＭＬ
+スキーマ名	詳細	DB識別名	タイプ	DB接続名1	DB接続名2	メインスキーマ名	プロファイル	スキーマ用途	最終更新日	デフォルト表領域	一時表領域	NO_OPE	ホスト名	DBVer	統計Ver
+AIFAEST	*	IFADB	APP	oskt7		IFAADM	仲介業アプリ新STスキーマ	仲介業アプリ新STスキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+AIFAESTUSER	*	IFADB	UNIT	oskt7		IFAADM	仲介業アプリ新ST参照スキーマ	仲介業アプリ新ST参照スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+BIZEST	*	BIZDB	APP	oskt7		BIZADM	営業店フロント新ST	営業店フロント新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+BIZESTUSER	*	BIZDB	UNIT	oskt7		BIZADM	営業店フロント新ST参照	営業店フロント新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+BIZIBMUT	*	BIZDB	UNIT	oskt7		BIZADM	基盤検証用UTスキーマ	基盤検証用UTスキーマ	20150716	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+CPVTST	*	KYKDB	UNIT	oskt7		KYKADM	サイクル進捗可視化ツール用スキ	サイクル進捗可視化ツール用スキーマ（ST）	20180815	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+CTMEST	*	MRKDB	APP	oskt7		MRKADM	顧客条件検索新STスキーマ	顧客条件検索新STスキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+CTMESTUSER	*	MRKDB	UNIT	oskt7		MRKADM	顧客条件検索新ST参照スキーマ	顧客条件検索新ST参照スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+EXTEST	*	KYKDB	APP	oskt7		KYKADM	CCIS延長ｵﾝﾗｲﾝ新STスキーマ	CCIS延長オンライン新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+EXTESTUSER	*	KYKDB	UNIT	oskt7		KYKADM	CCIS延長ｵﾝﾗｲﾝ新ST参照スキーマ	CCIS延長オンライン新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+FIFAEST	*	IFADB	APP	oskt7		IFAADM	仲介業フロント新STスキーマ	仲介業フロント新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+FIFAESTUSER	*	IFADB	UNIT	oskt7		IFAADM	仲介業フロント新ST参照	仲介業フロント新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ICTMEST	*	IFADB	APP	oskt7		IFAADM	仲介業顧客条件検索新ST	仲介業顧客条件検索新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ICTMESTUSER	*	IFADB	UNIT	oskt7		IFAADM	仲介業顧客条件検索新ST参照	仲介業顧客条件検索新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IEXTEST	*	IFADB	APP	oskt7		IFAADM	仲介業CCIS延長ｵﾝﾗｲﾝ新ST	仲介業CCIS延長オンライン新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IEXTESTUSER	*	IFADB	UNIT	oskt7		IFAADM	仲介業CCIS延長ｵﾝﾗｲﾝ新ST参照	仲介業CCIS延長オンライン新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IFAADM	*	IFADB	MAIN	oskt7		IFAADM	IFADBメインスキーマ	IFADBエントリー定義登録専用スキーマ	20040110	USERS_KYKDB	TEMP01		osktestdb7	11.1.0.7.0	5
+IFANKSUT1	*	IFADB	UNIT	oskt7		IFAADM	仲介業開発社員用UTスキーマ	仲介業開発社員用UTスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IFANKSUT3	*	IFADB	UNIT	oskt7		IFAADM	仲介業開発_社員用UTスキーマ(分	仲介業開発_社員用UTスキーマ(分離統合用)	20190412	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IISAST	*	IFADB	APP	oskt7		IFAADM			20130423	USR_DATA	TEMP01		osktestdb7	11.1.0.7.0	5
+IISASTUSER	*	IFADB	UNIT	oskt7		IFAADM			20130423	USR_DATA	TEMP01		osktestdb7	11.1.0.7.0	5
+IKYKEST	*	IFADB	APP	oskt7		IFAADM	仲介業顧客DB新STスキーマ	仲介業顧客DB新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IKYKESTUSER	*	IFADB	UNIT	oskt7		IFAADM	仲介業顧客DB新ST参照スキーマ	仲介業顧客DB新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IPAADM	*	IPADB	MAIN	oskt7		IPAADM	IPADBメインスキーマ	IPADBエントリー定義登録専用スキーマ	20050618	USERS_KYKDB	TEMP_KYKDB		osktestdb7	11.1.0.7.0	5
+IPADBITIUT1	*	IPADB	UNIT	oskt7		IPAADM	一般残管理開発ITI用UTスキーマ	一般残管理開発協力会社(ITI)用UTスキーマ	20210216	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+IPADBITIUT2	*	IPADB	UNIT	oskt7		IPAADM	一般残管理開発ITI用UTスキーマ	一般残管理開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISAADM	*	ISADB	MAIN	oskt7		ISAADM	ISADBメインスキーマ	ISA口座エントリー定義登録専用スキーマ	20130423	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISACECUT2	*	ISADB	UNIT	oskt7		ISAADM	NISADB開発CEC用UTスキーマ	NISADB開発CEC用UTスキーマ	20210219	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT1	*	ISADB	UNIT	oskt7		ISAADM	NISA口座管理開発協力会社(ITI)	NISA口座管理開発協力会社(ITI)用UTスキーマ	20210216	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT2	*	ISADB	UNIT	oskt7		ISAADM	NISA口座管理開発協力会社(ITI)	NISA口座管理開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT3	*	ISADB	UNIT	oskt7		ISAADM	NISA口座管理開発協力会社(ITI)	NISA口座管理開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT4	*	ISADB	UNIT	oskt7		ISAADM	NISA開発ITI用UTスキーマ	NISA開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT5	*	ISADB	UNIT	oskt7		ISAADM	NISA開発ITI用UTスキーマ	NISA開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT6	*	ISADB	UNIT	oskt7		ISAADM	NISA開発ITI用UTスキーマ	NISA開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISADBITIUT7	*	ISADB	UNIT	oskt7		ISAADM	NISA開発ITI用UTスキーマ	NISA開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISAST	*	ISADB	APP	oskt7		ISAADM			20130423	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+ISASTUSER	*	ISADB	UNIT	oskt7		ISAST			20130423	USR_DATA	TEMP01		osktestdb7	11.1.0.7.0	5
+ITSADM	*	ITSDB	MAIN	oskt7		ITSADM	ITSDBメインスキーマ	内部者システムエントリー定義登録専用スキーマ	20070221	USERS_KYKDB	TEMP02		osktestdb7	11.1.0.7.0	5
+ITSCITEUT1	*	KYKDB	UNIT	oskt7		KYKADM	内部者テスト協力会社(CIT)用DB1	内部者テスト協力会社(CIT)用DB1	20211228	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKADM	*	KYKDB	MAIN	oskt7		KYKADM	KYKDBメインスキーマ	KYKDBエントリー定義登録専用スキーマ	20020625	USERS_KYKDB	TEMP01		osktestdb7	11.1.0.7.0	5
+KYKANCUT1	*	KYKDB	UNIT	oskt7		KYKADM	ANC用スキーマ	協力会社(ANC)用スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKANCUT2	*	KYKDB	APP	oskt7		KYKADM	顧客DB開発ANC用UTスキーマ2	顧客DB開発ANC用UTスキーマ2	20250414	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKANCUT2USER	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ANC用UTスキーマ2	顧客DB開発ANC用UTスキーマ2	20250414	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKAZLGEUT1	*	KYKDB	UNIT	oskt7		KYKADM	預り金レガシーUT用スキーマ1KYK	預り金レガシー　UT用スキーマ1(KYK)	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKAZLGEUT2	*	KYKDB	UNIT	oskt7		KYKADM	預り金レガシーUT用スキーマ2KYK	預り金レガシー　UT用スキーマ2(KYK)	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKBT	*	KYKDB	UNIT	oskt7		KYKADM	顧客DBEOLバッチスキーマ	顧客DBEOLバッチスキーマ	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCECUT2	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発CEC用UTスキーマ	顧客DB開発CEC用UTスキーマ	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCECUT3	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発CEC用UTスキーマ	顧客DB開発CEC用UTスキーマ	20230830	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCECUT4	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発CEC用UTスキーマ	顧客DB開発CEC用UTスキーマ	20230830	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCECUT5	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発CEC用UTスキーマ	顧客DB開発CEC用UTスキーマ	20230830	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCITUT	*	KYKDB	APP	oskt7		KYKADM	顧客DB開発CIT用UTスキーマ	顧客DB開発CIT用UTスキーマ	20220519	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKCITUTUSER	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発CIT用UTスキーマ	顧客DB開発CIT用UTスキーマ	20220519	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT1	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT2	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT3	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発協力会社(ITI)用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT4	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT5	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT6	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT7	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発ITI用UTスキーマ	顧客DB開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKDBITIUT8	*	KYKDB	UNIT	oskt7		KYKADM	あんしん開発ITI用UTスキーマ	あんしん開発ITI用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKEST	*	KYKDB	APP	oskt7		KYKADM	顧客DB新STスキーマ	顧客DB新STスキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKESTUSER	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB新ST参照スキーマ	顧客DB新ST参照スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKEST_BK	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発　FBS用UTスキーマ		20161012	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKGAILGEUT1	*	KYKDB	UNIT	oskt7		KYKADM	外貨レガシー　UT用スキーマ1(KY	外貨レガシー　UT用スキーマ1(KYK)	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKGAILGEUT2	*	KYKDB	UNIT	oskt7		KYKADM	外貨レガシー　UT用スキーマ2(KY	外貨レガシー　UT用スキーマ2(KYK)	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKINTEUT1	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発INTEC用UTスキーマ	顧客DB開発協力会社(INTEC)用UTスキーマ	20210219	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKINTEUT2	*	KYKDB	UNIT	oskt7		KYKADM	INTECUT環境2(KYK)	INTECUT環境2(KYK)	20210219	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKIPAEST	*	IPADB	APP	oskt7		IPAADM	一般残取得価額新ST	一般残取得価額新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKIPAESTUSER	*	IPADB	UNIT	oskt7		IPAADM	一般残取得価額新ST参照	一般残取得価額新ST参照スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKJASUT2	*	KYKDB	APP	oskt7		KYKADM	顧客DB開発JAS用UTスキーマ	顧客DB開発JAS用UTスキーマ	20210507	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKJASUT2USER	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発JAS用UT参照スキーマ	顧客DB開発JAS用UT参照スキーマ	20210507	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKMKCUT1	*	KYKDB	UNIT	oskt7		KYKADM	ジュニアNISA開発（富士通用）	ジュニアNISA開発（富士通用）	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKMKCUT2	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発富士通用UTスキーマ	顧客DB開発富士通用UTスキーマ	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKMKCUT3	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発富士通用UTスキーマ	顧客DB開発富士通用UTスキーマ	20210218	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKNKSEUT1	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発社員用UTスキーマ	顧客DB開発社員用UTスキーマ	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT1	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT1用スキーマ	CCISRGDUT1用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT2	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT2用スキーマ	CCISRGDUT2用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT3	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT3用スキーマ	CCISRGDUT3用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT4	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT4用スキーマ	CCISRGDUT4用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT5	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT5用スキーマ	CCISRGDUT5用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT6	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT6用スキーマ	CCISRGDUT6用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKRGDUT7	*	KYKDB	UNIT	oskt7		KYKADM	CCISRGDUT7用スキーマ	CCISRGDUT7用スキーマ	20180820	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKSSEUT1_EOL	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発SSE用UTスキーマ	顧客DB開発SSE用UTスキーマ	20210219	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKSSEUT2	*	KYKDB	UNIT	oskt7		KYKADM	顧客DB開発SSE用UTスキーマ(EOL	顧客DB開発SSE用UTスキーマ(EOL後)	20210830	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKTEST	*	KYKDB	UNIT	oskt7		KYKADM	本番機訓練テスト用　顧客DB	本番機訓練テスト用　顧客DB	20230606	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKTISSUT	*	KYKDB	UNIT	oskt7		KYKADM	金融一体課税用DB(ＴＩＳ)	金融一体課税用DB(ＴＩＳ)	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+KYKTISSUT2	*	KYKDB	UNIT	oskt7		KYKADM	金融一体課税用DB2(ＴＩＳ)	金融一体課税用DB2(ＴＩＳ)	20210217	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+MRKADM	*	MRKDB	MAIN	oskt7		MRKADM	MRKDBメインスキーマ	マーケットＤＢエントリー定義登録専用スキーマ	20021028	USERS_KYKDB2	TEMP01		osktestdb7	11.1.0.7.0	5
+MRKINTEUT1	*	MBCDB	UNIT	oskt7		MBCADM	INTECUT環境(MRK)	INTECUT環境(MRK)	20210413	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_AIFAEST	*	IFADB	OBJECT	oskt7		IFAADM	仲介業アプリ新ST所有者スキー	仲介業アプリ新ST所有者スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_BIZEST	*	BIZDB	OBJECT	oskt7		BIZADM	営業店フロント新ST所有者	営業店フロント新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_CTMEST	*	MRKDB	OBJECT	oskt7		MRKADM	顧客条件検索新ST所有者スキー	顧客条件検索新ST所有者スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_EXTEST	*	KYKDB	OBJECT	oskt7		KYKADM	CCIS延長ｵﾝﾗｲﾝ新ST所有者スキー	CCIS延長オンライン新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_FIFAEST	*	IFADB	OBJECT	oskt7		IFAADM	仲介業フロント新ST所有者	仲介業フロント新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_ICTMEST	*	IFADB	OBJECT	oskt7		IFAADM	仲介業顧客条件検索新ST所有者	仲介業顧客条件検索新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_IEXTEST	*	IFADB	OBJECT	oskt7		IFAADM	仲介業CCIS延長ｵﾝﾗｲﾝ新ST所有者	仲介業CCIS延長オンライン新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_IISAST	*	IFADB	OBJECT	oskt7		IFAADM			20130423	USR_DATA	TEMP01		osktestdb7	11.1.0.7.0	5
+OBJECT_IKYKEST	*	IFADB	OBJECT	oskt7		IFAADM	仲介業顧客DB新ST所有者スキー	仲介業顧客DB新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_ISAST	*	ISADB	OBJECT	oskt7		ISAADM			20130423	USR_DATA	TEMP01		osktestdb7	11.1.0.7.0	5
+OBJECT_KYKANCUT2	*	KYKDB	OBJECT	oskt7		KYKADM	顧客DB開発ANC用UTスキーマ2	顧客DB開発ANC用UTスキーマ2	20250414	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_KYKCITUT	*	KYKDB	OBJECT	oskt7		KYKADM	顧客DB開発CIT用UTスキーマ	顧客DB開発CIT用UTスキーマ	20220519	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_KYKEST	*	KYKDB	OBJECT	oskt7		KYKADM	顧客DB新ST所有者スキーマ	顧客DB新ST所有者スキーマ	20110509	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_KYKIPAEST	*	IPADB	OBJECT	oskt7		IPAADM	一般残取得価額新ST所有者	一般残取得価額新ST所有者スキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+OBJECT_KYKJASUT2	*	KYKDB	OBJECT	oskt7		KYKADM	顧客DB開発JAS用UT所有スキーマ	顧客DB開発JAS用UT所有スキーマ	20210507	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+PROWEBEST	*	MRKDB	UNIT	oskt7		MRKADM	PROWEB新STスキーマ	PROWEB新STスキーマ	20110510	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+TESTUSER1	*	INTRADB	UNIT	oskt7		INTRAADM			20111213	USR_DATA	TEMP		osktestdb7	11.1.0.7.0	5
+
+
+ＣＳＶの10列目あたりにあるRPSスキーマとこの１列名が対応している
+
