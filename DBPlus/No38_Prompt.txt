@@ -1,0 +1,144 @@
+サイト修正およびServletを修正して
+
+以下の要望を修正し、添付のdbplus.warを修正した形で、再度dbplus.warのダウンロードリンクを提示して
+
+修正する際は、以下方針として
+１）いきなりコードを修正すると、ChatGPTのコードは間違いやすいので、修正方針と影響調査（どこをどうなおすかの検討）として
+２）その修正方針と影響調査をもとに、コード修正案を出す
+３）そのコード修正案を充てた際、ただしく動くか、期待する修正になるかをチェック
+４）１～３が問題なければ、コードを修正する
+５）コード修正後に、再度要望と修正内容が合致しており、ただしい修正になっているかをインスペクション
+６）問題があれば、コードを元に戻し、１～５を再帰的にやりなおして、正しいコードに導く
+
+
+修正点（すべてSQL＋サイトの話）
+
+[1]
+
+ファビコンのＤの色が違うのと、もっと太く（多分、font-familyが違う）
+
+KruglePlusのサイトのファビコンの画像解析をして、おなじようにかなにせてつくって
+
+ここだけ、ＤＢ＋も関係する
+
+[2]
+
+SQL＋
+
+SQLを実行のSQL文の箇所のしたちゅうおうに、ＣＴＲＬ＋ＥＮＴＥＲでＳＱＬを実行できる旨を
+ふわっと上にのせるようなコメントとしてのせておいて
+
+いまはわかりにくい
+
+
+[3]
+
+SQL＋
+
+スキーマの選択箇所において、DB+とおなじようにborderとかをくふうして、わかりやすくして
+
+
+[4]
+
+SQL＋
+入力例の選択において、以下として
+
+SELECT
+SELECT(テーブル結合）
+INSERT
+UPDATE
+DELETE
+
+これでよいし、選択したらアラートでConfirmをださずに、そのままパッと文字をプリセットしてしまってよい
+
+[5]
+
+SQL＋
+ヘッダーのタブですが、以下のように変更
+
+テーブル名（SELECT文）
+
+もしテーブルが二つあれば、テーブル名・テーブル名（SELECT文）
+
+長さは可変とする
+
+
+[6]
+SQL＋
+
+ヘッダーの結果のタブに、ＤＢ＋と同じように、スキーマと件数を足す
+
+[7]
+
+実行結果
+5,000 件取得 / 577 ms
+
+ここにもＤＢ＋と同じように、虫眼鏡やその行のＵＰＤＡＴＥや１行削除ができるモーダルを入れる
+
+このとき、もし絞り込みを行うと、先ほどの検索文にその絞り込みを入れて実行できるように、
+Ｓｅｒｖｖｌｅｔ側でＳＱＬ文を組みなおす工夫とコードを検討して、いれておいて
+
+
+[8]
+
+
+実行結果とその真横に、別タブのようなかたちで、実行計画を用意して
+もしその実行計画タブを入れたら、実行計画を取得して表示して
+
+
+たぶ１が実行結果
+タブ２が実行計画
+
+この構成として
+
+[9]
+
+実行計画の表示はこのような形として
+
+SELECT STATEMENT Cost = 64021
+ +-TABLE ACCESS BY LOCAL INDEX ROWID   (OBJECT_KYKOWNER.KYF0010 KYF0010@SEL$1)  1 rows (24 bytes)  1 sec.
+    +-NESTED LOOPS    29992 rows (14790 Kbytes)  769 sec.
+       +-HASH JOIN    29993 rows (14088 Kbytes)  49 sec.  "KYO9000"."MISE_C"="TMP_KYO9000"."MISE_C" AND "KYO9000"."TEKIYO_STYMD"="TMP_KYO9000"."MAX_TEKIYO_STYMD"
+       |  +-VIEW    1999 rows (19990 bytes)  1 sec.
+       |  |  +-SORT GROUP BY    1999 rows (77961 bytes)  1 sec.
+       |  |     +-TABLE ACCESS FULL   (OBJECT_KYKOWNER.KYO9000 KYO9000@SEL$3)  2000 rows (78000 bytes)  1 sec.
+       |  +-HASH JOIN    30008 rows (13802 Kbytes)  48 sec.  "KYO9000"."MISE_C"=SUBSTR("KYK5183_AZ_WK1"."KYAK_KOZANO",1,4)
+       |     +-TABLE ACCESS FULL   (OBJECT_KYKOWNER.KYO9000 KYO9000@SEL$2)  2000 rows (48000 bytes)  1 sec.
+       |     +-HASH JOIN    30000 rows (13095 Kbytes)  48 sec.  7504000  "KYM0000"."CO_HYJUN_C"="KYK5183_AZ_WK1"."CO_HYJUN_C" AND "KYM0000"."NAIB_SYORYO_MEIG_JOHO"="KYK5183_AZ_WK1"."NAIGAI_K"||"KYK5183_AZ_WK1"."SYOHN_K"||"KYK5183_AZ_WK1"."MEIG_C"
+       |        +-TABLE ACCESS FULL   (OBJECT_KYKOWNER.KYM0000 KYM0000@SEL$1)  100000 rows (6152 Kbytes)  18 sec.
+       |        +-TABLE ACCESS FULL   (OBJECT_KYKOWNER.KYK5183_AZ_WK1 KYK5183_AZ_WK1@SEL$1)  60000 rows (22500 Kbytes)  13 sec.
+       +-PARTITION RANGE ITERATOR    1 rows  1 sec.
+          +-INDEX UNIQUE SCAN   (OBJECT_KYKOWNER.KYF0010_IXP KYF0010@SEL$1)  1 rows  1 sec.  "KYF0010"."CO_HYJUN_C"="KYK5183_AZ_WK1"."CO_HYJUN_C" AND "KYF0010"."KYAK_CIF_C"="KYK5183_AZ_WK1"."KYAK_KOZANO"
+
+OBJECT_KYKOWNER.KYF0010  (KYF0010@SEL$1)
+    KYF0010_IX1 (CO_HYJUN_C,MISE_C,KYAK_C)
+    KYF0010_IX2 (CO_HYJUN_C,MISE_C,KAKARI_C)
+    KYF0010_IX3 (CO_HYJUN_C,SOSINYMDJI,DB_UPDJI2)
+    KYF0010_IXP (CO_HYJUN_C,KYAK_CIF_C)
+
+OBJECT_KYKOWNER.KYO9000  (KYO9000@SEL$3)
+    KYO9000PK (CO_HYJUN_C,MISE_C,TEKIYO_STYMD)
+
+OBJECT_KYKOWNER.KYO9000  (KYO9000@SEL$2)
+    KYO9000PK (CO_HYJUN_C,MISE_C,TEKIYO_STYMD)
+
+OBJECT_KYKOWNER.KYM0000  (KYM0000@SEL$1)
+    KYM0000PK (CO_HYJUN_C,MEIG_UNIQKEY)
+    KYM0000_IX1 (CO_HYJUN_C,NAIB_SYORYO_MEIG_JOHO)
+    KYM0000_IX2 (CO_HYJUN_C,INTFACE_MEIG_JOHO,NAIGAI_K,SINSYOHN_K)
+
+OBJECT_KYKOWNER.KYK5183_AZ_WK1  (KYK5183_AZ_WK1@SEL$1)
+    KYK5183_AZ_WK1PK (TORINO,TORINO_ED)
+
+OBJECT_KYKOWNER.KYF0010
+    KYF0010_IXP (CO_HYJUN_C,KYAK_CIF_C)  ← 利用したインデックス
+    KYF0010_IX1 (CO_HYJUN_C,MISE_C,KYAK_C)
+    KYF0010_IX2 (CO_HYJUN_C,MISE_C,KAKARI_C)
+    KYF0010_IX3 (CO_HYJUN_C,SOSINYMDJI,DB_UPDJI2)
+
+これをＨＴＭＬとして、無茶苦茶わかりやすいＣＳＳスタイルにして、表じして
+ただ文字列を並べられるとわかりにくい
+
+整形やそもそもHTMLのマークドロー自体も工夫して、実行計画がわかりやすい形で表示
+
+
