@@ -1,0 +1,151 @@
+サイト修正およびServletを修正して
+
+以下の要望を修正し、添付のdbplus.warを修正した形で、再度dbplus.warのダウンロードリンクを提示して
+
+修正する際は、以下方針として
+１）いきなりコードを修正すると、ChatGPTのコードは間違いやすいので、修正方針と影響調査（どこをどうなおすかの検討）として
+２）その修正方針と影響調査をもとに、コード修正案を出す
+３）そのコード修正案を充てた際、ただしく動くか、期待する修正になるかをチェック
+４）１～３が問題なければ、コードを修正する
+５）コード修正後に、再度要望と修正内容が合致しており、ただしい修正になっているかをインスペクション
+６）問題があれば、コードを元に戻し、１～５を再帰的にやりなおして、正しいコードに導く
+
+
+修正点
+
+[1]
+
+DB+とSQL＋のアイコン
+
+これが今、同じ大きさ
+
+DB＋をひらいたときは、ＳＱＬ＋はもっと小さく
+ＳＱＬ＋を開いたときは、DB＋はＳＱＬ＋のしたに配置して、もっと小さく
+
+いま、DB+へやＳＱＬ＋へ
+
+
+[2]
+
+
+HTMLへ保存ボタンは、画面の左側の縦書きの文字のボタンは不要
+
+ここは２つだけボタンは配置
+
+ＨＴＭＬへ保存のボタンはいらない
+
+
+[3]
+
+
+HTMLで保存のボタン
+
+ＤＢデータの箇所に配置されている
+
+ここのボタンだけ、他２つにくらべて目立つようにして
+
+
+
+
+[4]
+
+<textarea id="sql-input" rows="18" maxlength="200000" aria-label="実行するSQL" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="SELECT * FROM KYF1940 WHERE ROWNUM &lt;= 100;
+
+テーブル名だけを入力してEnter → SQLを自動生成
+例：KYF1940
+複数表：TABLE_A TABLE_B（改行・タブ・全角スペースも可、最大3表）
+結合キーを調べ、WHEREで結合するSELECTを作成します。" aria-describedby="sql-help sql-transaction sql-shortcut-hint"></textarea>
+
+
+プレイスホルダーを変更して
+
+----
+SELECT * FROM KYF1940 ORDER BY 1;
+
+or
+
+テーブル名だけを入力してEnter → SQLを自動生成
+例：KYF1940
+
+or
+
+複数テーブルの結合の場合は、TABLE_A TABLE_B（改行・タブ・全角スペースも可）
+
+
+
+※修正点１
+複数テーブルの結合の場合は、最大３テーブルまでというのはない。この上限はとっぱらって。
+
+
+
+[5]
+
+入力例を選択
+
+SELECT *
+FROM テーブル名
+ORDER BY 主キー;
+
+↓
+
+SELECT *
+FROM テーブル名
+ORDER BY 1;
+
+
+
+INSERT INTO テーブル名 (カラム名)
+VALUES ('値');
+
+↓
+
+INSERT INTO テーブル名
+VALUES ('値','値','値','値','値');
+
+[6]
+
+実行結果	実行計画	OBJECT_KYKOWNER / JH / KYKDB
+
+この上にある余白を削除して、なるべくデータの表示のtableを上の方へもってきて
+
+
+[7]
+
+
+HTMLで保存
+
+このindex.html　→ TableData(テーブル名)_YYYY年MM月DD日HH時MI分SS秒.html
+
+このＨＴＭＬはテーブルヘッダーに虫眼鏡アイコンで絞り込むので、
+ここでの絞り込みのＳｅｌｅｃｔボックスとかは不要
+
+
+
+[8]
+
+SQL+のファーストビュー
+
+実行したSQLのletter-spacingはnoneへ
+
+そして、ＳＱＬ文はfont-sizeを今の+2pxにして
+
+
+
+[9]
+
+
+OBJECT_KYKOWNER / JH / KYKDB
+sqlplus OBJECT_KYKOWNER/JH_USER@//172.28.140.94:1621/mkt.world
+
+この記載は、欄の縦軸中央値（Y軸中央値）に配置して
+
+そして、
+
+OBJECT_KYKOWNER / JH / KYKDB
+sqlplus OBJECT_KYKOWNER/JH_USER@//172.28.140.94:1621/mkt.world
+
+この２行の間に余白をすこし入れて
+
+
+
+
